@@ -6,13 +6,25 @@
         xmlns:local="clr-namespace:WpfApp"
         mc:Ignorable="d"
         Title="MainWindow2" Height="720" Width="1170">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="R/Dictionary1.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
     <Grid>
-        <ListBox x:Name="listBox">
-            
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Vertical">
+                <TextBox Text="test1" Width="100" Height="100" Style="{StaticResource CircularTextBoxStyle}"/>
+                <TextBox Text="test2" Width="100" Height="100" Style="{StaticResource CircularTextBoxStyle}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <ListBox x:Name="outputListBox" />
+                <TextBox x:Name="inputTextBox" KeyDown="TextBoxKeyDown" Width="420" Height="30"/>
+            </StackPanel>
 
-        </ListBox>
-        <Button x:Name="button" Content="Button"/>
-        
-
+        </StackPanel>
     </Grid>
 </Window>

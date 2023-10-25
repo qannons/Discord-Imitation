@@ -24,5 +24,16 @@ namespace WpfApp
         {
             InitializeComponent();
         }
+        //private void TextBoxKeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if(e.Key == Key.Enter)
+        //    {
+        //        string inputText = inputTextBox.Text;
+        //        outputListBox.Items.Add(inputText);
+        //        inputTextBox.Clear();
+        //        e.Handled = true; //이벤트 처리 완료를 설정하여 Enter 키 이벤트를 중복 처리하지 않도록 합니다.
+        //    }
+        //}
     }
+
 }
