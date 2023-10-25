@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChattingWindow;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,25 +16,39 @@ using System.Windows.Shapes;
 
 namespace WpfApp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        //public MainWindow()
+        //{
+        //    InitializeComponent();
+        //}
+
         public MainWindow()
         {
             InitializeComponent();
+            NavigateToHomePage();
         }
-        //private void TextBoxKeyDown(object sender, KeyEventArgs e)
-        //{
-        //    if(e.Key == Key.Enter)
-        //    {
-        //        string inputText = inputTextBox.Text;
-        //        outputListBox.Items.Add(inputText);
-        //        inputTextBox.Clear();
-        //        e.Handled = true; //이벤트 처리 완료를 설정하여 Enter 키 이벤트를 중복 처리하지 않도록 합니다.
-        //    }
-        //}
-    }
 
+        private void NavigateToHomePage()
+        {
+            DMWindow dmWindow = new DMWindow();
+            mainFrame.Navigate(dmWindow);
+        }
+
+        private void NavigateToAboutPage()
+        {
+            ServerWindow serverWindow = new ServerWindow();
+            mainFrame.Navigate(serverWindow);
+        }
+
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToHomePage();
+        }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateToAboutPage();
+        }
+    }
 }

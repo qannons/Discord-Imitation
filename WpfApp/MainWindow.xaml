@@ -13,18 +13,37 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    
-    <Grid>
-        <StackPanel Orientation="Horizontal">
-            <StackPanel Orientation="Vertical">
-                <TextBox Text="test1" Width="100" Height="100" Style="{StaticResource CircularTextBoxStyle}"/>
-                <TextBox Text="test2" Width="100" Height="100" Style="{StaticResource CircularTextBoxStyle}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <ListBox x:Name="outputListBox" />
-                <TextBox x:Name="inputTextBox" KeyDown="TextBoxKeyDown" Width="420" Height="30"/>
-            </StackPanel>
 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+
+        <StackPanel Orientation="Vertical" Width="50">
+            <Button Height="100" Content="home" Click="HomeButton_Click"></Button>
+            <Button Height="100" Content="DM" Click="AboutButton_Click"></Button>
+            <TextBox x:Name="textBox" Text="정현 조님의 서버" Width="40" Height="40" Style="{StaticResource CircularTextBoxStyle}" />
+            <TextBox Text="게임엔진" Width="40" Height="40" Style="{StaticResource CircularTextBoxStyle}" />
         </StackPanel>
+        <Frame x:Name="mainFrame" Grid.Column="1" Content="Frame" NavigationUIVisibility="Hidden"/>
+
+
+
     </Grid>
+    <!--<Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button Content="Home" Click="HomeButton_Click" />
+            <Button Content="About" Click="AboutButton_Click" />
+        </StackPanel>
+
+        <Frame x:Name="mainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" />
+    </Grid>-->
 </Window>
