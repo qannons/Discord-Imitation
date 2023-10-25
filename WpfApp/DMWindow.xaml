@@ -8,11 +8,8 @@
             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel Orientation="Vertical">
-            <ListBox x:Name="outputListBox" Height="300" d:ItemsSource="{d:SampleData ItemCount=5}" ></ListBox>
-            <TextBox x:Name="inputTextBox" Text="Text" KeyDown="TextBoxKeyDown" Height="30"/>
+            <ListBox x:Name="outputListBox" Height="585" d:ItemsSource="{d:SampleData ItemCount=5}" ></ListBox>
+            <TextBox x:Name="inputTextBox" Text="Text" KeyDown="TextBoxKeyDown" Height="45"/>
         </StackPanel>
     </Grid>
-    <!--<Grid>
-        <TextBlock Text="Home Page" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" />
-    </Grid>-->
 </UserControl>
