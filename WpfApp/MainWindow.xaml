@@ -3,50 +3,96 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp"
+        xmlns:local="clr-namespace:WpfApp" xmlns:viewmodel="clr-namespace:WpfApp.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow2" Height="720" Width="1170">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="R/Dictionary1.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
+        Background="#36393F"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+        Title="MainWindow" Height="720" Width="1280">
+
+    <Window.DataContext>
+        <viewmodel:MainViewModel/>
+    </Window.DataContext>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-
-        
-        <StackPanel Orientation="Vertical" Width="50">
-            <Button Height="100" Content="home" Click="HomeButton_Click"></Button>
-            <Button Height="100" Content="DM" Click="AboutButton_Click"></Button>
-            <TextBox x:Name="textBox" Text="정현 조님의 서버" Width="40" Height="40" Style="{StaticResource CircularTextBoxStyle}" />
-            <TextBox Text="게임엔진" Width="40" Height="40" Style="{StaticResource CircularTextBoxStyle}" />
-        </StackPanel>
-
-     
-        <Frame x:Name="mainFrame" Content="Frame" NavigationUIVisibility="Hidden" Grid.Column="1"/>
-
-
-
-
-    </Grid>
-    <!--<Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button Content="Home" Click="HomeButton_Click" />
-            <Button Content="About" Click="AboutButton_Click" />
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
-        <Frame x:Name="mainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" />
-    </Grid>-->
-</Window>
+
+        <Border Grid.ColumnSpan="2" Background="#252525" MouseDown="Border_MouseDown">
+            <Grid HorizontalAlignment="Stretch" >
+                <Label Content="Discord" Foreground="Gray" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Width="20" Height="20" Content="_" BorderThickness="0" Foreground="Gray" Background="Transparent" Margin="0, 0, 0, 3" Click="MinimizeWindow"/>
+                    <Button Width="20" Height="20" Content="ㅁ" BorderThickness="0" Foreground="Gray" Background="Transparent" Click="MaximizeWindow"/>
+                    <Button Width="20" Height="20" Content="X" BorderThickness="0" Foreground="Gray" Background="Transparent" Click="CloseWindow"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Background="#2F3136" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+
+            <Label Content="다이렉트 메시지" VerticalAlignment="Center" FontWeight="Medium" Foreground="Gray" Margin="8, 0, 0, 0"/>
+            <ListView ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedContact}" ItemContainerStyle="{StaticResource ChattingRoomCard}"  Background="Transparent" BorderThickness="0" Grid.Row="1" SelectionChanged="ListView_SelectionChanged" />
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Background="#292B2F">
+                <Border CornerRadius="25" Width="30" Height="30" Background="#3bff6f" Margin="18,0,0,0"/>
+
+                <StackPanel VerticalAlignment="Center">
+                    <Label Content="UserName" Foreground="White" FontWeight="SemiBold" Margin="0, -5, 0, -5"/>
+                    <Label Content="온라인" Foreground="Gray" FontWeight="SemiBold" Margin="0, -7, 0, -5" FontSize="8"/>
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition/>
+                <RowDefinition Height="70"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderBrush="#2F3136" BorderThickness="0,0,0,0">
+                <Grid HorizontalAlignment="Stretch" Margin="8">
+                    <Label Name ="UserNameLabel" Content="{Binding UserNameLabel}" Foreground="White" FontWeight="Bold" Margin="5, 0, 5, 0" VerticalAlignment="Center"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="Fant" Margin="5, 0, 5, 0" Source="./R/Icons/Call.png"></Image>
+                        <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="Fant" Margin="5, 0, 5, 0" Source="./R/Icons/Call.png"></Image>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <ListView ItemsSource="{Binding SelectedContact.Messages}" Background="Transparent" BorderThickness="0" 
+                      Margin="8,0,0,0" Grid.Row="1"/>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="90"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox Name="InputTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource InputBox}" KeyDown="EnterDown"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Margin="0,0,16,0">
+                    <Image Source="./R/Icons/Plus.png" Width="20" Height="20" RenderOptions.BitmapScalingMode="Fant" Margin="5,5,5,0"/>
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+</Window> 

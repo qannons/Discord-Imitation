@@ -1,5 +1,4 @@
-﻿using ChattingWindow;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,42 +12,57 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp.Model;
 
 namespace WpfApp
 {
     public partial class MainWindow : Window
     {
-        //public MainWindow()
-        //{
-        //    InitializeComponent();
-        //}
-
         public MainWindow()
         {
             InitializeComponent();
-            NavigateToHomePage();
         }
 
-        private void NavigateToHomePage()
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            DMWindow dmWindow = new DMWindow();
-            mainFrame.Navigate(dmWindow);
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
         }
 
-        private void NavigateToAboutPage()
+        private void MaximizeWindow(object sender, RoutedEventArgs e)
         {
-            ServerWindow serverWindow = new ServerWindow();
-            mainFrame.Navigate(serverWindow);
+            Application.Current.MainWindow.WindowState =
+                   (Application.Current.MainWindow.WindowState != WindowState.Maximized)
+                   ? WindowState.Maximized : WindowState.Normal;
         }
 
-        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        private void CloseWindow(object sender, RoutedEventArgs e)
         {
-            NavigateToHomePage();
+            Application.Current.Shutdown();
         }
 
-        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        private void MinimizeWindow(object sender, RoutedEventArgs e)
         {
-            NavigateToAboutPage();
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
+        private void EnterDown(object sender, KeyEventArgs e)
+        {
+            //if (e.Key == Key.Enter)
+            //{
+            //    string inputText = inputTextBox.Text;
+            //    outputListBox.Items.Add(inputText);
+            //    inputTextBox.Clear();
+            //    e.Handled = true; //이벤트 처리 완료를 설정하여 Enter 키 이벤트를 중복 처리하지 않도록 합니다.
+            //}
+        }
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            User selectedUser = e.AddedItems[0] as User;
+            UserNameLabel.Content = selectedUser.UserName;
         }
     }
 }
