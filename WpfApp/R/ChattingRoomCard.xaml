@@ -24,7 +24,7 @@
                             </Ellipse>
 
                             <StackPanel >
-                                <Label Content="{Binding UserName}" Foreground="White"/>
+                                <Label Content="{Binding RoomName}" Foreground="White"/>
 
                             </StackPanel>
                         </StackPanel>

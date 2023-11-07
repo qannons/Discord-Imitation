@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp.Core;
 
 namespace WpfApp.Model
 {
@@ -42,9 +44,11 @@ namespace WpfApp.Model
         public string RoomName { get; set; }
         public List<User> Members { get; set; }
         public List<Message> Messages { get; set; }
+        //나중에 삭제
+        public string ProfilePicture { get; set; }
     }
 
-    public class Message
+    public class Message 
     {
         //생성자
         public Message(string pSenderID, string pContent) 

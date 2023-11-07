@@ -8,9 +8,9 @@
                 <ControlTemplate TargetType="TextBox">
                     <Border CornerRadius="8" Background="#3e4147">
                         <Grid>
-                            <TextBox Name="TextBox" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch"  Background="Transparent" TextWrapping="Wrap" BorderThickness="0" Foreground="Gray" CaretBrush="Gray" Margin="8, 0, 0, 0">
+                            <TextBox Name="TextBox" Text="{Binding UserInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch"  Background="Transparent" TextWrapping="Wrap" BorderThickness="0" Foreground="Gray" CaretBrush="Gray" Margin="8, 0, 0, 0">
                                 <TextBox.InputBindings>
-                                    <KeyBinding Command="{Binding SendCommand}" Key="Return"/>
+                                    <KeyBinding Command="{Binding SendCommand}" Key="Enter"/>
                                 </TextBox.InputBindings>
                             </TextBox>
 

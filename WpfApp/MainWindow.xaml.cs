@@ -61,8 +61,18 @@ namespace WpfApp
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            User selectedUser = e.AddedItems[0] as User;
-            UserNameLabel.Content = selectedUser.UserName;
+            ChatRoom selectedRoom = e.AddedItems[0] as ChatRoom;
+            UserNameLabel.Content = selectedRoom.RoomName;
+        }
+
+        private void InputTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void ListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
