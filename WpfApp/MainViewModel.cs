@@ -14,7 +14,8 @@ namespace WpfApp.MVVM.ViewModel
     {
         public MainViewModel() 
         {
-            Users = new ObservableCollection<User>
+            sendCommand = new RelayCommand(Func1);
+            users = new ObservableCollection<User>
             {
                 new User("1", "User1", "https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg"),
                 new User("2", "User2", "https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg")
@@ -33,9 +34,15 @@ namespace WpfApp.MVVM.ViewModel
             set { mUserNameLabel = value; OnPropertyChanged(nameof(UserNameLabel)); }
         }
 
-        public ObservableCollection<Message> Messages { get; set; }
-        public ObservableCollection<User> Users { get; set; }
+        public ObservableCollection<Message> messages { get; set; }
+        public ObservableCollection<User> users { get; set; }
+        public RelayCommand sendCommand { get; set; }
 
-
+        public void Func1(Object parmeter)
+        {
+            _messages.Add(new Message("1", "Test7"));
+        }
     }
+    }
+
 }

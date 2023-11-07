@@ -13,14 +13,12 @@
                                     <KeyBinding Command="{Binding SendCommand}" Key="Return"/>
                                 </TextBox.InputBindings>
                             </TextBox>
-                            
+
                         </Grid>
                     </Border>
-                </ControlTemplate>            
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
-
-
     </Style>
     
 </ResourceDictionary>
