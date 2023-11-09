@@ -56,16 +56,27 @@ namespace WpfApp.Model
             MessageID = Guid.NewGuid().ToString();
             SenderID = pSenderID;
             Content = pContent;
-            Timestamp = DateTime.Now;
+            Timestamp = DateTime.Now.ToString("yyyy.MM.dd tt hh:mm");
             IsRead = false;
+            //ImageSource = UserManager.GetImageSource(pSenderID);
         }    
 
         //변수
         public string MessageID { get; set; }
         public string SenderID { get; set; }
         public string Content { get; set; }
-        public DateTime Timestamp { get; set; }
+        public string Timestamp { get; set; }
         public bool IsRead { get; set; }
+        //public string ImageSource {  get; set; }
     }
+    //static public class UserManager
+    //{
+    //    public static string GetImageSource(string pSenderID)
+    //    {
+    //        return Users[pSenderID].ProfilePicture;
+    //    }
 
+
+    //    public static Dictionary<string, User> Users;
+    //}
 }

@@ -46,33 +46,6 @@ namespace WpfApp
         private void MinimizeWindow(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
-        }
-
-        private void EnterDown(object sender, KeyEventArgs e)
-        {
-            //if (e.Key == Key.Enter)
-            //{
-            //    string inputText = inputTextBox.Text;
-            //    outputListBox.Items.Add(inputText);
-            //    inputTextBox.Clear();
-            //    e.Handled = true; //이벤트 처리 완료를 설정하여 Enter 키 이벤트를 중복 처리하지 않도록 합니다.
-            //}
-        }
-
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ChatRoom selectedRoom = e.AddedItems[0] as ChatRoom;
-            UserNameLabel.Content = selectedRoom.RoomName;
-        }
-
-        private void InputTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void ListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        }   
     }
 }
