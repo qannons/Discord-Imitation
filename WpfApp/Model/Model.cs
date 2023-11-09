@@ -43,7 +43,7 @@ namespace WpfApp.Model
         public string RoomID { get; set; }
         public string RoomName { get; set; }
         public List<User> Members { get; set; }
-        public List<Message> Messages { get; set; }
+        public ObservableCollection<Message> Messages { get; set; }
         //나중에 삭제
         public string ProfilePicture { get; set; }
     }

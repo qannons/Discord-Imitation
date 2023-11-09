@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="./R/ChattingRoomCard.xaml"/>
                 <ResourceDictionary Source="./R/MessageBox.xaml"/>
                 <ResourceDictionary Source="./R/ChatItem.xaml"/>
+                <ResourceDictionary Source="./R/Test.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
