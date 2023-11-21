@@ -54,7 +54,12 @@ namespace WpfApp.MVVM.ViewModel
         public ChatRoom SelectedRoom
         {
             get { return _selectedRoom; }
-            set { _selectedRoom = value; OnPropertyChanged(nameof(SelectedRoom)); }
+            set { 
+                _selectedRoom = value;
+                _roomNameLabel = value.RoomName;
+                OnPropertyChanged(nameof(RoomNameLabel));
+                OnPropertyChanged(nameof(SelectedRoom)); 
+            }
         }
 
         public ObservableCollection<User> users { get; set; }

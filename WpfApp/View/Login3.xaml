@@ -1,0 +1,65 @@
+﻿<Window x:Class="WpfApp.View.Login3"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp.View"
+        mc:Ignorable="d"
+        Background="#0C70F2"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+        Title="MainWindow" Height="720" Width="1280">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/R/Images/LoginBackground2.jpeg"/>
+        </Grid.Background>
+        
+        <!--<Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="780" Height="405">-->
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="780" Height="405" Background="#313338">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Background="Transparent" Grid.Column="0" CornerRadius="0 10 10 0">
+                <Grid>
+                    <StackPanel Margin="20 0 20 0">
+                        <TextBlock Text="돌아오신 것을 환영해요!" Style="{StaticResource LoginTitleText}" Foreground="White"/>
+                        <TextBlock Text="다시 만나다니 너무 반가워요!" Style="{StaticResource LoginNormalText}" Foreground="#878787" Margin="0 10 0 15"/>
+                        <StackPanel>
+                            <TextBlock x:Name="textEmail" Text="이메일 또는 전화번호" Style="{StaticResource LoginTextHint}"/>
+                            <TextBox Name="InputTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource InputBox}" />
+                        </StackPanel>
+
+                        <StackPanel Margin="0 20 0 0">
+                            <TextBlock x:Name="textPassword" Text="비밀번호" Style="{StaticResource LoginTextHint}"/>
+                            <PasswordBox Name="PasswordTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource PassWordBox}" />
+                            <TextBlock x:Name="textPasswordForgot" Style="{StaticResource LoginTextHint}">
+                                비밀번호를 잊으셨나요? <Hyperlink NavigateUri="https://www.naver.com/"></Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+
+                        <Button Content="로그인" Style="{StaticResource LoginMainButton}"/>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="계정이 필요하신가요?" Style="{StaticResource LoginTextHint}" Margin="0, 0, 10, 0"/>
+                            <TextBlock Text="가입하기"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Border Background="Transparent" Grid.Column="1" CornerRadius="0 10 10 0">
+                <StackPanel Margin="20 20 20 0">
+                    <Image Source="/R/Images/QR_Code.png" Width="200" Height="200">
+                        
+                    </Image>
+
+                    <TextBlock Text="QR코드로 로그인" Style="{StaticResource LoginTitleText}" Foreground="White"/>
+                    <TextBlock Text="Discord 모바일 앱으로 스캔해 바로 로그인하세요" Style="{StaticResource LoginTextHint}" TextWrapping="Wrap"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        
+    </Grid>
+</Window>

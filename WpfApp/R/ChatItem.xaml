@@ -3,9 +3,9 @@
     <DataTemplate x:Key="ChatItem">
         <StackPanel Orientation="Horizontal">
             <Ellipse Width="30" Height="30" Margin="10,0,0,-5">
-                <Ellipse.Fill>
+                <!--<Ellipse.Fill>
                     <ImageBrush ImageSource="{Binding ImageSource}" RenderOptions.BitmapScalingMode="Fant"/>
-                </Ellipse.Fill>
+                </Ellipse.Fill>-->
             </Ellipse>
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
