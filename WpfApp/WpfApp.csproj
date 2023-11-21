@@ -8,11 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="R\Images\LoginBackground.jpg" />
+    <None Remove="R\Images\LoginBackground2.jpeg" />
+    <None Remove="R\Images\LoginBackground3.jpg" />
+    <None Remove="R\Images\QR_Code.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="기타 파일\" />
   </ItemGroup>
 
   <ItemGroup>
     <Page Include="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="R\Images\LoginBackground.jpg" />
+    <Resource Include="R\Images\LoginBackground2.jpeg" />
+    <Resource Include="R\Images\LoginBackground3.jpg" />
+    <Resource Include="R\Images\QR_Code.png" />
   </ItemGroup>
 
 </Project>
