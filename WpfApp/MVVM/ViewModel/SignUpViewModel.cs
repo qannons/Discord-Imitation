@@ -8,13 +8,15 @@ using WpfApp.Core;
 
 namespace WpfApp.ViewModel
 {
-    public class SignUp : ObservableObject
+    public class SignUpViewModel : ObservableObject
     {
         //생성자
-        public SignUp() 
+        public SignUpViewModel() 
         {
             // 연도, 월, 일에 대한 컬렉션 초기화
-            Years = new ObservableCollection<string>(Enumerable.Range(1900, DateTime.Now.Year - 1899).Select(year => year.ToString()));
+            Years = new ObservableCollection<string>(Enumerable.Range(1920, DateTime.Now.Year - 1919-3)
+                .OrderByDescending(year=>year)
+                .Select(year => year.ToString()));
             Months = new ObservableCollection<string>(Enumerable.Range(1, 12).Select(month => month.ToString()));
             Days = new ObservableCollection<string>(Enumerable.Range(1, 31).Select(day => day.ToString()));
         }

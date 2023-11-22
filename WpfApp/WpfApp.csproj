@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="R\CustomControls\" />
     <Folder Include="기타 파일\" />
   </ItemGroup>
 

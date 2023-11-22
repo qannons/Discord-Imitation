@@ -70,7 +70,7 @@
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Grid.Column" Value="1"/>
         <Setter Property="Panel.ZIndex" Value="1"/>
-        <Setter Property="Margin" Value="10 0 0 0"/>
+        <Setter Property="Margin" Value="0 0 0 5"/>
         <Setter Property="Foreground" Value="#acb0af"/>
     </Style>
 
@@ -102,7 +102,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="8" BorderThickness="1" BorderBrush="#49B7A3" Padding="15">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="5" BorderThickness="1"  Padding="15">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
@@ -138,23 +138,50 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="PasswordBox" x:Key="PassWordBox">
+    <Style x:Key="PassWordBox2" TargetType="PasswordBox">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="PasswordBox">
                     <Border CornerRadius="8" Background="#3e4147">
                         <Grid>
-                            <PasswordBox Name="TextBox" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch"  Background="Transparent" BorderThickness="0" Foreground="Gray" CaretBrush="Gray" Margin="8, 0, 0, 0">
-                                <!--<PasswordBox.InputBindings>
-                                    <KeyBinding Command="{Binding SendCommand}" Key="Enter"/>
-                                </PasswordBox.InputBindings>-->
-                            </PasswordBox>
-
+                            <PasswordBox Name="TextBox" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch"  Background="Transparent" BorderThickness="0" Foreground="Gray" CaretBrush="Gray" Margin="8, 0, 0, 0"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="LoginInputBox" TargetType="TextBox">
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="BorderThickness"  Value="0"/>
+        <Setter Property="Foreground" Value="WhiteSmoke"/>
+        <Setter Property="CaretBrush" Value="WhiteSmoke"/>
+        <Setter Property="Background" Value="#3e4147"/>
+        <Style.Resources>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="CornerRadius" Value="8" />
+            </Style>
+        </Style.Resources>
+    </Style>
     
+    <Style x:Key="PassWordBox" TargetType="PasswordBox">
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="WhiteSmoke" />
+        <Setter Property="CaretBrush" Value="WhiteSmoke" />
+        <Setter Property="Background" Value="#3e4147"/>
+        
+        <!--<Style.Resources>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="CornerRadius" Value="30" />
+            </Style>
+        </Style.Resources>-->
+    </Style>
+
 </ResourceDictionary>

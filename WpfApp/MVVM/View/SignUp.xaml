@@ -12,7 +12,7 @@
         Title="MainWindow" Height="720" Width="1280">
 
     <Window.DataContext>
-        <viewmodel:SignUp />
+        <viewmodel:SignUpViewModel/>
     </Window.DataContext>
     
     <Grid>
@@ -20,7 +20,7 @@
             <ImageBrush ImageSource="/R/Images/LoginBackground2.jpeg"/>
         </Grid.Background>
 
-        <Border   Background="Transparent" MouseDown="Border_MouseDown">
+        <Border Background="Transparent" MouseDown="Border_MouseDown">
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <Label Content="Discord" Foreground="Gray"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
@@ -38,26 +38,29 @@
                         <TextBlock Text="계정 만들기" Style="{StaticResource LoginTitleText}" Foreground="White" Margin="0, 20, 0, 0"/>
                         <StackPanel>
                             <TextBlock x:Name="textEmail" Text="이메일" Style="{StaticResource LoginTextHint}"/>
-                            <TextBox Name="EmailTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource InputBox}" />
+                            <TextBox Name="EmailTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource LoginInputBox}" TabIndex="0"/>
                         </StackPanel>
 
                         <StackPanel Margin="0, 20, 0, 0">
                             <TextBlock x:Name="textNickname" Text="별명" Style="{StaticResource LoginTextHint}"/>
-                            <TextBox Name="NicknameTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource InputBox}" />
+                            <TextBox Name="NicknameTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource LoginInputBox}" TabIndex="1"/>
                         </StackPanel>
                         
                         <StackPanel Margin="0 20 0 0">
                             <TextBlock x:Name="textUserName" Text="사용자명" Style="{StaticResource LoginTextHint}"/>
-                            <TextBox Name="UserNameTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource InputBox}" />
+                            <TextBox Name="UserNameTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource LoginInputBox}" TabIndex="2"/>
                         </StackPanel>
                         
                         <StackPanel Margin="0 20 0 0">
                             <TextBlock x:Name="textPassword" Text="비밀번호" Style="{StaticResource LoginTextHint}"/>
-                            <PasswordBox Name="PasswordTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource PassWordBox}" />
+                            <PasswordBox x:Name="PasswordTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource PassWordBox}" TabIndex="3">
+                                
+                            </PasswordBox>
+                            
                         </StackPanel>
 
                         <StackPanel Margin="0 20 0 0">
-                            <TextBlock x:Name="textBirthday" Text="생년월일" Style="{StaticResource LoginTextHint}"/>
+                            <TextBlock x:Name="textBirthday" Text="생년월일" Style="{StaticResource LoginTextHint}" Margin="0 0 0 5"/>
                             <Grid VerticalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -65,17 +68,16 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <ComboBox Grid.Column="0" ItemsSource="{Binding Years}" />
-
-
-                                <ComboBox Grid.Column="1" ItemsSource="{Binding Months}" />
-
-                                <ComboBox Grid.Column="2" ItemsSource="{Binding Days}" />
+                                <ComboBox Grid.Column="0" ItemsSource="{Binding Years}" TabIndex="4" SelectedIndex="0"/>
+                                <ComboBox Grid.Column="1" ItemsSource="{Binding Months}" TabIndex="5" SelectedIndex="0"/>
+                                <ComboBox Grid.Column="2" ItemsSource="{Binding Days}" TabIndex="6" SelectedIndex="0"/>
                             </Grid>
-
                         </StackPanel>
+                        <CheckBox Margin="0, 10, 0, 0" TabIndex="7">
+                            <TextBlock Text="(선택사항) Discord 소식, 도움말, 특별 할인을 이메일로 보내주세요. 언제든지 취소하실 수 있어요" TextWrapping="Wrap" Style="{StaticResource LoginTextHint}"/>
+                        </CheckBox>
 
-                        <Button Content="계속하기" Style="{StaticResource LoginMainButton}"/>
+                        <Button Content="계속하기" Style="{StaticResource LoginMainButton}" TabIndex="8"/>
 
                         
                         <TextBlock>

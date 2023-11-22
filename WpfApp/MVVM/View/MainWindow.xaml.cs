@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApp.Model;
 
-namespace WpfApp
+namespace WpfApp.MVVM.View
 {
     public partial class MainWindow : Window
     {
@@ -48,9 +48,5 @@ namespace WpfApp
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }
