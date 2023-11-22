@@ -8,13 +8,19 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WpfApp.Core;
 using WpfApp.Model;
+using WpfApp.Service;
 
 namespace WpfApp.MVVM.ViewModel
 {
     class MainViewModel : ObservableObject
     {
+        public ServerCommunicationService client;
+        //생성자
         public MainViewModel()
         {
+            client = new ServerCommunicationService();
+            client.Connect("127.0.0.1", 7777);
+            //
             users = new ObservableCollection<User>
             {
                 new User("1", "User1", "https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg"),
