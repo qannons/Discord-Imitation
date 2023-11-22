@@ -30,7 +30,7 @@ namespace WpfApp.Service
             }
         }
 
-        public void SendData(string data)
+        public void Send(string data)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace WpfApp.Service
             }
         }
 
-        public string ReceiveData()
+        public string Recv()
         {
             try
             {

@@ -93,13 +93,14 @@ namespace WpfApp.MVVM.ViewModel
                     _sendCommand = new RelayCommand(
                         param =>
                         {
-                                // ListView에 데이터 추가
-                                SelectedRoom.Messages.Add(new Message("1", UserInput));
-                                // 다른 사용자에게 데이터 전송 (예: 서버 또는 네트워크 호출)
-                                //SendMessageToOthers(messageText);
+                            // ListView에 데이터 추가
+                            SelectedRoom.Messages.Add(new Message("1", UserInput));
+                            // 다른 사용자에게 데이터 전송 (예: 서버 또는 네트워크 호출)
+                            client.Send(UserInput);
+                            //SendMessageToOthers(messageText);
 
-                                // TextBox 비우기
-                                UserInput = string.Empty;
+                            // TextBox 비우기
+                            UserInput = string.Empty;
                         }
                     );
                 }

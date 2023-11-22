@@ -140,6 +140,7 @@ int main(int argc, char* argv[])
 				readPos += pHeader->TotalSize;
 				recvSize -= pHeader->TotalSize;
 			}
+			cout << buf << endl;
 		}
 
 		closesocket(client_sock);
