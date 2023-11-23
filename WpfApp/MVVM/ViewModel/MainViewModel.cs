@@ -46,6 +46,8 @@ namespace WpfApp.MVVM.ViewModel
 
         }
 
+        
+
         //변수
         
 

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using WpfApp.MVVM.View;
 
 namespace WpfApp
 {
@@ -13,5 +14,7 @@ namespace WpfApp
     /// </summary>
     public partial class App : Application
     {
+
     }
+    
 }
