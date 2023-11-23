@@ -20,8 +20,11 @@ namespace WpfApp.MVVM.View
     /// </summary>
     public partial class subWindow : Window
     {
+        public Frame myFrame;
+
         public subWindow()
         {
+            myFrame = mainFrame;
             InitializeComponent();
             
         }

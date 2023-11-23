@@ -33,5 +33,12 @@ namespace WpfApp.MVVM.View
             //NavigationService.Navigate(new subSignUp());
             e.Handled = true;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var mainView = new WpfApp.MVVM.View.subWindow();
+            mainView.mainFrame.Navigate(new Uri("/MVVM/View/subSignUp.xaml", UriKind.Relative));
+            mainView.Show();
+        }
     }
 }
