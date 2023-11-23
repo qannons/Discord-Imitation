@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WpfApp.Core;
 
-namespace WpfApp.ViewModel
+namespace WpfApp.MVVM.ViewModel
 {
     public class SignUpViewModel : ObservableObject
     {

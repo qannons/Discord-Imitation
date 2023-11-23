@@ -17,9 +17,9 @@ namespace WpfApp.MVVM.View
     /// <summary>
     /// Login3.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Login3 : Window
+    public partial class SignIn : Window
     {
-        public Login3()
+        public SignIn()
         {
             InitializeComponent();
         }

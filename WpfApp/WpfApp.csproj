@@ -8,6 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="R\CustomControls\**" />
+    <EmbeddedResource Remove="R\CustomControls\**" />
+    <None Remove="R\CustomControls\**" />
+    <Page Remove="R\CustomControls\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="MVVM\View\Login.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="R\Images\LoginBackground.jpg" />
     <None Remove="R\Images\LoginBackground2.jpeg" />
     <None Remove="R\Images\LoginBackground3.jpg" />
@@ -15,8 +26,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="R\CustomControls\" />
     <Folder Include="기타 파일\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Prism.Core" Version="8.1.97" />
+    <PackageReference Include="Prism.Forms" Version="8.1.97" />
+    <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
 
   <ItemGroup>

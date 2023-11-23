@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -49,22 +50,28 @@ namespace WpfApp.MVVM.ViewModel
         
 
         public List<ChatRoom> rooms {  get; set; }
-        private string _roomNameLabel { get; set; }
+
+        private string _roomNameLabel;
         public string RoomNameLabel
         {
             get { return _roomNameLabel; }
-            set { _roomNameLabel = value; OnPropertyChanged(nameof(RoomNameLabel)); }
+            set
+            {
+                SetProperty(ref _roomNameLabel, value);
+                //_roomNameLabel = value;
+                //OnPropertyChanged(nameof(RoomNameLabel)); 
+            }
         }
 
         private ChatRoom _selectedRoom;
         public ChatRoom SelectedRoom
         {
             get { return _selectedRoom; }
-            set { 
-                _selectedRoom = value;
+            set 
+            { 
+                SetProperty(ref _roomNameLabel, value.RoomName);
                 _roomNameLabel = value.RoomName;
-                OnPropertyChanged(nameof(RoomNameLabel));
-                OnPropertyChanged(nameof(SelectedRoom)); 
+                RaisePropertyChanged(nameof(RoomNameLabel));
             }
         }
 
@@ -77,8 +84,7 @@ namespace WpfApp.MVVM.ViewModel
             get { return _userInput; }
             set
             {
-                _userInput = value;
-                OnPropertyChanged(nameof(UserInput));
+                SetProperty(ref _userInput, value);
             }
         }
 
@@ -96,8 +102,7 @@ namespace WpfApp.MVVM.ViewModel
                             // ListView에 데이터 추가
                             SelectedRoom.Messages.Add(new Message("1", UserInput));
                             // 다른 사용자에게 데이터 전송 (예: 서버 또는 네트워크 호출)
-                            client.Send(UserInput);
-                            //SendMessageToOthers(messageText);
+                            //client.Send(UserInput);
 
                             // TextBox 비우기
                             UserInput = string.Empty;
