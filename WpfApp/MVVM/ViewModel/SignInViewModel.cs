@@ -10,7 +10,7 @@ using WpfApp.Core;
 
 namespace WpfApp.MVVM.ViewModel
 {
-    internal class SignInViewModel// : BindableBase
+    internal class SignInViewModel : BindableBase
     {
         //private readonly INavigationService _navigationService;
 

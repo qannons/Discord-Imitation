@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <PackageReference Include="Prism.Core" Version="8.1.97" />
-    <PackageReference Include="Prism.Forms" Version="8.1.97" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
   </ItemGroup>
 
