@@ -24,21 +24,12 @@ namespace WpfApp.MVVM.View
         public subSignIn()
         {
             InitializeComponent();
+            DataContext = new ViewModel.SignInViewModel(new ViewModel.SubMainViewModel());
         }
 
         private void Hyperlink_signup(object sender, RequestNavigateEventArgs e)
         {
-            Frame parentFrame = this.Parent as Frame;
-            parentFrame.Navigate(new subSignIn());
-            //NavigationService.Navigate(new subSignUp());
-            e.Handled = true;
-        }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var mainView = new WpfApp.MVVM.View.subWindow();
-            mainView.mainFrame.Navigate(new Uri("/MVVM/View/subSignUp.xaml", UriKind.Relative));
-            mainView.Show();
         }
     }
 }

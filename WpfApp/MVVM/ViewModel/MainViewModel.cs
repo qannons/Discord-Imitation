@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,11 +47,7 @@ namespace WpfApp.MVVM.ViewModel
 
         }
 
-        
-
         //변수
-        
-
         public List<ChatRoom> rooms {  get; set; }
 
         private string _roomNameLabel;
@@ -114,5 +111,7 @@ namespace WpfApp.MVVM.ViewModel
                 return _sendCommand;
             }
         }
+
+
     }
 }

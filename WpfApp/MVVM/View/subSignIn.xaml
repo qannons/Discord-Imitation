@@ -8,7 +8,8 @@
       d:DesignHeight="690" d:DesignWidth="1280"
       Title="subSignIn">
 
-    
+ 
+
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/R/Images/LoginBackground2.jpeg"/>
@@ -37,7 +38,7 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <Button Content="로그인" Style="{StaticResource LoginMainButton}" Click="Button_Click"/>
+                        <Button Content="로그인" Style="{StaticResource LoginMainButton}" Command="{Binding ButtonClickCommand}"/>
 
                         <TextBlock Style="{StaticResource LoginTextHint}" Margin="0, 10, 10, 0" >
                             계정이 필요하신가요? <Hyperlink  RequestNavigate="Hyperlink_signup">가입하기</Hyperlink>

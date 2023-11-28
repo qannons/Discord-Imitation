@@ -10,7 +10,18 @@ namespace WpfApp.MVVM.ViewModel
 {
     internal class SubMainViewModel : ObservableObject
     {
+        public SignInViewModel signInViewModel { get; }
 
+        public SubMainViewModel()
+        {
+            signInViewModel = new SignInViewModel(this);
+
+        }
+        public void testFunc()
+        {
+            
+            return;
+        }
 
     }
 }
