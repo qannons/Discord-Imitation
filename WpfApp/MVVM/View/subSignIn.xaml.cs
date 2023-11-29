@@ -21,10 +21,11 @@ namespace WpfApp.MVVM.View
     /// </summary>
     public partial class subSignIn : Page
     {
+
         public subSignIn()
         {
             InitializeComponent();
-            DataContext = new ViewModel.SignInViewModel(new ViewModel.SubMainViewModel());
+            
         }
 
         private void Hyperlink_signup(object sender, RequestNavigateEventArgs e)

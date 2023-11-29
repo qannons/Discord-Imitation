@@ -31,7 +31,7 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <Frame Name="mainFrame"  Grid.Row="1" NavigationUIVisibility="Hidden" Source="/MVVM/View/subSignIn.xaml"/>
+        <Frame Name="mainFrame"  Grid.Row="1" NavigationUIVisibility="Hidden" Source="{Binding CurrentPage}"/>
 
     </Grid>
 </Window>

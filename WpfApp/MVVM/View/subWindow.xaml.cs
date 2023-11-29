@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp.MVVM.ViewModel;
 
 namespace WpfApp.MVVM.View
 {
@@ -20,13 +21,17 @@ namespace WpfApp.MVVM.View
     /// </summary>
     public partial class subWindow : Window
     {
-        public Frame myFrame;
-
         public subWindow()
         {
-            myFrame = mainFrame;
             InitializeComponent();
-            
+
+
+            //// ViewModel 생성
+            //SubMainViewModel viewModel = new SubMainViewModel();
+            //// 초기 페이지 설정
+            //viewModel.CurrentPage = "/MVVM/View/subSignIn.xaml";
+            //// DataContext 설정
+            //DataContext = viewModel;
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
