@@ -8,15 +8,13 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Navigation;
 using WpfApp.Core;
+using WpfApp.Model;
+using WpfApp.MVVM.View;
 
 namespace WpfApp.MVVM.ViewModel
 {
     internal class SubMainViewModel : ObservableObject
     {
-        private readonly NavigationService navigationService;
-
-        public NavigateCommand navigateCommand { get; }
-
         private string _currentPage;
         public string CurrentPage
         {
@@ -33,17 +31,12 @@ namespace WpfApp.MVVM.ViewModel
 
         public SubMainViewModel()
         {
-            _currentPage = "/MVVM/View/subSignIn.xaml"; // 초기 페이지 설정
-            navigateCommand = new NavigateCommand(this);
-
+            // 초기 페이지 설정
+            CurrentPage = "/MVVM/View/subSignIn.xaml";
             
-
+            
         }
 
-        public void NavigateToPage(string pPageName)
-        {
-            CurrentPage = pPageName;
-        }
 
     }
 }

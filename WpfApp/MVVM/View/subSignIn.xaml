@@ -3,14 +3,18 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WpfApp.MVVM.View"
+      xmlns:local="clr-namespace:WpfApp.MVVM.View" xmlns:viewmodel="clr-namespace:WpfApp.MVVM.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="690" d:DesignWidth="1280"
       Title="subSignIn">
 
- 
+    <Page.DataContext>
+        <viewmodel:SubMainViewModel/>
+    </Page.DataContext>
 
-    <Grid>
+
+
+        <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/R/Images/LoginBackground2.jpeg"/>
         </Grid.Background>
@@ -38,10 +42,10 @@
                             </TextBlock>
                         </StackPanel>
 
-                        <Button Content="로그인" Style="{StaticResource LoginMainButton}" Command="{Binding ButtonClickCommand}"/>
+                        <Button Content="로그인" Style="{StaticResource LoginMainButton}" />
 
                         <TextBlock Style="{StaticResource LoginTextHint}" Margin="0, 10, 10, 0" >
-                            계정이 필요하신가요? <Hyperlink  RequestNavigate="Hyperlink_signup">가입하기</Hyperlink>
+                            계정이 필요하신가요? <Hyperlink  Click="Hyperlink_signup">가입하기</Hyperlink>
                         </TextBlock>
                         
                     </StackPanel>

@@ -3,11 +3,15 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WpfApp.MVVM.View"
+      xmlns:local="clr-namespace:WpfApp.MVVM.View" xmlns:viewmodel="clr-namespace:WpfApp.MVVM.ViewModel"
       mc:Ignorable="d" 
       d:DesignHeight="690" d:DesignWidth="1280"
       Title="subSignUp">
 
+    <Page.DataContext>
+        <viewmodel:SignUpViewModel/>
+    </Page.DataContext>
+    
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/R/Images/LoginBackground2.jpeg"/>
@@ -68,7 +72,7 @@
                         </TextBlock>
 
                         <TextBlock Margin="0, 0, 0, 10">
-                            <Hyperlink  RequestNavigate="Hyperlink_signin">이미 계정이 있으신가요?</Hyperlink>
+                            <Hyperlink  Click="Hyperlink_signin">이미 계정이 있으신가요?</Hyperlink>
                         </TextBlock>
                         
 

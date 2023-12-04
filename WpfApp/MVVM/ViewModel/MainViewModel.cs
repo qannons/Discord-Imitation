@@ -1,5 +1,4 @@
-﻿using Prism.Mvvm;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -14,7 +13,7 @@ using WpfApp.Service;
 
 namespace WpfApp.MVVM.ViewModel
 {
-    class MainViewModel : BindableBase
+    class MainViewModel : ObservableObject
     {
         public ServerCommunicationService client;
         //생성자
@@ -56,9 +55,8 @@ namespace WpfApp.MVVM.ViewModel
             get { return _roomNameLabel; }
             set
             {
-                SetProperty(ref _roomNameLabel, value);
-                //_roomNameLabel = value;
-                //OnPropertyChanged(nameof(RoomNameLabel)); 
+                _roomNameLabel = value;
+                OnPropertyChanged(nameof(RoomNameLabel)); 
             }
         }
 
@@ -68,9 +66,10 @@ namespace WpfApp.MVVM.ViewModel
             get { return _selectedRoom; }
             set 
             { 
-                SetProperty(ref _roomNameLabel, value.RoomName);
                 _roomNameLabel = value.RoomName;
-                RaisePropertyChanged(nameof(RoomNameLabel));
+               _selectedRoom = value; 
+                OnPropertyChanged(nameof(RoomNameLabel));
+                OnPropertyChanged(nameof(SelectedRoom));
             }
         }
 
@@ -83,7 +82,8 @@ namespace WpfApp.MVVM.ViewModel
             get { return _userInput; }
             set
             {
-                SetProperty(ref _userInput, value);
+                _userInput = value;
+                OnPropertyChanged(nameof(UserInput));
             }
         }
 

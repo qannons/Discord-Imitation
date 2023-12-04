@@ -16,21 +16,26 @@ using WpfApp.View;
 
 namespace WpfApp.MVVM.View
 {
-    /// <summary>
-    /// subSignIn.xaml에 대한 상호 작용 논리
-    /// </summary>
     public partial class subSignIn : Page
     {
+        static private subSignUp _subSignUp = new subSignUp();
 
         public subSignIn()
         {
             InitializeComponent();
-            
+            //subSignUp _subSignUp = new subSignUp();
         }
 
-        private void Hyperlink_signup(object sender, RequestNavigateEventArgs e)
-        {
 
+
+        private void Hyperlink_signup(object sender, RoutedEventArgs e)
+        {
+            if(_subSignUp != null) 
+            {
+                NavigationService.Navigate(_subSignUp);
+
+            }
+            //subSignUp _subSignUp = new subSignUp();
         }
     }
 }

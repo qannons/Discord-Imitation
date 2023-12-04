@@ -20,6 +20,8 @@ namespace WpfApp.MVVM.View
     /// </summary>
     public partial class subSignUp : Page
     {
+        static private subSignIn _subSignIn = new subSignIn();
+
         public subSignUp()
         {
             InitializeComponent();
@@ -35,10 +37,15 @@ namespace WpfApp.MVVM.View
 
         }
 
-        private void Hyperlink_signin(object sender, RequestNavigateEventArgs e)
+
+        private void Hyperlink_signin(object sender, RoutedEventArgs e)
         {
-            Frame parentFrame = this.Parent as Frame;
-            parentFrame.Navigate(new subSignIn());
+            //subSignIn _subSignIn = new subSignIn();
+            if(_subSignIn !=  null) 
+            {
+                NavigationService.Navigate(_subSignIn);
+
+            }
         }
     }
 }

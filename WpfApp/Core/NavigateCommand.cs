@@ -11,8 +11,13 @@ namespace WpfApp.Core
 {
     internal class NavigateCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
+        
         private readonly SubMainViewModel _viewModel;
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
 
         public NavigateCommand(SubMainViewModel pViewModel)
         {
@@ -25,12 +30,13 @@ namespace WpfApp.Core
             return true;
         }
 
+
         public virtual void Execute(object parameter)
         {
             string pageName = parameter as string;
             if (!string.IsNullOrEmpty(pageName))
             {
-                _viewModel.NavigateToPage(pageName);
+                //_viewModel.NavigateToPage(pageName);
             }
         }
     }
