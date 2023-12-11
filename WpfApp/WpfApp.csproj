@@ -39,6 +39,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ServerCore\ServerCore.vcxproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="R\Images\LoginBackground.jpg" />
     <Resource Include="R\Images\LoginBackground2.jpeg" />
     <Resource Include="R\Images\LoginBackground3.jpg" />
