@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp.Core
 {
-    internal class MySqlDB : IDisposable
+    public class MySqlDB : IDisposable
     {
         //변수
         private MySqlConnection? _connection;
@@ -45,7 +45,7 @@ namespace WpfApp.Core
             }
         }
 
-        public IDataReader GetDataReader(string query) 
+        public IDataReader GetReader(string query) 
         {
             return GetReader(query, null);
         }

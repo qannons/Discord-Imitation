@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp.Core.Repo;
+using WpfApp.MVVM.ViewModel;
 
 namespace WpfApp.MVVM.View
 {
@@ -22,6 +24,9 @@ namespace WpfApp.MVVM.View
         public Test()
         {
             InitializeComponent();
+
+            var testRepo = new TestRepo();
+            DataContext = new testViewModel(testRepo);
         }
     }
 }

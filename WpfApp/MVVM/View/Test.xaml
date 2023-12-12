@@ -24,19 +24,21 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <DataGrid>
+        <DataGrid ItemsSource="{Binding Tests}">
 
         </DataGrid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Button Content="Connection"
-                Command="{Binding ConnectionCommand}"/>
+                    Command="{Binding ConnectionCommand}"/>
             <Button Content="Insert"
-                Command="{Binding InsertCommand}"/>
+                    Command="{Binding InsertCommand}"/>
             <Button Content="Update"
-                Command="{Binding UpdateCommand}"/>
-            <Button Content="Delete"/>
-            <Button Content="Select"/>
+                    Command="{Binding UpdateCommand}"/>
+            <Button Content="Delete"
+                    Command="{Binding DeleteCommand}"/>
+            <Button Content="Select"
+                    Command="{Binding SelectCommand}"/>
         </StackPanel>
     </Grid>
 </Window>
