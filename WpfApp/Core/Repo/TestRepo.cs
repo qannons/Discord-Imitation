@@ -56,7 +56,7 @@ namespace WpfApp.Core.Repo
         public List<testModel> GetAll()
         {
             List<testModel> list = new List<testModel>();
-            string query = "SELECT * FROM dis;";
+            string query = "SELECT * FROM testTable;";
             using (MySqlDB? db = GetMySqlDB())
             {
                 using (IDataReader dr = db.GetReader(query))

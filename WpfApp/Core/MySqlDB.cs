@@ -92,6 +92,7 @@ namespace WpfApp.Core
             _connection?.Close();
             _connection?.Dispose();
             _connection = null;
+            GC.SuppressFinalize(this);
         }
     }
 }

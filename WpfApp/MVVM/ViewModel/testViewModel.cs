@@ -45,7 +45,6 @@ namespace WpfApp.MVVM.ViewModel
             
         }
 
-        
 
         private void Insert(object _)
         {

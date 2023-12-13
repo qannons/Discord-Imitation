@@ -25,7 +25,7 @@ namespace WpfApp.MVVM.View
         {
             InitializeComponent();
 
-            var testRepo = new TestRepo();
+            TestRepo testRepo = new TestRepo();
             DataContext = new testViewModel(testRepo);
         }
     }
