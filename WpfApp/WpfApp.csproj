@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="MVVM\View\Login.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="R\Images\LoginBackground.jpg" />
     <None Remove="R\Images\LoginBackground2.jpeg" />
     <None Remove="R\Images\LoginBackground3.jpg" />
@@ -26,11 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="기타 파일\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
+    <PackageReference Include="MySql.Data" Version="8.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +37,21 @@
     <Resource Include="R\Images\LoginBackground2.jpeg" />
     <Resource Include="R\Images\LoginBackground3.jpg" />
     <Resource Include="R\Images\QR_Code.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="WpfApp.MVVM.View.MainControls.SignUpView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp.MVVM.View.MainControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="690" d:DesignWidth="1280">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/R/Images/LoginBackground2.jpeg"/>
+        </Grid.Background>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="480" Background="#313338">
+            <StackPanel Margin="20, 0, 20, 0">
+                <TextBlock Text="계정 만들기" Style="{StaticResource LoginTitleText}" Foreground="White" Margin="0, 10, 0, 0"/>
+                <StackPanel>
+                    <TextBlock x:Name="textEmail" Text="이메일" Style="{StaticResource LoginTextHint}"/>
+                    <TextBox Name="EmailTextBox"  Grid.Row="1" Height="40"  Grid.ColumnSpan="2"  Style="{StaticResource LoginInputBox}" TabIndex="0"/>
+                    <TextBlock x:Name="textPasswordForgot" Style="{StaticResource LoginTextHint}" Text="비밀번호를 잊으셨나요?" Margin="0, 10, 0, 0"/>
+                </StackPanel>
+
+                <StackPanel Margin="0, 20, 0, 0">
+                    <TextBlock x:Name="textNickname" Text="별명" Style="{StaticResource LoginTextHint}"/>
+                    <TextBox Name="NicknameTextBox"  Grid.Row="1" Height="40"  Grid.ColumnSpan="2"  Style="{StaticResource LoginInputBox}" TabIndex="1"/>
+                    <TextBlock Style="{StaticResource LoginTextHint}" Text="다른 회원에게 표시되는 이름이에요. 특수 문자와 이모지를 사용할 수 있어요." Margin="5, 10, 5, 0" TextWrapping="Wrap" Visibility="Collapsed"/>
+                </StackPanel>
+
+                <StackPanel Margin="0 20 0 0">
+                    <TextBlock x:Name="textUserName" Text="사용자명" Style="{StaticResource LoginTextHint}"/>
+                    <TextBox Name="UserNameTextBox"  Grid.Row="1" Height="40"  Grid.ColumnSpan="2"  Style="{StaticResource LoginInputBox}" TabIndex="2"/>
+                    <TextBlock Style="{StaticResource LoginTextHint}" Text="2-32자여야 합니다." Margin="0, 10, 0, 0"/>
+                </StackPanel>
+
+                <StackPanel Margin="0 20 0 0">
+                    <TextBlock x:Name="textPassword" Text="비밀번호" Style="{StaticResource LoginTextHint}"/>
+                    <PasswordBox x:Name="PasswordTextBox"  Grid.Row="1" Height="40"  Grid.ColumnSpan="2"  Style="{StaticResource PassWordBox}" TabIndex="3">
+
+                    </PasswordBox>
+
+                </StackPanel>
+
+                <StackPanel Margin="0 20 0 0">
+                    <TextBlock x:Name="textBirthday" Text="생년월일" Style="{StaticResource LoginTextHint}" Margin="0 0 0 5"/>
+                    <Grid VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ComboBox Grid.Column="0" ItemsSource="{Binding Years}" TabIndex="4" SelectedIndex="0"/>
+                        <ComboBox Grid.Column="1" ItemsSource="{Binding Months}" TabIndex="5" SelectedIndex="0"/>
+                        <ComboBox Grid.Column="2" ItemsSource="{Binding Days}" TabIndex="6" SelectedIndex="0"/>
+                    </Grid>
+                </StackPanel>
+                <CheckBox Margin="0, 10, 0, 0" TabIndex="7">
+                    <TextBlock Text="(선택사항) Discord 소식, 도움말, 특별 할인을 이메일로 보내주세요. 언제든지 취소하실 수 있어요" TextWrapping="Wrap" Style="{StaticResource LoginTextHint}"/>
+                </CheckBox>
+
+                <Button Content="계속하기" Style="{StaticResource LoginMainButton}" TabIndex="8"/>
+
+
+                <TextBlock>
+                    등록하는 순간 Discord의 <Hyperlink >서비스 이용 약관</Hyperlink>과
+                    <Hyperlink>개인정보 보호 정책</Hyperlink>에 동의하게 됩니다.
+                </TextBlock>
+
+                <TextBlock Margin="0, 0, 0, 10">
+                        <Hyperlink  Command="{Binding ToSignInCommand}">이미 계정이 있으신가요?</Hyperlink>
+                </TextBlock>
+
+
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</UserControl>

@@ -70,10 +70,10 @@
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Grid.Column" Value="1"/>
         <Setter Property="Panel.ZIndex" Value="1"/>
-        <Setter Property="Margin" Value="0 0 0 5"/>
-        <Setter Property="Foreground" Value="#acb0af"/>
+        <Setter Property="Margin" Value="0, 10, 0, 5"/>
+        <Setter Property="Foreground" Value="DarkGray"/>
     </Style>
-
+    
     <Style TargetType="TextBox">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Grid.Column" Value="1"/>
@@ -83,13 +83,14 @@
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
 
-    <Style x:Key="LoginTextBox" TargetType="Control">
+    <Style x:Key="LoginTextBox" TargetType="TextBox">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Grid.Column" Value="1"/>
         <Setter Property="Margin" Value="10 0 0 0"/>
-        <Setter Property="Foreground" Value="#878787"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="WhiteSmoke"/>
+        <Setter Property="Background" Value="#3e4147"/>
     </Style>
 
     <Style x:Key="LoginMainButton" TargetType="Button">
@@ -161,6 +162,7 @@
         <Setter Property="Foreground" Value="WhiteSmoke"/>
         <Setter Property="CaretBrush" Value="WhiteSmoke"/>
         <Setter Property="Background" Value="#3e4147"/>
+
         <Style.Resources>
             <Style TargetType="{x:Type Border}">
                 <Setter Property="CornerRadius" Value="8" />
@@ -170,18 +172,18 @@
     
     <Style x:Key="PassWordBox" TargetType="PasswordBox">
         <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Foreground" Value="WhiteSmoke" />
-        <Setter Property="CaretBrush" Value="WhiteSmoke" />
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="BorderThickness"  Value="0"/>
+        <Setter Property="Foreground" Value="WhiteSmoke"/>
+        <Setter Property="CaretBrush" Value="WhiteSmoke"/>
         <Setter Property="Background" Value="#3e4147"/>
-        
-        <!--<Style.Resources>
+
+        <Style.Resources>
             <Style TargetType="{x:Type Border}">
-                <Setter Property="CornerRadius" Value="30" />
+                <Setter Property="CornerRadius" Value="8" />
             </Style>
-        </Style.Resources>-->
+        </Style.Resources>
     </Style>
 
 </ResourceDictionary>

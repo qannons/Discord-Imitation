@@ -11,17 +11,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfApp.Database.Repo;
+using WpfApp.MVVM.ViewModel;
 
 namespace WpfApp.MVVM.View
 {
     /// <summary>
-    /// Login3.xaml에 대한 상호 작용 논리
+    /// sqlTest.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class SignIn : Window
+    public partial class sqlTest : Window
     {
-        public SignIn()
+        public sqlTest()
         {
             InitializeComponent();
+
+            UserRepo? repo = new UserRepo();
+            DataContext = new sqlTestViewModel(repo);
         }
     }
 }

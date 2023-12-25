@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,33 +11,40 @@ using System.Windows.Navigation;
 using WpfApp.Core;
 using WpfApp.Model;
 using WpfApp.MVVM.View;
+using WpfApp.Service.Interface;
+using WpfApp.Stores;
 
 namespace WpfApp.MVVM.ViewModel
 {
     internal class SubMainViewModel : ObservableObject
     {
-        private string _currentPage;
-        public string CurrentPage
+        private readonly MainNavigationStore _mainNavigationStore;
+        private INotifyPropertyChanged? _currentViewModel;
+
+        private void CurrentViewModelChanged()
         {
-            get { return _currentPage; }
+            CurrentViewModel = _mainNavigationStore.CurrentViewModel;
+        }
+
+        public SubMainViewModel(MainNavigationStore mainNavigationStore, INavigationService navigationService)
+        {
+            _mainNavigationStore = mainNavigationStore;
+            _mainNavigationStore.CurrentViewModelChanged += CurrentViewModelChanged;
+            navigationService.Navigate(NaviType.SIGNIN);
+        }
+
+        public INotifyPropertyChanged? CurrentViewModel
+        {
+            get { return _currentViewModel; }
             set
             {
-                if (_currentPage != value)
+                if (_currentViewModel != value)
                 {
-                    _currentPage = value;
-                    OnPropertyChanged(nameof(CurrentPage));
+                    _currentViewModel = value;
+                    OnPropertyChanged(nameof(CurrentViewModel));
                 }
             }
         }
-
-        public SubMainViewModel()
-        {
-            // 초기 페이지 설정
-            CurrentPage = "/MVVM/View/subSignIn.xaml";
-            
-            
-        }
-
 
     }
 }
