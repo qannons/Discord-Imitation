@@ -10,30 +10,29 @@
         <Grid.Background>
             <ImageBrush ImageSource="/R/Images/LoginBackground2.jpeg"/>
         </Grid.Background>
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="480" Background="#313338">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="480" Background="#313338" Margin="0, 20, 0, 0">
             <StackPanel Margin="20, 0, 20, 0">
                 <TextBlock Text="계정 만들기" Style="{StaticResource LoginTitleText}" Foreground="White" Margin="0, 10, 0, 0"/>
                 <StackPanel>
-                    <TextBlock x:Name="textEmail" Text="이메일" Style="{StaticResource LoginTextHint}"/>
-                    <TextBox Name="EmailTextBox"  Grid.Row="1" Height="40"  Grid.ColumnSpan="2"  Style="{StaticResource LoginInputBox}" TabIndex="0"/>
-                    <TextBlock x:Name="textPasswordForgot" Style="{StaticResource LoginTextHint}" Text="비밀번호를 잊으셨나요?" Margin="0, 10, 0, 0"/>
+                    <TextBlock Text="{Binding EmailTextBlock}" Style="{StaticResource LoginTextHint}" Foreground="{Binding EmailBrush}" />
+                    <TextBox Text="{Binding Email}" Grid.Row="1" Height="40"   Style="{StaticResource LoginInputBox}" TabIndex="0"/>
                 </StackPanel>
 
                 <StackPanel Margin="0, 20, 0, 0">
                     <TextBlock x:Name="textNickname" Text="별명" Style="{StaticResource LoginTextHint}"/>
-                    <TextBox Name="NicknameTextBox"  Grid.Row="1" Height="40"  Grid.ColumnSpan="2"  Style="{StaticResource LoginInputBox}" TabIndex="1"/>
+                    <TextBox Text="{Binding Nickname}"  Grid.Row="1" Height="40" Style="{StaticResource LoginInputBox}" TabIndex="1"/>
                     <TextBlock Style="{StaticResource LoginTextHint}" Text="다른 회원에게 표시되는 이름이에요. 특수 문자와 이모지를 사용할 수 있어요." Margin="5, 10, 5, 0" TextWrapping="Wrap" Visibility="Collapsed"/>
                 </StackPanel>
 
                 <StackPanel Margin="0 20 0 0">
                     <TextBlock x:Name="textUserName" Text="사용자명" Style="{StaticResource LoginTextHint}"/>
-                    <TextBox Name="UserNameTextBox"  Grid.Row="1" Height="40"  Grid.ColumnSpan="2"  Style="{StaticResource LoginInputBox}" TabIndex="2"/>
+                    <TextBox Text="{Binding Name}"  Grid.Row="1" Height="40"  Style="{StaticResource LoginInputBox}" TabIndex="2"/>
                     <TextBlock Style="{StaticResource LoginTextHint}" Text="2-32자여야 합니다." Margin="0, 10, 0, 0"/>
                 </StackPanel>
 
                 <StackPanel Margin="0 20 0 0">
                     <TextBlock x:Name="textPassword" Text="비밀번호" Style="{StaticResource LoginTextHint}"/>
-                    <PasswordBox x:Name="PasswordTextBox"  Grid.Row="1" Height="40"  Grid.ColumnSpan="2"  Style="{StaticResource PassWordBox}" TabIndex="3">
+                    <PasswordBox x:Name="pwdBox"  Grid.Row="1" Height="40" Style="{StaticResource PassWordBox}" TabIndex="3">
 
                     </PasswordBox>
 
@@ -57,7 +56,7 @@
                     <TextBlock Text="(선택사항) Discord 소식, 도움말, 특별 할인을 이메일로 보내주세요. 언제든지 취소하실 수 있어요" TextWrapping="Wrap" Style="{StaticResource LoginTextHint}"/>
                 </CheckBox>
 
-                <Button Content="계속하기" Style="{StaticResource LoginMainButton}" TabIndex="8"/>
+                <Button Content="계속하기" Command="{Binding SignUpBtnCommand}" CommandParameter="{Binding ElementName=pwdBox}" Style="{StaticResource LoginMainButton}" TabIndex="8"/>
 
 
                 <TextBlock>

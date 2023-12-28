@@ -25,9 +25,10 @@ namespace WpfApp.MVVM.ViewModel
     internal partial class SignInViewModel
     {
         private readonly INavigationService _navigationService;
-        private readonly SignUpStore _signupStore;
+        
 
-        private IUserRepo _userRepo;
+        private UserRepo _userRepo;
+        private HomeStore _homeStore;
 
         [ObservableProperty]
         private string _email = default;
@@ -49,7 +50,8 @@ namespace WpfApp.MVVM.ViewModel
             }
             else
             {
-                _signupStore.CurrentUser = new Model.User { Email = Email, Password = pPwd.Password };
+                string tmp = _userRepo.SelectUser(Email);
+                _homeStore.CurrentUser = new Model.User() { Email = Email, Nickname=tmp };
                 _navigationService.Navigate(NaviType.HOME);
 
                 //mainWindow.Show();
@@ -63,11 +65,11 @@ namespace WpfApp.MVVM.ViewModel
             _navigationService.Navigate(NaviType.SIGNUP);
         }
 
-        public SignInViewModel(IUserRepo userRepository, INavigationService navigationService, SignUpStore signupStore)
+        public SignInViewModel(IUserRepo userRepository, INavigationService navigationService, HomeStore pHomeStore)
         {
-            _userRepo = userRepository;
+            _userRepo = (UserRepo?)userRepository;
             _navigationService = navigationService;
-            _signupStore = signupStore;
+            _homeStore = pHomeStore;
         }
         //public SignInViewModel(IUserRepo userRepository)
         //{

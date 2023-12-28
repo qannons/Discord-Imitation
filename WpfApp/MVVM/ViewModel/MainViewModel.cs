@@ -13,7 +13,7 @@ using WpfApp.Service;
 
 namespace WpfApp.MVVM.ViewModel
 {
-    class MainViewModel : ObservableObject
+    class MainViewModel : MyObservableObject
     {
     //    public ServerCommunicationService client;
     //    //생성자

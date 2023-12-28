@@ -37,7 +37,7 @@ namespace WpfApp
             //Stores
             services.AddSingleton<MainNavigationStore>();
             services.AddSingleton<SignUpStore>();
-            
+            services.AddSingleton<HomeStore>();
             
 
             //ViewModel

@@ -14,17 +14,31 @@
         <DataTemplate DataType="{x:Type viewmodels:HomeViewModel}">
             <local:HomeView/>
         </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type viewmodels:SignInViewModel}">
             <local:SignInView/>
         </DataTemplate>
-        
+
         <DataTemplate DataType="{x:Type viewmodels:SignUpViewModel}">
             <local:SignUpView/>
         </DataTemplate>
     </Window.Resources>
-   
+
     <Grid>
-        <ContentControl Content="{Binding CurrentViewModel}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Background="#252525" MouseDown="Border_MouseDown" Height="25" Grid.Row="0">
+            <Grid HorizontalAlignment="Stretch" >
+                <Label Content="Discord" Foreground="Gray" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Width="20" Height="20" Content="_" BorderThickness="0" Foreground="Gray" Background="Transparent" Margin="0, 0, 0, 3"/>
+                    <Button Width="20" Height="20" Content="ㅁ" BorderThickness="0" Foreground="Gray" Background="Transparent"/>
+                    <Button Width="20" Height="20" Content="X" BorderThickness="0" Foreground="Gray" Background="Transparent"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <ContentControl Content="{Binding CurrentViewModel}" Grid.Row="1"/>
     </Grid>
 </Window>

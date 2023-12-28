@@ -8,7 +8,7 @@ using WpfApp.Core;
 
 namespace WpfApp.Stores
 {
-    public class MainNavigationStore : ObservableObject
+    public class MainNavigationStore : MyObservableObject
     {
         private INotifyPropertyChanged? _currentViewModel;
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp.Core
 {
-    public class ObservableObject : INotifyPropertyChanged
+    public class MyObservableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

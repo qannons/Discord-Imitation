@@ -16,7 +16,7 @@ using WpfApp.Stores;
 
 namespace WpfApp.MVVM.ViewModel
 {
-    internal class SubMainViewModel : ObservableObject
+    internal class SubMainViewModel : MyObservableObject
     {
         private readonly MainNavigationStore _mainNavigationStore;
         private INotifyPropertyChanged? _currentViewModel;
@@ -30,7 +30,7 @@ namespace WpfApp.MVVM.ViewModel
         {
             _mainNavigationStore = mainNavigationStore;
             _mainNavigationStore.CurrentViewModelChanged += CurrentViewModelChanged;
-            navigationService.Navigate(NaviType.SIGNIN);
+            navigationService.Navigate(NaviType.SIGNUP);
         }
 
         public INotifyPropertyChanged? CurrentViewModel
