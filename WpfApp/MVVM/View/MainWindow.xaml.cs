@@ -48,5 +48,9 @@ namespace WpfApp.MVVM.View
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 
+        private void InputTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

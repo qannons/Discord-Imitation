@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 
 #pragma comment(lib, "ws2_32")
 #include <winsock2.h>
@@ -12,7 +12,7 @@
 #define SERVERPORT 7777
 #define BUFSIZE    512
 
-// ¼ÒÄÏ ÇÔ¼ö ¿À·ù Ãâ·Â ÈÄ Á¾·á
+// ì†Œì¼“ í•¨ìˆ˜ ì˜¤ë¥˜ ì¶œë ¥ í›„ ì¢…ë£Œ
 void err_quit(const char* msg)
 {
 	LPVOID lpMsgBuf;
@@ -27,7 +27,7 @@ void err_quit(const char* msg)
 	exit(1);
 }
 
-// ¼ÒÄÏ ÇÔ¼ö ¿À·ù Ãâ·Â
+// ì†Œì¼“ í•¨ìˆ˜ ì˜¤ë¥˜ ì¶œë ¥
 void err_display(const char* msg)
 {
 	LPVOID lpMsgBuf;
@@ -40,36 +40,12 @@ void err_display(const char* msg)
 	LocalFree(lpMsgBuf);
 }
 
-void PacketProcess(SOCKET sock, char* pPacket)
-{
-	PktCalcuRes res;
-	res.Id = (short)PACKET_ID::CALCU_RES;
-	res.TotalSize = (short)sizeof(PktCalcuRes);
-	res.num = 0;
-
-	PktHeader* pHeader = (PktHeader*)pPacket;
-
-	if (pHeader->Id == (short)PACKET_ID::CALCU_2_REQ)
-	{
-		PktCalcu2Req* req = (PktCalcu2Req*)pPacket;
-
-		res.num = 1;
-	}
-	else if (pHeader->Id == (short)PACKET_ID::CALCU_3_REQ)
-	{
-		PktCalcu3Req* req = (PktCalcu3Req*)pPacket;
-
-		res.num = 2;
-	}
-
-	send(sock, (char*)&res, res.TotalSize, 0);
-}
 
 int main(int argc, char* argv[])
 {
 	int retval;
 
-	// À©¼Ó ÃÊ±âÈ­
+	// ìœˆì† ì´ˆê¸°í™”
 	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
 		return 1;
@@ -103,52 +79,51 @@ int main(int argc, char* argv[])
 			break;
 		}
 
-		// Á¢¼ÓÇÑ Å¬¶óÀÌ¾ðÆ® Á¤º¸ Ãâ·Â
+		// ì ‘ì†í•œ í´ë¼ì´ì–¸íŠ¸ ì •ë³´ ì¶œë ¥
 		char clientIP[33] = { 0, };
 		inet_ntop(AF_INET, &(clientaddr.sin_addr), clientIP, 33 - 1);
-		printf("\n[TCP ¼­¹ö] Å¬¶óÀÌ¾ðÆ® Á¢¼Ó: IP ÁÖ¼Ò=%s, Æ÷Æ® ¹øÈ£=%d\n", clientIP, ntohs(clientaddr.sin_port));
+		printf("\n[TCP ì„œë²„] í´ë¼ì´ì–¸íŠ¸ ì ‘ì†: IP ì£¼ì†Œ=%s, í¬íŠ¸ ë²ˆí˜¸=%d\n", clientIP, ntohs(clientaddr.sin_port));
 
 
-		// Å¬¶óÀÌ¾ðÆ®¿Í µ¥ÀÌÅÍ Åë½Å
-		char buf[BUFSIZE + 1];
+		// í´ë¼ì´ì–¸íŠ¸ì™€ ë°ì´í„° í†µì‹ 
+		wchar_t buf[BUFSIZE + 1];
 
 		while (1) {
-			int recvSize = recv(client_sock, buf, BUFSIZE, 0);
+			int recvSize = recv(client_sock, (char*)&buf, BUFSIZE, 0);
 			if (recvSize == SOCKET_ERROR) {
 				err_display("recv()");
 				break;
 			}
 			else if (recvSize == 0)
 				break;
-			
 
-			// ¹ÞÀº Å©±â Ãâ·Â
+
+			// ë°›ì€ í¬ê¸° ì¶œë ¥
 			printf("[recv:%d]\n", recvSize);
 
 			int readPos = 0;
-			while (recvSize >= PACKET_HEADER_SIZE)
+			while (recvSize >= 4)
 			{
 				PktHeader* pHeader = (PktHeader*)&buf[readPos];
 
-				if (pHeader->TotalSize > recvSize)
+				if (pHeader->totalSize > recvSize)
 				{
 					break;
 				}
 
-				PacketProcess(client_sock, &buf[readPos]);
+				
 
-				readPos += pHeader->TotalSize;
-				recvSize -= pHeader->TotalSize;
+				readPos += pHeader->totalSize;
+				recvSize -= pHeader->totalSize;
 			}
-			cout << buf << endl;
+			wcout << buf << endl;
 		}
 
 		closesocket(client_sock);
-		printf("[TCP ¼­¹ö] Å¬¶óÀÌ¾ðÆ® Á¾·á: IP ÁÖ¼Ò=%s, Æ÷Æ® ¹øÈ£=%d\n", clientIP, ntohs(clientaddr.sin_port));
+		printf("[TCP ì„œë²„] í´ë¼ì´ì–¸íŠ¸ ì¢…ë£Œ: IP ì£¼ì†Œ=%s, í¬íŠ¸ ë²ˆí˜¸=%d\n", clientIP, ntohs(clientaddr.sin_port));
 	}
 
 	closesocket(listen_sock);
 	WSACleanup();
 	return 0;
 }
-

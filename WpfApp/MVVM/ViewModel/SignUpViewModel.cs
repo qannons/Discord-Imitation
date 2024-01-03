@@ -22,8 +22,7 @@ namespace WpfApp.MVVM.ViewModel
     {
         private IUserRepo _userRepo;
         private readonly INavigationService _navigationService;
-        private SignUpStore _signupStore;
-        private User _currentUser => _signupStore.CurrentUser!;
+        private HomeStore _homeStore;
 
         [ObservableProperty]
         private string _emailTextBlock = "이메일 또는 전화번호";
@@ -51,11 +50,11 @@ namespace WpfApp.MVVM.ViewModel
         public ObservableCollection<string> Days { get; set; }
 
         //생성자
-        public SignUpViewModel(IUserRepo userRepository, INavigationService navigationService, SignUpStore pSignUpStore) 
+        public SignUpViewModel(IUserRepo userRepository, INavigationService navigationService, HomeStore pSignUpStore) 
         {
             _userRepo = userRepository;
             _navigationService = navigationService;
-            _signupStore = pSignUpStore;
+            _homeStore = pSignUpStore;
 
             // 연도, 월, 일에 대한 컬렉션 초기화
             Years = new ObservableCollection<string>(Enumerable.Range(1920, DateTime.Now.Year - 1919-3)
@@ -84,6 +83,7 @@ namespace WpfApp.MVVM.ViewModel
             else
             {
                 _userRepo.Insert(new User { Email = Email, Password = pPwd.Password, Name = Name, Nickname = Nickname });
+                _homeStore.CurrentUser = new Model.User() { Email = Email, Nickname = Nickname };
                 _navigationService.Navigate(NaviType.HOME);
 
             }

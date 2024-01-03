@@ -36,7 +36,7 @@ namespace WpfApp
 
             //Stores
             services.AddSingleton<MainNavigationStore>();
-            services.AddSingleton<SignUpStore>();
+            
             services.AddSingleton<HomeStore>();
             
 
@@ -47,7 +47,7 @@ namespace WpfApp
             services.AddTransient<SubMainViewModel>();
 
             //Serivce
-            //services.AddSingleton<ITestService, TestService>();
+            services.AddSingleton<IServerCommunicationService, ServerCommunicationService>();
             services.AddSingleton<INavigationService, Service.NavigationService>();
             services.AddSingleton<IUserRepo, UserRepo>();
             

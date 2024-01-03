@@ -30,7 +30,10 @@ namespace WpfApp.MVVM.ViewModel
         {
             _mainNavigationStore = mainNavigationStore;
             _mainNavigationStore.CurrentViewModelChanged += CurrentViewModelChanged;
-            navigationService.Navigate(NaviType.SIGNUP);
+            navigationService.Navigate(NaviType.SIGNIN);
+
+            //            client = new ServerCommunicationService();
+            //            client.Connect("127.0.0.1", 7777);
         }
 
         public INotifyPropertyChanged? CurrentViewModel

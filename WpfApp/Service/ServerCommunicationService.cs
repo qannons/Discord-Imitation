@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
+using WpfApp.Service.Interface;
 
 namespace WpfApp.Service
 {
-    internal class ServerCommunicationService
+    internal class ServerCommunicationService : IServerCommunicationService
     {
+        //Private 변수
+        private TcpClient client;
+        private NetworkStream stream;
 
         //생성자
         public ServerCommunicationService()
@@ -34,7 +38,10 @@ namespace WpfApp.Service
         {
             try
             {
-                byte[] buffer = Encoding.UTF8.GetBytes(data);
+                byte[] buffer = new byte[data.Length+1];
+                buffer[0] = (byte)data.Length;
+                Encoding.UTF8.GetBytes(data).CopyTo(buffer, 1);
+
                 stream.Write(buffer, 0, buffer.Length);
             }
             catch (Exception e)
@@ -64,8 +71,5 @@ namespace WpfApp.Service
             stream.Close();
             client.Close();
         }
-        //Private 변수
-        private TcpClient client;
-        private NetworkStream stream;
     }
 }

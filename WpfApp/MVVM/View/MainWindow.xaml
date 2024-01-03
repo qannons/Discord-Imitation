@@ -11,9 +11,7 @@
         ResizeMode="CanResizeWithGrip"
         Title="MainWindow" Height="720" Width="1280">
 
-    <Window.DataContext>
-        <viewmodel:MainViewModel/>
-    </Window.DataContext>
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -88,7 +86,7 @@
                     <ColumnDefinition Width="90"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Name="InputTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource InputBox}"  />
+                <TextBox Name="InputTextBox"  Grid.Row="1" Height="50"  Grid.ColumnSpan="2"  Style="{StaticResource InputBox}" TextChanged="InputTextBox_TextChanged"  />
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Margin="0,0,16,0">
                     <Image Source="./R/Icons/Plus.png" Width="20" Height="20" RenderOptions.BitmapScalingMode="Fant" Margin="5,5,5,0"/>

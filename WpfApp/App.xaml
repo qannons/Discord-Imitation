@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="./R/MessageBox.xaml"/>
                 <ResourceDictionary Source="./R/ChatItem.xaml"/>
                 <ResourceDictionary Source="./R/Sign.xaml"/>
+                <ResourceDictionary Source="./R/Home.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

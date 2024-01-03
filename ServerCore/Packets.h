@@ -16,29 +16,10 @@ enum class PACKET_ID : short
 	CALCU_RES = 31,
 };
 
-#pragma pack(push, 1)
-const int PACKET_HEADER_SIZE = 5;
 struct PktHeader
 {
-	short TotalSize;
-	short Id;
-	unsigned char Reserve;
-};
-
-struct PktCalcu2Req
-{
-	int n1;
-	short op1;
-	int n2;
-};
-
-struct PktCalcu3Req
-{
-	int n1;
-	short op1;
-	int n2;
-	short op2;
-	int n3;
+	short totalSize;
+	short id;
 };
 
 struct PktCalcuRes : PktHeader
