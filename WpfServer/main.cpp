@@ -12,118 +12,61 @@
 #define SERVERPORT 7777
 #define BUFSIZE    512
 
-// 소켓 함수 오류 출력 후 종료
-void err_quit(const char* msg)
+struct MyStruct
 {
-	LPVOID lpMsgBuf;
-	FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL, WSAGetLastError(),
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR)&lpMsgBuf, 0, NULL);
+	int size;
+	string data;
+};
 
-	MessageBox(NULL, (LPCTSTR)lpMsgBuf, (LPTSTR)msg, MB_ICONERROR);
-	LocalFree(lpMsgBuf);
-	exit(1);
-}
 
-// 소켓 함수 오류 출력
-void err_display(const char* msg)
+int main(void)
 {
-	LPVOID lpMsgBuf;
-	FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-		NULL, WSAGetLastError(),
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		(LPTSTR)&lpMsgBuf, 0, NULL);
-	printf("[%s] %s", msg, (char*)lpMsgBuf);
-	LocalFree(lpMsgBuf);
-}
-
-
-int main(int argc, char* argv[])
-{
-	int retval;
-
 	// 윈속 초기화
 	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
 		return 1;
 
-	// socket()
-	SOCKET listen_sock = socket(AF_INET, SOCK_STREAM, 0);
-	if (listen_sock == INVALID_SOCKET) err_quit("socket()");
+	SOCKET listenSocket = socket(AF_INET, SOCK_STREAM, 0);
+	ASSERT_CRASH(listenSocket == INVALID_SOCKET);
 
-	// bind()
-	SOCKADDR_IN serveraddr;
-	ZeroMemory(&serveraddr, sizeof(serveraddr));
-	serveraddr.sin_family = AF_INET;
-	serveraddr.sin_addr.s_addr = htonl(INADDR_ANY);
-	serveraddr.sin_port = htons(SERVERPORT);
-	retval = bind(listen_sock, (SOCKADDR*)&serveraddr, sizeof(serveraddr));
-	if (retval == SOCKET_ERROR) err_quit("bind()");
+	SOCKADDR_IN addr;
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(7777);
+	addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-	// listen()
-	retval = listen(listen_sock, SOMAXCONN);
-	if (retval == SOCKET_ERROR) {
-		err_quit("listen()");
-	}
+	//Bind
+	if (::bind(listenSocket, reinterpret_cast<SOCKADDR*>(&addr), sizeof(addr)) == SOCKET_ERROR)
+		return 1;
 
-	while (1) {
-		SOCKADDR_IN clientaddr;
-		int addrlen = sizeof(clientaddr);
+	//Listen
+	if (listen(listenSocket, SOMAXCONN) == SOCKET_ERROR)
+		return 1;
 
-		SOCKET client_sock = accept(listen_sock, (SOCKADDR*)&clientaddr, &addrlen);
-		if (client_sock == INVALID_SOCKET) {
-			err_display("accept()");
-			break;
+	while (true)
+	{
+		SOCKADDR_IN clientAddr;
+		int32 addrLen = sizeof(clientAddr);
+		SOCKET clientSocket = accept(listenSocket, reinterpret_cast<SOCKADDR*>(&clientAddr), &addrLen);
+		if (clientSocket == INVALID_SOCKET)
+			return 2;
+		
+		char clientIP[32];
+		cout << "연결 성공!" << inet_ntop(AF_INET, &clientAddr.sin_addr, clientIP, 32) << " " << clientAddr.sin_port << endl;
+		
+		while (true)
+		{
+			BYTE buf[512];
+			int32 recvSize = recv(clientSocket, (char*)buf, 512, 0);
+
+			if (recvSize <= 0)
+				return 3;
+
+			buf[recvSize] = '\0';
+			cout << buf << endl;
+			
+			::send(clientSocket, (char*)buf, sizeof(buf) / sizeof(char), 0);
 		}
-
-		// 접속한 클라이언트 정보 출력
-		char clientIP[33] = { 0, };
-		inet_ntop(AF_INET, &(clientaddr.sin_addr), clientIP, 33 - 1);
-		printf("\n[TCP 서버] 클라이언트 접속: IP 주소=%s, 포트 번호=%d\n", clientIP, ntohs(clientaddr.sin_port));
-
-
-		// 클라이언트와 데이터 통신
-		wchar_t buf[BUFSIZE + 1];
-
-		while (1) {
-			int recvSize = recv(client_sock, (char*)&buf, BUFSIZE, 0);
-			if (recvSize == SOCKET_ERROR) {
-				err_display("recv()");
-				break;
-			}
-			else if (recvSize == 0)
-				break;
-
-
-			// 받은 크기 출력
-			printf("[recv:%d]\n", recvSize);
-
-			int readPos = 0;
-			while (recvSize >= 4)
-			{
-				PktHeader* pHeader = (PktHeader*)&buf[readPos];
-
-				if (pHeader->totalSize > recvSize)
-				{
-					break;
-				}
-
-				
-
-				readPos += pHeader->totalSize;
-				recvSize -= pHeader->totalSize;
-			}
-			wcout << buf << endl;
-		}
-
-		closesocket(client_sock);
-		printf("[TCP 서버] 클라이언트 종료: IP 주소=%s, 포트 번호=%d\n", clientIP, ntohs(clientaddr.sin_port));
 	}
-
-	closesocket(listen_sock);
 	WSACleanup();
 	return 0;
 }

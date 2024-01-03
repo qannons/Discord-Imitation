@@ -16,5 +16,3 @@ using uint64 = unsigned __int64;
 #define size32(val)		static_cast<int32>(sizeof(val))
 #define len16(arr)		static_cast<int16>(sizeof(arr)/sizeof(arr[0]))
 #define len32(arr)		static_cast<int32>(sizeof(arr)/sizeof(arr[0]))
-
-#define _STOMP

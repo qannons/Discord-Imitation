@@ -38,11 +38,13 @@ namespace WpfApp.Service
         {
             try
             {
-                byte[] buffer = new byte[data.Length+1];
+                byte[] buffer = new byte[data.Length+13];
                 buffer[0] = (byte)data.Length;
-                Encoding.UTF8.GetBytes(data).CopyTo(buffer, 1);
-
+                //Encoding.UTF8.GetBytes(data).CopyTo(buffer, 1);
+                Encoding.Unicode.GetBytes(data).CopyTo(buffer, 2);
+                //Encoding.UTF32.GetBytes(data).CopyTo(buffer, 4);
                 stream.Write(buffer, 0, buffer.Length);
+                
             }
             catch (Exception e)
             {
@@ -54,9 +56,10 @@ namespace WpfApp.Service
         {
             try
             {
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[512];
                 int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                //string receivedData = Encoding.UTF8.GetString(buffer, 1, bytesRead);
+                string receivedData = Encoding.Unicode.GetString(buffer, 0, bytesRead);
                 return receivedData;
             }
             catch (Exception e)
@@ -70,6 +73,12 @@ namespace WpfApp.Service
         {
             stream.Close();
             client.Close();
+        }
+
+        struct Packet
+        {
+            public Int32 size;
+            public string data;
         }
     }
 }

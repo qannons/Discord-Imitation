@@ -6,7 +6,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using WpfApp.Model;
 using WpfApp.MVVM.Model;
@@ -43,6 +45,9 @@ namespace WpfApp.MVVM.ViewModel
                 UserName = _store.CurrentUser.Nickname;
 
             _serverService.Connect("127.0.0.1", 7777);
+
+            Thread thread = new Thread(Recv);
+            thread.Start();
         }
 
         [RelayCommand]
@@ -55,6 +60,21 @@ namespace WpfApp.MVVM.ViewModel
             Test = "";
         }
 
+        private void Recv()
+        {
+            while(true)
+            {
+                string recvData = _serverService.Recv();
+                Console.WriteLine("recvied: " + recvData);
+                recvData = recvData.Split('\0')[0];
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+
+                    _selectedRoom.Messages.Add(new Message("Server", recvData));
+                });
+            }
+        }
+
         //생성자
         public HomeViewModel(HomeStore pHomeStore, IServerCommunicationService pServerCommunicationService)
         {
@@ -65,6 +85,9 @@ namespace WpfApp.MVVM.ViewModel
             
             rooms = new List<ChatRoom>
             {
+                //new ChatRoom{RoomID="123", RoomName="Room1", Members=new List<User>{}, Messages=new List<Message>{ }},
+                //new ChatRoom{RoomID="124", RoomName="Room2", Members=new List<User>{}, Messages=new List<Message>{ }}
+
                 new ChatRoom{RoomID="123", RoomName="Room1", Members=new List<User>{}, Messages=new ObservableCollection<Message>{ }},
                 new ChatRoom{RoomID="124", RoomName="Room2", Members=new List<User>{}, Messages=new ObservableCollection<Message>{ }}
             };

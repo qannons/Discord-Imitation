@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Types.h"
-//#include "CoreMacro.h"
+#include "CoreMacro.h"
 //#include "CoreTLS.h"
 //#include "CoreGlobal.h"
 
@@ -13,5 +13,3 @@ using namespace std;
 #include <mswsock.h>
 #include <ws2tcpip.h>
 #pragma comment(lib, "ws2_32.lib")
-
-#include "Packets.h"

@@ -18,6 +18,12 @@
     <ClInclude Include="Types.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="IocpCore.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreMacro.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -26,7 +32,7 @@
     <ClCompile Include="CorePch.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Packets.h">
+    <ClCompile Include="IocpCore.cpp">
       <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
