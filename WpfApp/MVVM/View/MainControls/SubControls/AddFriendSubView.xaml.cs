@@ -13,16 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApp.MVVM.View
+namespace WpfApp.MVVM.View.MainControls.SubControls
 {
     /// <summary>
-    /// copiedHomeView.xaml에 대한 상호 작용 논리
+    /// AddFriendSubView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class copiedHomeView : UserControl
+    public partial class AddFriendSubView : UserControl
     {
-        public copiedHomeView()
+        public AddFriendSubView()
         {
-            //InitializeComponent();
+            InitializeComponent();
         }
     }
 }

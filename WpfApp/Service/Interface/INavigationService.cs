@@ -10,7 +10,9 @@ namespace WpfApp.Service.Interface
     {
         SIGNIN,
         SIGNUP,
-        HOME
+        HOME,
+
+        SubFriend
     }
 
     public interface INavigationService

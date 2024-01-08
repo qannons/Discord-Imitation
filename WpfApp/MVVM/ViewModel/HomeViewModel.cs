@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WpfApp.Model;
 using WpfApp.MVVM.Model;
+using WpfApp.MVVM.View.MainControls.SubControls;
 using WpfApp.Service;
 using WpfApp.Service.Interface;
 using WpfApp.Stores;
@@ -23,6 +25,9 @@ namespace WpfApp.MVVM.ViewModel
     {
         private HomeStore _store;
         private ServerCommunicationService _serverService;
+
+        [ObservableProperty]
+        private UserControl? _currentSubViewModel;
 
 
         [ObservableProperty]
@@ -43,7 +48,10 @@ namespace WpfApp.MVVM.ViewModel
         {
             if(_store.CurrentUser != null)
                 UserName = _store.CurrentUser.Nickname;
+            //기본 화면은 FriendView
+            CurrentSubViewModel = new FriendSubView();
 
+            //통신 부분
             _serverService.Connect("127.0.0.1", 7777);
 
             Thread thread = new Thread(Recv);
@@ -60,6 +68,23 @@ namespace WpfApp.MVVM.ViewModel
             Test = "";
         }
 
+        [RelayCommand]
+        private void NavigateFriend()
+        {
+            CurrentSubViewModel = new FriendSubView();
+        }
+
+        [RelayCommand]
+        private void NavDirectMessage()
+        {
+            CurrentSubViewModel = new DirectMessageSubView();
+        }
+
+        [RelayCommand]
+        private void NavAddFriend()
+        {
+            CurrentSubViewModel = new AddFriendSubView();
+        }
         private void Recv()
         {
             while(true)
@@ -93,6 +118,10 @@ namespace WpfApp.MVVM.ViewModel
             };
 
 
+        }
+        public void NaviageToPage(Type pageType)
+        {
+            Activator.CreateInstance(pageType);
         }
     }
 }

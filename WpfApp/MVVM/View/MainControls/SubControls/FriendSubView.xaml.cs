@@ -10,23 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfApp.Database.Repo;
-using WpfApp.MVVM.ViewModel;
 
-namespace WpfApp.MVVM.View
+namespace WpfApp.MVVM.View.MainControls.SubControls
 {
     /// <summary>
-    /// sqlTest.xaml에 대한 상호 작용 논리
+    /// FriendSubView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class sqlTest : Window
+    public partial class FriendSubView : UserControl
     {
-        public sqlTest()
+        public FriendSubView()
         {
             InitializeComponent();
-
-            UserRepo? repo = new UserRepo();
-            DataContext = new sqlTestViewModel(repo);
         }
     }
 }

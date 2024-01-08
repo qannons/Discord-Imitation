@@ -3,30 +3,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WpfApp.MVVM.View.MainControls" xmlns:viewmodel="clr-namespace:WpfApp.MVVM.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:HomeViewModel}"
+             xmlns:local="clr-namespace:WpfApp.MVVM.View.MainControls" xmlns:viewmodels="clr-namespace:WpfApp.MVVM.ViewModel" xmlns:local1="clr-namespace:WpfApp.MVVM.View.MainControls.SubControls" xmlns:b="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
              mc:Ignorable="d" 
              Background="#36393F"
              d:DesignHeight="690" d:DesignWidth="1280">
-    <Grid>
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type local1:FriendSubView}">
+            <local1:FriendSubView/>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type local1:DirectMessageSubView}">
+            <local1:DirectMessageSubView/>
+        </DataTemplate>
 
+        <DataTemplate DataType="{x:Type local1:AddFriendSubView}">
+            <local1:AddFriendSubView/>
+        </DataTemplate>
+    </UserControl.Resources>
+    
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Grid Background="#2F3136" Grid.Row="1">
+        <Grid Background="#2F3136" Grid.Row="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
-            <Label Content="다이렉트 메시지" VerticalAlignment="Center" FontWeight="Medium" Foreground="Gray" Margin="8, 0, 0, 0"/>
-            <ListView ItemsSource="{Binding rooms}" SelectedItem="{Binding SelectedRoom}" ItemContainerStyle="{StaticResource ChattingRoomCard}"  Background="Transparent" BorderThickness="0" Grid.Row="1" >
-                   
+            <Button Grid.Row="0" Command="{Binding NavigateFriendCommand}">
+                <TextBlock Text="친구" FontSize="24"></TextBlock>
+            </Button>
+            <Label Content="다이렉트 메시지" VerticalAlignment="Center" FontWeight="Medium" Foreground="Gray" Margin="8, 0, 0, 0" Grid.Row="1"/>
+            <ListView ItemsSource="{Binding rooms}" SelectedItem="{Binding SelectedRoom}" ItemContainerStyle="{StaticResource ChattingRoomCard}"  Background="Transparent" BorderThickness="0" Grid.Row="2">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="SelectionChanged">
+                        <b:InvokeCommandAction Command="{Binding NavDirectMessageCommand}" CommandParameter="{Binding ElementName=PeopleListView, Path=SelectedItem}" />
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
             </ListView>
 
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Background="#292B2F">
+            <StackPanel Orientation="Horizontal" Background="#292B2F" Grid.Row="3" >
                 <Border CornerRadius="25" Width="30" Height="30" Background="#3bff6f" Margin="18,0,0,0"/>
 
                 <StackPanel VerticalAlignment="Center">
@@ -37,48 +58,9 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="17*"/>
-                <ColumnDefinition Width="253*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition/>
-                <RowDefinition Height="70"/>
-            </Grid.RowDefinitions>
+        <ContentControl Content="{Binding CurrentSubViewModel}" Grid.Row="1" Grid.Column="1">
 
-            <Border BorderBrush="#2F3136" BorderThickness="0,0,0,0" Grid.ColumnSpan="2">
-                <Grid HorizontalAlignment="Stretch" Margin="8">
-                    <Label Content="{Binding SelectedRoom.RoomName}"  Foreground="White" FontWeight="Bold" Margin="5, 0, 5, 0" VerticalAlignment="Center"/>
-
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="Fant" Margin="5, 0, 5, 0" Source="/R/Icons/Call.png"></Image>
-                        <Image Width="20" Height="20" RenderOptions.BitmapScalingMode="Fant" Margin="5, 0, 5, 0" Source="/R/Icons/Call.png"></Image>
-                    </StackPanel>
-                </Grid>
-            </Border>
-            <ListView ItemsSource="{Binding SelectedRoom.Messages, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Background="Transparent" BorderThickness="0" 
-                  Margin="8,0,0,0" Grid.Row="1" ItemTemplate="{StaticResource ChatItem}" Grid.ColumnSpan="2" />
-            <Grid Grid.Row="2" Grid.ColumnSpan="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="90"/>
-                </Grid.ColumnDefinitions>
-
-                <TextBox Text="{Binding Test, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="InputTextBox3"  Grid.Row="1" Height="50" Style="{StaticResource InputBox2}" >
-                    <TextBox.InputBindings>
-                        <KeyBinding Key="Enter" Command="{Binding EnterCommand}" CommandParameter="{Binding Text, ElementName=InputTextBox3}"/>
-                    </TextBox.InputBindings>
-                </TextBox >
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Margin="0,0,16,0">
-                    <Image Source="/R/Icons/Plus.png" Width="20" Height="20" RenderOptions.BitmapScalingMode="Fant" Margin="5,5,5,0"/>
-                </StackPanel>
-
-            </Grid>
-
-        </Grid>
+        </ContentControl>
 
     </Grid>
 </UserControl>
