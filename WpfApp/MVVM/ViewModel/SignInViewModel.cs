@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Xps.Serialization;
 using WpfApp.Core;
 using WpfApp.Database.Repo;
+using WpfApp.MVVM.Model;
 using WpfApp.MVVM.View;
 using WpfApp.Service.Interface;
 using WpfApp.Stores;
@@ -50,8 +51,8 @@ namespace WpfApp.MVVM.ViewModel
             }
             else
             {
-                string tmp = _userRepo.SelectUser(Email);
-                _homeStore.CurrentUser = new Model.User() { Email = Email, Nickname=tmp };
+                _homeStore.CurrentUser = _userRepo.SelectUser(Email);
+
                 _navigationService.Navigate(NaviType.HOME);
 
                 //mainWindow.Show();

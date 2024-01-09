@@ -47,8 +47,8 @@
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Background="Transparent" Grid.Column="0" Foreground="White"></TextBox>
-                    <Button Content="친구 요청 보내기" Background="#3B4289" Foreground ="#85878F" Grid.Column="1" Margin="0, 0, 10, 0"></Button>
+                    <TextBox Name ="FriendInputBox" Background="Transparent" Grid.Column="0" Foreground="White"></TextBox>
+                    <Button Content="친구 요청 보내기" Background="#3B4289" Foreground ="#85878F" Grid.Column="1" Margin="0, 0, 10, 0" Command="{Binding AddFriendCommand}" CommandParameter="{Binding ElementName=FriendInputBox, Path=Text}"></Button>
                 </Grid>
 
             </StackPanel>

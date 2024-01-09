@@ -15,5 +15,7 @@ namespace WpfApp.Database.Repo
         void Update(User account);
         void Delete(int id);
         public bool IsExistEmail(string pEmail, string pPwd);
+
+        public bool AddFriend(int pUserID, string pFriendName);
     }
 }

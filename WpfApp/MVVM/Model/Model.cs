@@ -11,13 +11,6 @@ using WpfApp.MVVM.Model;
 
 namespace WpfApp.Model
 {
-    //public enum eStatus
-    //{
-    //    Online,
-    //    AFK,
-    //    Offline
-    //}
-
     public class ChatRoom
     {
         public string RoomID { get; set; }
