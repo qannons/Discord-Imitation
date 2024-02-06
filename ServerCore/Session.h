@@ -1,24 +1,23 @@
 #pragma once
 #include "IocpCore.h"
+#include "IocpEvent.h"
 class Session : public IocpObject
 {
+public:
+	BYTE _recvBuf[512];
+
 private:
 	SOCKET _socket;
-	BYTE _recvBuf[512];
 	SOCKADDR_IN _addr;
 
 private:
-	class RecvEvent* _recvEvent;
-	class  SendEvent* _sendEvent;
+	 RecvEvent _recvEvent;
+	 SendEvent _sendEvent;
 
 public:
 	// IocpObject을(를) 통해 상속됨
 	virtual HANDLE GetHandle(void) override;
-	virtual void Dispatch() override;
-
-protected:
-	virtual void OnSend();
-	virtual void OnRecv();
+	virtual void Dispatch(class IocpEvent* pIocpEvent) override;
 
 public:
 	void Send();
@@ -28,7 +27,7 @@ private:
 	void RegisterRecv();
 
 	void ProcessSend();
-	void ProvcessRecv();
+	void ProcessRecv();
 
 
 public:

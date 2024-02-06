@@ -45,6 +45,9 @@
     <ClInclude Include="Service.h">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="SessionManager.h">
+      <Filter>Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -72,6 +75,9 @@
       <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="Service.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="SessionManager.cpp">
       <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>

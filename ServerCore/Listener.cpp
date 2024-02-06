@@ -3,6 +3,7 @@
 #include "IocpCore.h"
 #include "Session.h"
 #include "IocpEvent.h"
+#include "SessionManager.h"
 
 Listener::Listener()
 {
@@ -17,7 +18,7 @@ HANDLE Listener::GetHandle(void)
 	return HANDLE(_socket);
 }
 
-void Listener::Dispatch()
+void Listener::Dispatch(IocpEvent* pIocpEvent)
 {
 	
 }
@@ -53,25 +54,22 @@ void Listener::StartAccept()
 			continue;
 		}
 
-		char buf[100];
-		WSABUF wsaBuf;
-		wsaBuf.buf = buf;
-		wsaBuf.len = 100;
 
 		DWORD recvLen = 0;
 		DWORD flags = 0;
 
 		RecvEvent* recvEvent = new RecvEvent();
+
+		SessionRef session = make_shared<Session>();
+		session->Init(clientSocket, addr);
+		recvEvent->owner = session;
+
+		WSABUF wsaBuf;
+		wsaBuf.buf = (char*)session->_recvBuf;
+		wsaBuf.len = 100;
+
+		GSessionManager.AddSession(session);
 		
-		shared_ptr<Session> s = make_shared<Session>();
-		s->Init(clientSocket, addr);
-		
-		if (GIocpCore.Register(s) == false)
-		{
-			int32 errCode = WSAGetLastError();
-			cout << "Register Fail" << errCode;
-			return;
-		}
 		::WSARecv(clientSocket, &wsaBuf, 1, &recvLen, &flags, recvEvent, NULL);
 	}
 }

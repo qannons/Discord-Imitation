@@ -7,16 +7,20 @@ HANDLE Session::GetHandle(void)
     return HANDLE(_socket);
 }
 
-void Session::Dispatch()
+void Session::Dispatch(IocpEvent* pIocpEvent)
 {
-}
+    switch (pIocpEvent->eventType)
+    {
+    case eEventType::Send:
+        ProcessSend();
+        break;
+    case eEventType::Recv:
+        ProcessRecv();
+        break;
 
-void Session::OnSend()
-{
-}
-
-void Session::OnRecv()
-{
+    default:
+        break;
+    }
 }
 
 void Session::Send()
@@ -26,23 +30,41 @@ void Session::Send()
 
 void Session::RegisterSend()
 {
+    _sendEvent.owner = shared_from_this();
+
     WSABUF wsaBuf;
-    wsaBuf.buf = (char*)_sendEvent->sendBuffer;
+    wsaBuf.buf = (char*)_sendEvent.sendBuffer;
     DWORD numOfBytes;
     DWORD flags = 0;
-    ::WSASend(_socket, &wsaBuf, 1, &numOfBytes, flags, _sendEvent, NULL);
+    ::WSASend(_socket, &wsaBuf, 1, &numOfBytes, flags, (LPOVERLAPPED)&_sendEvent, NULL);
 }
 
 void Session::RegisterRecv()
 {
+    _recvEvent.Init();
+    _recvEvent.owner = shared_from_this();
+
+    WSABUF wsaBuf;
+    wsaBuf.buf = (char*)_recvBuf;
+    wsaBuf.len = sizeof(_recvBuf);
+
+    DWORD recvLen;
+    DWORD flag = 0;
+    ::WSARecv(_socket, &wsaBuf, 1, &recvLen, &flag, (LPOVERLAPPED)&_recvEvent, NULL);
 }
 
 void Session::ProcessSend()
 {
 }
 
-void Session::ProvcessRecv()
+void Session::ProcessRecv()
 {
+    cout << "recv: " << _recvBuf << endl;
+
+    _recvEvent.owner = nullptr;
+
+    RegisterRecv();
+
 }
 
 void Session::Init(SOCKET pSocket, SOCKADDR_IN pAddr)

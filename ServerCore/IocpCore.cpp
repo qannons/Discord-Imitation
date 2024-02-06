@@ -32,6 +32,6 @@ void IocpCore::Dispatch()
 	if (::GetQueuedCompletionStatus(_handle, &numOfBytes, &key, (LPOVERLAPPED*)&iocpEvent, INFINITE))
 	{
 		IocpObjectRef object = iocpEvent->owner;
-		object->Dispatch();
+		object->Dispatch(iocpEvent);
 	}
 }

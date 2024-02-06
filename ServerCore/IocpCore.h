@@ -4,7 +4,7 @@ class IocpObject : public enable_shared_from_this<IocpObject>
 {
 public:
 	virtual HANDLE GetHandle(void) abstract;
-	virtual void Dispatch() abstract;
+	virtual void Dispatch(class IocpEvent* pIocpEvent) abstract;
 };
 
 class IocpCore
