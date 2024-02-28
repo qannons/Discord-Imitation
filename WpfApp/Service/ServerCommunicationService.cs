@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
 using WpfApp.Service.Interface;
+using System.Diagnostics;
 
 namespace WpfApp.Service
 {
@@ -14,7 +15,6 @@ namespace WpfApp.Service
         //Private 변수
         private TcpClient client;
         private NetworkStream stream;
-
         //생성자
         public ServerCommunicationService()
         {
@@ -34,15 +34,17 @@ namespace WpfApp.Service
             }
         }
 
-        public void Send(string data)
+        public void Send(Guid roomID, string data)
         {
             try
             {
-                byte[] buffer = new byte[data.Length+13];
-                buffer[0] = (byte)data.Length;
-                //Encoding.UTF8.GetBytes(data).CopyTo(buffer, 1);
-                Encoding.Unicode.GetBytes(data).CopyTo(buffer, 2);
-                //Encoding.UTF32.GetBytes(data).CopyTo(buffer, 4);
+                byte[] buffer = new byte[68 + data.Length * 2];
+                //roomID.ToByteArray().CopyTo(buffer, 0);
+                
+                string s = roomID.ToString();
+                Encoding.UTF8.GetBytes(roomID.ToString()).CopyTo(buffer, 0);
+                Encoding.UTF8.GetBytes(data.Length.ToString()).CopyTo(buffer, 16);
+                Encoding.UTF8.GetBytes(data).CopyTo(buffer, 18);
                 stream.Write(buffer, 0, buffer.Length);
                 
             }

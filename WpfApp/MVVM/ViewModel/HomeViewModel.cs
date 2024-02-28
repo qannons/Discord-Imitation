@@ -70,7 +70,7 @@ namespace WpfApp.MVVM.ViewModel
             if (Test.Length == 0)
                     return;
             SelectedRoom.Messages.Add(new Message(UserName, Test));
-            _serverService.Send(Test);
+            _serverService.Send(SelectedRoom.RoomID, Test);
             Test = "";
         }
 
@@ -104,6 +104,9 @@ namespace WpfApp.MVVM.ViewModel
         {
             while(true)
             {
+                if (_selectedRoom == null)
+                    continue;
+                 
                 string recvData = _serverService.Recv();
                 Console.WriteLine("recvied: " + recvData);
                 recvData = recvData.Split('\0')[0];
@@ -129,8 +132,8 @@ namespace WpfApp.MVVM.ViewModel
                 //new ChatRoom{RoomID="123", RoomName="Room1", Members=new List<User>{}, Messages=new List<Message>{ }},
                 //new ChatRoom{RoomID="124", RoomName="Room2", Members=new List<User>{}, Messages=new List<Message>{ }}
 
-                new ChatRoom{RoomID="123", RoomName="Room1", Members=new List<User>{}, Messages=new ObservableCollection<Message>{ }},
-                new ChatRoom{RoomID="124", RoomName="Room2", Members=new List<User>{}, Messages=new ObservableCollection<Message>{ }}
+                new ChatRoom{RoomID=Guid.NewGuid(), RoomName="Room1", Members=new List<User>{}, Messages=new ObservableCollection<Message>{ }},
+                new ChatRoom{RoomID=Guid.NewGuid(), RoomName="Room2", Members=new List<User>{}, Messages=new ObservableCollection<Message>{ }}
             };
 
 

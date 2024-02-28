@@ -13,7 +13,7 @@ namespace WpfApp.Model
 {
     public class ChatRoom
     {
-        public string RoomID { get; set; }
+        public Guid RoomID { get; set; }
         public string RoomName { get; set; }
         public List<User> Members { get; set; }
         public ObservableCollection<Message> Messages { get; set; }

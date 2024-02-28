@@ -10,7 +10,7 @@ namespace WpfApp.Service.Interface
     {
         public void Connect(string host, int port);
         public void Disconnect();
-        public void Send(string data);
+        public void Send(Guid roomID, string data);
         public string Recv();
     }
 }
