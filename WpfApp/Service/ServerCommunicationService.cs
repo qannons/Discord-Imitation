@@ -42,9 +42,11 @@ namespace WpfApp.Service
                 //roomID.ToByteArray().CopyTo(buffer, 0);
                 
                 string s = roomID.ToString();
-                Encoding.UTF8.GetBytes(roomID.ToString()).CopyTo(buffer, 0);
-                Encoding.UTF8.GetBytes(data.Length.ToString()).CopyTo(buffer, 16);
-                Encoding.UTF8.GetBytes(data).CopyTo(buffer, 18);
+                
+               // Encoding.Unicode.GetBytes(roomID.ToString()).CopyTo(buffer, 0);
+                //Encoding.Unicode.GetBytes(data.Length.ToString()).CopyTo(buffer, 16);
+                //Encoding.Unicode.GetBytes(data).CopyTo(buffer, 18);
+                Encoding.Unicode.GetBytes(data).CopyTo(buffer, 0);
                 stream.Write(buffer, 0, buffer.Length);
                 
             }

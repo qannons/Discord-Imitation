@@ -61,7 +61,7 @@ namespace WpfApp.MVVM.ViewModel
             thread.Start();
 
             //친구 목록 불러오기
-            friends = _userRepo.SelectAllFriends(_store.CurrentUser.ID);
+            //friends = _userRepo.SelectAllFriends(_store.CurrentUser.ID);
         }
 
         [RelayCommand]
