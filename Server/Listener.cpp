@@ -49,3 +49,4 @@ void Listener::Init(wstring ip, INT16 port)
 	if (::listen(_socket, SOMAXCONN) == SOCKET_ERROR)
 		return;
 }
+

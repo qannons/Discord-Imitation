@@ -52,6 +52,15 @@ bool IocpCore::Dispatch(UINT32 timeoutMs)
 	return true;
 }
 
+void IocpCore::Broadcast(BYTE* buffer)
+{
+	lock_guard<mutex> lock(_mutex);
+	for (SessionRef session : _sessions)
+	{
+		session->Send(buffer, sizeof(buffer));
+	}
+}
+
 void IocpCore::Add(SessionRef session)
 {
 	lock_guard<mutex> lock(_mutex);

@@ -11,7 +11,7 @@
     <Filter Include="Main">
       <UniqueIdentifier>{a4b6aef3-c101-451f-a872-08750a2ca2cf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Packet">
+    <Filter Include="Protocol">
       <UniqueIdentifier>{46ff6c51-6605-4000-b22c-6b13972cb836}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -45,6 +45,9 @@
     </ClCompile>
     <ClCompile Include="TLS.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Protocol.pb.cc">
+      <Filter>Protocol</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,8 +84,8 @@
     <ClInclude Include="TLS.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="BasePacket.h">
-      <Filter>Packet</Filter>
+    <ClInclude Include="Protocol.pb.h">
+      <Filter>Protocol</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

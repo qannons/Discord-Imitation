@@ -8,10 +8,11 @@ public:
 	~Listener();
 
 	void Init(wstring ip, INT16 port);
+
 	void StartAccept();
 
 private:
-	SOCKADDR_IN _addr;
+	SOCKADDR_IN _addr;	
 	SOCKET _socket = INVALID_SOCKET;
 };
 

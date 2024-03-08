@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Net;
 using WpfApp.Service.Interface;
 using System.Diagnostics;
-
+using Google.Protobuf;
 namespace WpfApp.Service
 {
     internal class ServerCommunicationService : IServerCommunicationService
@@ -60,6 +60,7 @@ namespace WpfApp.Service
         {
             try
             {
+                
                 byte[] buffer = new byte[512];
                 int bytesRead = stream.Read(buffer, 0, buffer.Length);
                 //string receivedData = Encoding.UTF8.GetString(buffer, 1, bytesRead);

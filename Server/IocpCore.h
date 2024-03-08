@@ -27,6 +27,7 @@ public:
 	bool		Dispatch(UINT32 timeoutMs = INFINITE);
 
 public:
+	void Broadcast(BYTE* buffer);
 	void Add(SessionRef session);
 	void Remove(SessionRef session);
 	//void Broadcast(SendBufferRef sendBuffer);
