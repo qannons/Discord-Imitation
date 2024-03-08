@@ -65,6 +65,15 @@ namespace WpfApp.Service
                 int bytesRead = stream.Read(buffer, 0, buffer.Length);
                 //string receivedData = Encoding.UTF8.GetString(buffer, 1, bytesRead);
                 string receivedData = Encoding.Unicode.GetString(buffer, 0, bytesRead);
+
+
+                Protocol.S_TEST receivedMessage = Protocol.S_TEST.Parser.ParseFrom(buffer);
+
+                // 수신한 메시지의 값을 출력 또는 처리
+                Console.WriteLine($"Received ID: {receivedMessage.Id}");
+                Console.WriteLine($"Received HP: {receivedMessage.Hp}");
+                Console.WriteLine($"Received Attack: {receivedMessage.Attack}");
+
                 return receivedData;
             }
             catch (Exception e)

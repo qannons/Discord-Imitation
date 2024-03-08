@@ -34,8 +34,7 @@ struct BuffDataDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT BuffDataDefaultTypeInternal _BuffData_default_instance_;
 constexpr S_TEST::S_TEST(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : buffs_()
-  , id_(uint64_t{0u})
+  : id_(uint64_t{0u})
   , hp_(0u)
   , attack_(0u){}
 struct S_TESTDefaultTypeInternal {
@@ -69,7 +68,6 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Protocol_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::Protocol::S_TEST, id_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_TEST, hp_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_TEST, attack_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_TEST, buffs_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::Protocol::BuffData)},
@@ -84,13 +82,12 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\016Protocol.proto\022\010Protocol\"\?\n\010BuffData\022\016"
   "\n\006buffId\030\001 \001(\004\022\022\n\nremainTime\030\002 \001(\002\022\017\n\007vi"
-  "ctims\030\003 \003(\004\"S\n\006S_TEST\022\n\n\002id\030\001 \001(\004\022\n\n\002hp\030"
-  "\002 \001(\r\022\016\n\006attack\030\003 \001(\r\022!\n\005buffs\030\004 \003(\0132\022.P"
-  "rotocol.BuffDatab\006proto3"
+  "ctims\030\003 \003(\004\"0\n\006S_TEST\022\n\n\002id\030\001 \001(\004\022\n\n\002hp\030"
+  "\002 \001(\r\022\016\n\006attack\030\003 \001(\rb\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Protocol_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Protocol_2eproto = {
-  false, false, 184, descriptor_table_protodef_Protocol_2eproto, "Protocol.proto", 
+  false, false, 149, descriptor_table_protodef_Protocol_2eproto, "Protocol.proto", 
   &descriptor_table_Protocol_2eproto_once, nullptr, 0, 2,
   schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
   file_level_metadata_Protocol_2eproto, file_level_enum_descriptors_Protocol_2eproto, file_level_service_descriptors_Protocol_2eproto,
@@ -372,15 +369,13 @@ class S_TEST::_Internal {
 };
 
 S_TEST::S_TEST(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
-  buffs_(arena) {
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:Protocol.S_TEST)
 }
 S_TEST::S_TEST(const S_TEST& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      buffs_(from.buffs_) {
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&id_, &from.id_,
     static_cast<size_t>(reinterpret_cast<char*>(&attack_) -
@@ -421,7 +416,6 @@ void S_TEST::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  buffs_.Clear();
   ::memset(&id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&attack_) -
       reinterpret_cast<char*>(&id_)) + sizeof(attack_));
@@ -453,18 +447,6 @@ const char* S_TEST::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::int
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           attack_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // repeated .Protocol.BuffData buffs = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_buffs(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -514,14 +496,6 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_attack(), target);
   }
 
-  // repeated .Protocol.BuffData buffs = 4;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->_internal_buffs_size()); i < n; i++) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(4, this->_internal_buffs(i), target, stream);
-  }
-
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -537,13 +511,6 @@ size_t S_TEST::ByteSizeLong() const {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
-
-  // repeated .Protocol.BuffData buffs = 4;
-  total_size += 1UL * this->_internal_buffs_size();
-  for (const auto& msg : this->buffs_) {
-    total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
-  }
 
   // uint64 id = 1;
   if (this->id() != 0) {
@@ -597,7 +564,6 @@ void S_TEST::MergeFrom(const S_TEST& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  buffs_.MergeFrom(from.buffs_);
   if (from.id() != 0) {
     _internal_set_id(from._internal_id());
   }
@@ -630,7 +596,6 @@ bool S_TEST::IsInitialized() const {
 void S_TEST::InternalSwap(S_TEST* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  buffs_.InternalSwap(&other->buffs_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(S_TEST, attack_)
       + sizeof(S_TEST::attack_)
