@@ -2,6 +2,7 @@
 #include "Listener.h"
 #include "SocketUtils.h"
 #include "Protocol.pb.h"
+#include "PacketHeader.h"
 
 int main()
 {
@@ -22,14 +23,19 @@ int main()
     while (true)
     {
         Protocol::S_TEST pkt;
-        pkt.set_id(1);
+        pkt.set_id(S_TEST);
         pkt.set_hp(2);
         pkt.set_attack(3);
 
-        vector<uint8_t> serialized_data(pkt.ByteSizeLong());
-        if (pkt.SerializeToArray(serialized_data.data(), serialized_data.size()))
+        const int array_size = pkt.ByteSizeLong();
+        //const int array_size = 6;
+
+        // 배열 할당
+        BYTE* byte_array = new BYTE[array_size];
+
+        if (pkt.SerializeToArray(byte_array, array_size))
         {
-            GIocpCore.Broadcast(serialized_data.data());
+            GIocpCore.Broadcast(byte_array);
         }
         else
         {

@@ -8,6 +8,7 @@ using System.Net;
 using WpfApp.Service.Interface;
 using System.Diagnostics;
 using Google.Protobuf;
+using Protocol;
 namespace WpfApp.Service
 {
     internal class ServerCommunicationService : IServerCommunicationService
@@ -30,7 +31,7 @@ namespace WpfApp.Service
             }
             catch (Exception e)
             {
-                Console.WriteLine("Failed to connect to server: " + e.Message);
+                Debug.WriteLine("Failed to connect to server: " + e.Message);
             }
         }
 
@@ -52,7 +53,7 @@ namespace WpfApp.Service
             }
             catch (Exception e)
             {
-                Console.WriteLine("Failed to send data: " + e.Message);
+                Debug.WriteLine("Failed to send data: " + e.Message);
             }
         }
 
@@ -64,21 +65,25 @@ namespace WpfApp.Service
                 byte[] buffer = new byte[512];
                 int bytesRead = stream.Read(buffer, 0, buffer.Length);
                 //string receivedData = Encoding.UTF8.GetString(buffer, 1, bytesRead);
-                string receivedData = Encoding.Unicode.GetString(buffer, 0, bytesRead);
+                //string receivedData = Encoding.Unicode.GetString(buffer, 0, bytesRead);
+                byte[] dest = new byte[6];
 
+                Array.Copy(buffer, 0, dest, 0, 6);
 
-                Protocol.S_TEST receivedMessage = Protocol.S_TEST.Parser.ParseFrom(buffer);
+                S_TEST receivedMessage = S_TEST.Parser.ParseFrom(dest);
 
                 // 수신한 메시지의 값을 출력 또는 처리
-                Console.WriteLine($"Received ID: {receivedMessage.Id}");
-                Console.WriteLine($"Received HP: {receivedMessage.Hp}");
-                Console.WriteLine($"Received Attack: {receivedMessage.Attack}");
+                Debug.WriteLine($"Received ID: {receivedMessage.Id}");
+                Debug.WriteLine($"Received HP: {receivedMessage.Hp}");
+                Debug.WriteLine($"Received Attack: {receivedMessage.Attack}");
 
-                return receivedData;
+
+                return receivedMessage.Attack.ToString();
+                //return receivedData;
             }
             catch (Exception e)
             {
-                Console.WriteLine("Failed to receive data: " + e.Message);
+                Debug.WriteLine("Failed to receive data: " + e.Message);
                 return "";
             }
         }

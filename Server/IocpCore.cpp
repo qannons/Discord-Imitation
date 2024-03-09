@@ -57,7 +57,7 @@ void IocpCore::Broadcast(BYTE* buffer)
 	lock_guard<mutex> lock(_mutex);
 	for (SessionRef session : _sessions)
 	{
-		session->Send(buffer, sizeof(buffer));
+		session->Send(buffer, 6);
 	}
 }
 
