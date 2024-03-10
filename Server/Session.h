@@ -44,7 +44,7 @@ private:
 		while (true)
 		{
 			INT32 dataSize = len - processLen;
-			// 최소한 헤더는 파싱할 수 있어야 한다
+			 //최소한 헤더는 파싱할 수 있어야 한다
 			if (dataSize < sizeof(PacketHeader))
 				break;
 
@@ -53,7 +53,7 @@ private:
 			if (dataSize < header.size)
 				break;
 
-			// 패킷 조립 성공
+			 //패킷 조립 성공
 			HandlePacket(&buffer[processLen], header.size);
 
 			processLen += header.size;
@@ -64,11 +64,11 @@ private:
 
 	void HandlePacket(BYTE* buffer, INT32 len)
 	{
-		Protocol::S_TEST pkt;
+		//Protocol::S_TEST pkt;
 
-		ASSERT_CRASH(pkt.ParseFromArray(buffer + sizeof(PacketHeader), len - sizeof(PacketHeader)));
+		//ASSERT_CRASH(pkt.ParseFromArray(buffer + sizeof(PacketHeader), len - sizeof(PacketHeader)));
 
-		wcout << pkt.id() << " " << pkt.hp() << " " << pkt.attack() << endl;
+		//wcout << pkt.id() << " " << pkt.hp() << " " << pkt.attack() << endl;
 	}
 
 private:

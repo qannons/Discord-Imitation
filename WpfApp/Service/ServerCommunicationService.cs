@@ -9,7 +9,8 @@ using WpfApp.Service.Interface;
 using System.Diagnostics;
 using Google.Protobuf;
 using Protocol;
-using WpfApp.Protocol;
+using WpfApp.Model;
+
 namespace WpfApp.Service
 {
     internal class ServerCommunicationService : IServerCommunicationService
@@ -45,15 +46,6 @@ namespace WpfApp.Service
                 
                 string s = roomID.ToString();
                 
-                PacketHeader header = new PacketHeader();
-                header.id = (ushort)ePacketID.S_TEST;
-                header.size = (ushort)(data.Length + sizeof(PacketHeader));
-
-                S_TEST s_TEST = new S_TEST();
-                s_TEST.Id = 10;
-                s_TEST.Attack = 20;
-                s_TEST.Hp = 30;
-                s_TEST.WriteTo(stream);
                // Encoding.Unicode.GetBytes(roomID.ToString()).CopyTo(buffer, 0);
                 //Encoding.Unicode.GetBytes(data.Length.ToString()).CopyTo(buffer, 16);
                 //Encoding.Unicode.GetBytes(data).CopyTo(buffer, 18);
@@ -74,37 +66,9 @@ namespace WpfApp.Service
             int bytesRead = stream.Read(buffer, 0, buffer.Length);
 
             return (buffer, bytesRead);
-            OnRecv(buffer, bytesRead);  
         }
 
-        public int OnRecv(byte[] buffer, int len)
-        {
-            int processLen = 0;
-
-            unsafe
-            {
-                fixed (byte* p = buffer)
-                {
-                    while (true)
-                    {
-                        int dataSize = len - processLen;
-                        if (dataSize < sizeof(PacketHeader))
-                            break;
-
-                        PacketHeader* headerPtr = (PacketHeader*)(p + processLen);
-                        PacketHeader header = *headerPtr;
-                        if (dataSize < header.size)
-                            break;
-                        byte[] tmp = new byte[dataSize];
-                        Buffer.BlockCopy(buffer, processLen, tmp, 0, header.size);
-                        //OnRecvPacket(p + processLen, header.size);
-                        HandlePacket(tmp, header.size);
-                        processLen += header.size;
-                    }
-                }
-            }
-            return processLen;
-        }
+        
 
         unsafe void HandlePacket(byte[] buffer,  int len)
         {

@@ -135,6 +135,9 @@ namespace WpfApp.MVVM.ViewModel
                 fixed (byte* ptr = &buffer[0])
                 {
                     PacketHeader header = *(PacketHeader*)ptr;
+
+                    PacketHeader h =
+
                     switch((PacketID)header.id)
                     {
                         case PacketID.S_TEST:

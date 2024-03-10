@@ -16,7 +16,6 @@ int main()
                 GIocpCore.Dispatch(); 
         });
 
-    //listener.StartAccept();
     std::thread t2(&Listener::StartAccept, &listener);
 
 
@@ -54,6 +53,13 @@ int main()
     //    }
     //    this_thread::sleep_for(2s);
     //}
+
+    while (true)
+    {
+        
+
+        this_thread::sleep_for(2s);
+    }
 
     t2.join();
     t1.join();

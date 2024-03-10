@@ -171,6 +171,7 @@
     <ClCompile Include="RecvBuffer.cpp" />
     <ClCompile Include="SendBuffer.cpp" />
     <ClCompile Include="Server.cpp" />
+    <ClCompile Include="ServerPacketHandler.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="SocketUtils.cpp" />
     <ClCompile Include="TLS.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Protocol.pb.h" />
     <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="SendBuffer.h" />
+    <ClInclude Include="ServerPacketHandler.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="SocketUtils.h" />
     <ClInclude Include="TLS.h" />

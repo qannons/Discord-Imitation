@@ -44,40 +44,37 @@ struct TableStruct_Protocol_2eproto {
   static const uint32_t offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Protocol_2eproto;
-namespace Protocol {
-class BuffData;
-struct BuffDataDefaultTypeInternal;
-extern BuffDataDefaultTypeInternal _BuffData_default_instance_;
+class PacketHeader2;
+struct PacketHeader2DefaultTypeInternal;
+extern PacketHeader2DefaultTypeInternal _PacketHeader2_default_instance_;
 class S_TEST;
 struct S_TESTDefaultTypeInternal;
 extern S_TESTDefaultTypeInternal _S_TEST_default_instance_;
-}  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
-template<> ::Protocol::BuffData* Arena::CreateMaybeMessage<::Protocol::BuffData>(Arena*);
-template<> ::Protocol::S_TEST* Arena::CreateMaybeMessage<::Protocol::S_TEST>(Arena*);
+template<> ::PacketHeader2* Arena::CreateMaybeMessage<::PacketHeader2>(Arena*);
+template<> ::S_TEST* Arena::CreateMaybeMessage<::S_TEST>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
-namespace Protocol {
 
 // ===================================================================
 
-class BuffData final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.BuffData) */ {
+class PacketHeader2 final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:PacketHeader2) */ {
  public:
-  inline BuffData() : BuffData(nullptr) {}
-  ~BuffData() override;
-  explicit PROTOBUF_CONSTEXPR BuffData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline PacketHeader2() : PacketHeader2(nullptr) {}
+  ~PacketHeader2() override;
+  explicit PROTOBUF_CONSTEXPR PacketHeader2(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  BuffData(const BuffData& from);
-  BuffData(BuffData&& from) noexcept
-    : BuffData() {
+  PacketHeader2(const PacketHeader2& from);
+  PacketHeader2(PacketHeader2&& from) noexcept
+    : PacketHeader2() {
     *this = ::std::move(from);
   }
 
-  inline BuffData& operator=(const BuffData& from) {
+  inline PacketHeader2& operator=(const PacketHeader2& from) {
     CopyFrom(from);
     return *this;
   }
-  inline BuffData& operator=(BuffData&& from) noexcept {
+  inline PacketHeader2& operator=(PacketHeader2&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -100,20 +97,20 @@ class BuffData final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const BuffData& default_instance() {
+  static const PacketHeader2& default_instance() {
     return *internal_default_instance();
   }
-  static inline const BuffData* internal_default_instance() {
-    return reinterpret_cast<const BuffData*>(
-               &_BuffData_default_instance_);
+  static inline const PacketHeader2* internal_default_instance() {
+    return reinterpret_cast<const PacketHeader2*>(
+               &_PacketHeader2_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  friend void swap(BuffData& a, BuffData& b) {
+  friend void swap(PacketHeader2& a, PacketHeader2& b) {
     a.Swap(&b);
   }
-  inline void Swap(BuffData* other) {
+  inline void Swap(PacketHeader2* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -126,7 +123,7 @@ class BuffData final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(BuffData* other) {
+  void UnsafeArenaSwap(PacketHeader2* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -134,14 +131,14 @@ class BuffData final :
 
   // implements Message ----------------------------------------------
 
-  BuffData* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<BuffData>(arena);
+  PacketHeader2* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PacketHeader2>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const BuffData& from);
+  void CopyFrom(const PacketHeader2& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const BuffData& from) {
-    BuffData::MergeImpl(*this, from);
+  void MergeFrom( const PacketHeader2& from) {
+    PacketHeader2::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -159,15 +156,15 @@ class BuffData final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(BuffData* other);
+  void InternalSwap(PacketHeader2* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Protocol.BuffData";
+    return "PacketHeader2";
   }
   protected:
-  explicit BuffData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit PacketHeader2(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -181,51 +178,28 @@ class BuffData final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kVictimsFieldNumber = 3,
-    kBuffIdFieldNumber = 1,
-    kRemainTimeFieldNumber = 2,
+    kPacketIdFieldNumber = 1,
+    kSizeFieldNumber = 2,
   };
-  // repeated uint64 victims = 3;
-  int victims_size() const;
+  // uint32 packetId = 1;
+  void clear_packetid();
+  uint32_t packetid() const;
+  void set_packetid(uint32_t value);
   private:
-  int _internal_victims_size() const;
-  public:
-  void clear_victims();
-  private:
-  uint64_t _internal_victims(int index) const;
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >&
-      _internal_victims() const;
-  void _internal_add_victims(uint64_t value);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >*
-      _internal_mutable_victims();
-  public:
-  uint64_t victims(int index) const;
-  void set_victims(int index, uint64_t value);
-  void add_victims(uint64_t value);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >&
-      victims() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >*
-      mutable_victims();
-
-  // uint64 buffId = 1;
-  void clear_buffid();
-  uint64_t buffid() const;
-  void set_buffid(uint64_t value);
-  private:
-  uint64_t _internal_buffid() const;
-  void _internal_set_buffid(uint64_t value);
+  uint32_t _internal_packetid() const;
+  void _internal_set_packetid(uint32_t value);
   public:
 
-  // float remainTime = 2;
-  void clear_remaintime();
-  float remaintime() const;
-  void set_remaintime(float value);
+  // uint32 size = 2;
+  void clear_size();
+  uint32_t size() const;
+  void set_size(uint32_t value);
   private:
-  float _internal_remaintime() const;
-  void _internal_set_remaintime(float value);
+  uint32_t _internal_size() const;
+  void _internal_set_size(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:Protocol.BuffData)
+  // @@protoc_insertion_point(class_scope:PacketHeader2)
  private:
   class _Internal;
 
@@ -233,10 +207,8 @@ class BuffData final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t > victims_;
-    mutable std::atomic<int> _victims_cached_byte_size_;
-    uint64_t buffid_;
-    float remaintime_;
+    uint32_t packetid_;
+    uint32_t size_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -245,7 +217,7 @@ class BuffData final :
 // -------------------------------------------------------------------
 
 class S_TEST final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_TEST) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:S_TEST) */ {
  public:
   inline S_TEST() : S_TEST(nullptr) {}
   ~S_TEST() override;
@@ -348,7 +320,7 @@ class S_TEST final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Protocol.S_TEST";
+    return "S_TEST";
   }
   protected:
   explicit S_TEST(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -368,6 +340,7 @@ class S_TEST final :
     kIdFieldNumber = 1,
     kHpFieldNumber = 2,
     kAttackFieldNumber = 3,
+    kSStrFieldNumber = 4,
   };
   // uint64 id = 1;
   void clear_id();
@@ -396,7 +369,16 @@ class S_TEST final :
   void _internal_set_attack(uint32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:Protocol.S_TEST)
+  // uint32 s_str = 4;
+  void clear_s_str();
+  uint32_t s_str() const;
+  void set_s_str(uint32_t value);
+  private:
+  uint32_t _internal_s_str() const;
+  void _internal_set_s_str(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:S_TEST)
  private:
   class _Internal;
 
@@ -407,6 +389,7 @@ class S_TEST final :
     uint64_t id_;
     uint32_t hp_;
     uint32_t attack_;
+    uint32_t s_str_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -421,93 +404,46 @@ class S_TEST final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// BuffData
+// PacketHeader2
 
-// uint64 buffId = 1;
-inline void BuffData::clear_buffid() {
-  _impl_.buffid_ = uint64_t{0u};
+// uint32 packetId = 1;
+inline void PacketHeader2::clear_packetid() {
+  _impl_.packetid_ = 0u;
 }
-inline uint64_t BuffData::_internal_buffid() const {
-  return _impl_.buffid_;
+inline uint32_t PacketHeader2::_internal_packetid() const {
+  return _impl_.packetid_;
 }
-inline uint64_t BuffData::buffid() const {
-  // @@protoc_insertion_point(field_get:Protocol.BuffData.buffId)
-  return _internal_buffid();
+inline uint32_t PacketHeader2::packetid() const {
+  // @@protoc_insertion_point(field_get:PacketHeader2.packetId)
+  return _internal_packetid();
 }
-inline void BuffData::_internal_set_buffid(uint64_t value) {
+inline void PacketHeader2::_internal_set_packetid(uint32_t value) {
   
-  _impl_.buffid_ = value;
+  _impl_.packetid_ = value;
 }
-inline void BuffData::set_buffid(uint64_t value) {
-  _internal_set_buffid(value);
-  // @@protoc_insertion_point(field_set:Protocol.BuffData.buffId)
+inline void PacketHeader2::set_packetid(uint32_t value) {
+  _internal_set_packetid(value);
+  // @@protoc_insertion_point(field_set:PacketHeader2.packetId)
 }
 
-// float remainTime = 2;
-inline void BuffData::clear_remaintime() {
-  _impl_.remaintime_ = 0;
+// uint32 size = 2;
+inline void PacketHeader2::clear_size() {
+  _impl_.size_ = 0u;
 }
-inline float BuffData::_internal_remaintime() const {
-  return _impl_.remaintime_;
+inline uint32_t PacketHeader2::_internal_size() const {
+  return _impl_.size_;
 }
-inline float BuffData::remaintime() const {
-  // @@protoc_insertion_point(field_get:Protocol.BuffData.remainTime)
-  return _internal_remaintime();
+inline uint32_t PacketHeader2::size() const {
+  // @@protoc_insertion_point(field_get:PacketHeader2.size)
+  return _internal_size();
 }
-inline void BuffData::_internal_set_remaintime(float value) {
+inline void PacketHeader2::_internal_set_size(uint32_t value) {
   
-  _impl_.remaintime_ = value;
+  _impl_.size_ = value;
 }
-inline void BuffData::set_remaintime(float value) {
-  _internal_set_remaintime(value);
-  // @@protoc_insertion_point(field_set:Protocol.BuffData.remainTime)
-}
-
-// repeated uint64 victims = 3;
-inline int BuffData::_internal_victims_size() const {
-  return _impl_.victims_.size();
-}
-inline int BuffData::victims_size() const {
-  return _internal_victims_size();
-}
-inline void BuffData::clear_victims() {
-  _impl_.victims_.Clear();
-}
-inline uint64_t BuffData::_internal_victims(int index) const {
-  return _impl_.victims_.Get(index);
-}
-inline uint64_t BuffData::victims(int index) const {
-  // @@protoc_insertion_point(field_get:Protocol.BuffData.victims)
-  return _internal_victims(index);
-}
-inline void BuffData::set_victims(int index, uint64_t value) {
-  _impl_.victims_.Set(index, value);
-  // @@protoc_insertion_point(field_set:Protocol.BuffData.victims)
-}
-inline void BuffData::_internal_add_victims(uint64_t value) {
-  _impl_.victims_.Add(value);
-}
-inline void BuffData::add_victims(uint64_t value) {
-  _internal_add_victims(value);
-  // @@protoc_insertion_point(field_add:Protocol.BuffData.victims)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >&
-BuffData::_internal_victims() const {
-  return _impl_.victims_;
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >&
-BuffData::victims() const {
-  // @@protoc_insertion_point(field_list:Protocol.BuffData.victims)
-  return _internal_victims();
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >*
-BuffData::_internal_mutable_victims() {
-  return &_impl_.victims_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >*
-BuffData::mutable_victims() {
-  // @@protoc_insertion_point(field_mutable_list:Protocol.BuffData.victims)
-  return _internal_mutable_victims();
+inline void PacketHeader2::set_size(uint32_t value) {
+  _internal_set_size(value);
+  // @@protoc_insertion_point(field_set:PacketHeader2.size)
 }
 
 // -------------------------------------------------------------------
@@ -522,7 +458,7 @@ inline uint64_t S_TEST::_internal_id() const {
   return _impl_.id_;
 }
 inline uint64_t S_TEST::id() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_TEST.id)
+  // @@protoc_insertion_point(field_get:S_TEST.id)
   return _internal_id();
 }
 inline void S_TEST::_internal_set_id(uint64_t value) {
@@ -531,7 +467,7 @@ inline void S_TEST::_internal_set_id(uint64_t value) {
 }
 inline void S_TEST::set_id(uint64_t value) {
   _internal_set_id(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_TEST.id)
+  // @@protoc_insertion_point(field_set:S_TEST.id)
 }
 
 // uint32 hp = 2;
@@ -542,7 +478,7 @@ inline uint32_t S_TEST::_internal_hp() const {
   return _impl_.hp_;
 }
 inline uint32_t S_TEST::hp() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_TEST.hp)
+  // @@protoc_insertion_point(field_get:S_TEST.hp)
   return _internal_hp();
 }
 inline void S_TEST::_internal_set_hp(uint32_t value) {
@@ -551,7 +487,7 @@ inline void S_TEST::_internal_set_hp(uint32_t value) {
 }
 inline void S_TEST::set_hp(uint32_t value) {
   _internal_set_hp(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_TEST.hp)
+  // @@protoc_insertion_point(field_set:S_TEST.hp)
 }
 
 // uint32 attack = 3;
@@ -562,7 +498,7 @@ inline uint32_t S_TEST::_internal_attack() const {
   return _impl_.attack_;
 }
 inline uint32_t S_TEST::attack() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_TEST.attack)
+  // @@protoc_insertion_point(field_get:S_TEST.attack)
   return _internal_attack();
 }
 inline void S_TEST::_internal_set_attack(uint32_t value) {
@@ -571,7 +507,27 @@ inline void S_TEST::_internal_set_attack(uint32_t value) {
 }
 inline void S_TEST::set_attack(uint32_t value) {
   _internal_set_attack(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_TEST.attack)
+  // @@protoc_insertion_point(field_set:S_TEST.attack)
+}
+
+// uint32 s_str = 4;
+inline void S_TEST::clear_s_str() {
+  _impl_.s_str_ = 0u;
+}
+inline uint32_t S_TEST::_internal_s_str() const {
+  return _impl_.s_str_;
+}
+inline uint32_t S_TEST::s_str() const {
+  // @@protoc_insertion_point(field_get:S_TEST.s_str)
+  return _internal_s_str();
+}
+inline void S_TEST::_internal_set_s_str(uint32_t value) {
+  
+  _impl_.s_str_ = value;
+}
+inline void S_TEST::set_s_str(uint32_t value) {
+  _internal_set_s_str(value);
+  // @@protoc_insertion_point(field_set:S_TEST.s_str)
 }
 
 #ifdef __GNUC__
@@ -582,7 +538,6 @@ inline void S_TEST::set_attack(uint32_t value) {
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace Protocol
 
 // @@protoc_insertion_point(global_scope)
 
