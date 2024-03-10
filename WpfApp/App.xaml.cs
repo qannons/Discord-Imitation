@@ -26,7 +26,7 @@ namespace WpfApp
 
         private void App_Startup(object sender, StartupEventArgs e)
         {
-            var mainView = Services.GetService<subWindow>();
+            var mainView = Services.GetService<MainWindow>();
             mainView.Show();
         }
 
@@ -53,7 +53,7 @@ namespace WpfApp
             
 
             //View
-            services.AddSingleton(s => new subWindow()
+            services.AddSingleton(s => new MainWindow()
             {
                 DataContext = s.GetRequiredService<SubMainViewModel>()
             });

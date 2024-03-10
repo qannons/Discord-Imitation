@@ -64,11 +64,22 @@ private:
 
 	void HandlePacket(BYTE* buffer, INT32 len)
 	{
-		//Protocol::S_TEST pkt;
+		Protocol::ChatMessage pkt;
 
-		//ASSERT_CRASH(pkt.ParseFromArray(buffer + sizeof(PacketHeader), len - sizeof(PacketHeader)));
-
-		//wcout << pkt.id() << " " << pkt.hp() << " " << pkt.attack() << endl;
+		if (pkt.ParseFromArray(buffer+sizeof(PacketHeader), len - sizeof(PacketHeader)))
+		{
+			cout << "Sender ID: " << pkt.sender().userid() << endl;
+			cout << "Username: " << pkt.sender().username() << endl;
+			cout << "Content: " << pkt.content() << endl;
+			cout << "Timestamp: " << pkt.timestamp() << endl;
+			cout << "Message Type: " << pkt.type() << endl;
+			cout << "Room ID: " << pkt.roomid() << endl;
+		}
+		else
+		{
+			return;
+		}
+		
 	}
 
 private:

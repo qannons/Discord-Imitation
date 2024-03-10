@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +11,14 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfApp.Model;
+using WpfApp.MVVM.ViewModel;
 
 namespace WpfApp.MVVM.View
 {
+    /// <summary>
+    /// subWindow.xaml에 대한 상호 작용 논리
+    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -48,9 +51,5 @@ namespace WpfApp.MVVM.View
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 
-        private void InputTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
     }
 }

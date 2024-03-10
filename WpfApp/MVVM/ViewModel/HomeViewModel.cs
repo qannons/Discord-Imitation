@@ -44,7 +44,7 @@ namespace WpfApp.MVVM.ViewModel
         private ChatRoom _selectedRoom;
 
         [ObservableProperty]
-        private string _timeStamp;
+        private string _timestamp;
 
         public List<ChatRoom> rooms { get; set; }
         public ObservableCollection<MinimalUser> friends { get; set; }
@@ -175,7 +175,7 @@ namespace WpfApp.MVVM.ViewModel
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                _timeStamp = formattedDate;
+                _timestamp = formattedDate;
                 _selectedRoom.Messages.Add(new Message("Server", message.Content));
             });
         }

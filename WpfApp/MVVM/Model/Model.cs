@@ -22,20 +22,23 @@ namespace WpfApp.Model
     public class Message
     {
         //생성자
-        public Message(string pSenderID, string pContent)
+        public Message(string pSenderID, string pContent, string pTimestamp)
         {
             MessageID = Guid.NewGuid().ToString();
             SenderID = pSenderID;
             Content = pContent;
+            Timestamp = pTimestamp;
             //Timestamp = DateTime.Now.ToString("yyyy.MM.dd tt hh:mm");
             IsRead = false;
         }
+        public Message(string pSenderID, string pContent)
+               : this(pSenderID, pContent, DateTime.Now.ToString("yyyy.MM.dd tt hh:mm")){  }
 
         //변수
         public string MessageID { get; set; }
         public string SenderID { get; set; }
         public string Content { get; set; }
-        //public string Timestamp { get; set; }
+        public string Timestamp { get; set; }
         public bool IsRead { get; set; }
     }
 }

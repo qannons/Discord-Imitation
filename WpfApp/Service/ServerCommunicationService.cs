@@ -10,6 +10,8 @@ using System.Diagnostics;
 using Google.Protobuf;
 using Protocol;
 using WpfApp.Model;
+using WpfApp.Protocol;
+using System.IO;
 
 namespace WpfApp.Service
 {
@@ -41,18 +43,45 @@ namespace WpfApp.Service
         {
             try
             {
-                byte[] buffer = new byte[68 + data.Length * 2];
-                //roomID.ToByteArray().CopyTo(buffer, 0);
-                
-                string s = roomID.ToString();
-                
-               // Encoding.Unicode.GetBytes(roomID.ToString()).CopyTo(buffer, 0);
-                //Encoding.Unicode.GetBytes(data.Length.ToString()).CopyTo(buffer, 16);
-                //Encoding.Unicode.GetBytes(data).CopyTo(buffer, 18);
-                Encoding.Unicode.GetBytes(data).CopyTo(buffer, 0);
-               
-                stream.Write(buffer, 0, buffer.Length);
-                
+                ChatMessage message = new ChatMessage();
+                {
+                    P_Sender sender = new P_Sender();
+                    sender.UserID = 1;
+                    sender.Username = "cannons";
+                    message.Sender = sender;
+                }
+                message.Content = data;
+
+                message.Timestamp = 100000;
+
+                message.Type = EP_MessageType.Text;
+
+                message.RoomID = "1212";
+
+                MyPacketHeader header = new MyPacketHeader();
+                header.id = 1;
+                header.size = (UInt16)(sizeof(MyPacketHeader)+message.CalculateSize());
+                using (var memoryStream = new MemoryStream())
+                {
+                    // PacketHeader를 바이트 배열로 변환하여 MemoryStream에 쓰기
+                    using (var writer = new BinaryWriter(memoryStream, Encoding.Default, true))
+                    {
+                        writer.Write(header.size);
+                        writer.Write(header.id);
+                    }
+
+                    // 현재 MemoryStream의 위치는 PacketHeader 다음 위치입니다.
+                    // 여기서부터 Protobuf 메시지를 직렬화하여 쓸 수 있습니다.
+                    message.WriteTo(memoryStream);
+
+                    // 최종 바이트 배열 가져오기
+                    byte[] finalBytes = memoryStream.ToArray();
+
+                    // finalBytes를 네트워크 스트림에 쓰기
+                    // 예: stream.Write(finalBytes, 0, finalBytes.Length);
+                    stream.Write(finalBytes, 0, finalBytes.Length);
+                }
+
             }
             catch (Exception e)
             {
