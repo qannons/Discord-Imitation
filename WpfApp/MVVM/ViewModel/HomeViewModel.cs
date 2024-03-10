@@ -43,6 +43,9 @@ namespace WpfApp.MVVM.ViewModel
         [ObservableProperty]
         private ChatRoom _selectedRoom;
 
+        [ObservableProperty]
+        private string _timeStamp;
+
         public List<ChatRoom> rooms { get; set; }
         public ObservableCollection<MinimalUser> friends { get; set; }
 
@@ -159,17 +162,22 @@ namespace WpfApp.MVVM.ViewModel
             ChatMessage message = ChatMessage.Parser.ParseFrom(buffer, headerSize, len - headerSize);
             Debug.WriteLine($"Received Sender: {message.Sender}");
             Debug.WriteLine($"Received Content: {message.Content}");
-            {
-                DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(message.Timestamp);
-                // 출력 형식 지정
-                string formattedDate = dateTimeOffset.ToString("yyyy.MM.dd. tt hh:mm");
-                Debug.WriteLine($"Received Time: {formattedDate}");
-            }
+
+            
+            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(message.Timestamp);
+            // 출력 형식 지정
+            string formattedDate = dateTimeOffset.ToString("yyyy.MM.dd. tt hh:mm");
+            Debug.WriteLine($"Received Time: {formattedDate}");
+            
             
             Debug.WriteLine($"Received Type: {message.Type}");
             Debug.WriteLine($"Received ID: {message.RoomID}");
-            
 
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _timeStamp = formattedDate;
+                _selectedRoom.Messages.Add(new Message("Server", message.Content));
+            });
         }
 
         //생성자
