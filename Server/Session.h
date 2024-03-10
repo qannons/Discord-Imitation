@@ -74,6 +74,8 @@ private:
 			cout << "Timestamp: " << pkt.timestamp() << endl;
 			cout << "Message Type: " << pkt.type() << endl;
 			cout << "Room ID: " << pkt.roomid() << endl;
+
+
 		}
 		else
 		{

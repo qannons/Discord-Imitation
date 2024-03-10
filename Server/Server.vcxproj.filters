@@ -90,9 +90,11 @@
     <ClInclude Include="PacketHeader.h">
       <Filter>Protocol</Filter>
     </ClInclude>
-    <ClInclude Include="ServerPacketHandler.h" />
     <ClInclude Include="Protocol.pb.h">
       <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerPacketHandler.h">
+      <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
