@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Org.BouncyCastle.Bcpg;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,9 +16,13 @@ using WpfApp.Database.Repo;
 using WpfApp.Model;
 using WpfApp.MVVM.Model;
 using WpfApp.MVVM.View.MainControls.SubControls;
+using WpfApp.Protocol;
 using WpfApp.Service;
 using WpfApp.Service.Interface;
 using WpfApp.Stores;
+using WpfApp.Protocol;
+using Protocol;
+using System.Diagnostics;
 
 namespace WpfApp.MVVM.ViewModel
 {
@@ -99,6 +104,10 @@ namespace WpfApp.MVVM.ViewModel
 
             int tmp2;
         }
+        enum PacketID : ushort
+        {
+            S_TEST = 1
+        };
 
         private void Recv()
         {
@@ -107,15 +116,48 @@ namespace WpfApp.MVVM.ViewModel
                 if (_selectedRoom == null)
                     continue;
                  
-                string recvData = _serverService.Recv();
-                Console.WriteLine("recvied: " + recvData);
-                recvData = recvData.Split('\0')[0];
-                Application.Current.Dispatcher.Invoke(() =>
-                {
+                (byte[], int) buffer = _serverService.Recv();
+                OnRecv(buffer.Item1, buffer.Item2);
+                //Console.WriteLine("recvied: " + recvData);
+                //recvData = recvData.Split('\0')[0];
+                //Application.Current.Dispatcher.Invoke(() =>
+                //{
 
-                    _selectedRoom.Messages.Add(new Message("Server", recvData));
-                });
+                //    _selectedRoom.Messages.Add(new Message("Server", recvData));
+                //});
             }
+        }
+
+        private void OnRecv(byte[] buffer, int len)
+        {
+        unsafe
+            {
+                fixed (byte* ptr = &buffer[0])
+                {
+                    PacketHeader header = *(PacketHeader*)ptr;
+                    switch((PacketID)header.id)
+                    {
+                        case PacketID.S_TEST:
+                            Handle_S_TEST(buffer, len);
+                            break;
+
+                    }
+                }
+            }
+        }
+
+        unsafe void Handle_S_TEST(byte[] buffer, int len)
+        {
+            S_TEST pkt = S_TEST.Parser.ParseFrom(buffer, sizeof(PacketHeader), len - sizeof(PacketHeader));
+            Debug.WriteLine($"Received ID: {pkt.Id}");
+            Debug.WriteLine($"Received HP: {pkt.Hp}");
+            Debug.WriteLine($"Received Attack: {pkt.Attack}");
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+
+                _selectedRoom.Messages.Add(new Message("Server", pkt.Hp.ToString()));
+            });
         }
 
         //생성자

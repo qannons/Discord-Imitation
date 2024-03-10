@@ -9,6 +9,7 @@ using WpfApp.Service.Interface;
 using System.Diagnostics;
 using Google.Protobuf;
 using Protocol;
+using WpfApp.Protocol;
 namespace WpfApp.Service
 {
     internal class ServerCommunicationService : IServerCommunicationService
@@ -35,7 +36,7 @@ namespace WpfApp.Service
             }
         }
 
-        public void Send(Guid roomID, string data)
+        public unsafe void Send(Guid roomID, string data)
         {
             try
             {
@@ -44,10 +45,20 @@ namespace WpfApp.Service
                 
                 string s = roomID.ToString();
                 
+                PacketHeader header = new PacketHeader();
+                header.id = (ushort)ePacketID.S_TEST;
+                header.size = (ushort)(data.Length + sizeof(PacketHeader));
+
+                S_TEST s_TEST = new S_TEST();
+                s_TEST.Id = 10;
+                s_TEST.Attack = 20;
+                s_TEST.Hp = 30;
+                s_TEST.WriteTo(stream);
                // Encoding.Unicode.GetBytes(roomID.ToString()).CopyTo(buffer, 0);
                 //Encoding.Unicode.GetBytes(data.Length.ToString()).CopyTo(buffer, 16);
                 //Encoding.Unicode.GetBytes(data).CopyTo(buffer, 18);
                 Encoding.Unicode.GetBytes(data).CopyTo(buffer, 0);
+               
                 stream.Write(buffer, 0, buffer.Length);
                 
             }
@@ -57,35 +68,52 @@ namespace WpfApp.Service
             }
         }
 
-        public string Recv()
+        public (byte[], int) Recv()
         {
-            try
+            byte[] buffer = new byte[512];
+            int bytesRead = stream.Read(buffer, 0, buffer.Length);
+
+            return (buffer, bytesRead);
+            OnRecv(buffer, bytesRead);  
+        }
+
+        public int OnRecv(byte[] buffer, int len)
+        {
+            int processLen = 0;
+
+            unsafe
             {
-                
-                byte[] buffer = new byte[512];
-                int bytesRead = stream.Read(buffer, 0, buffer.Length);
-                //string receivedData = Encoding.UTF8.GetString(buffer, 1, bytesRead);
-                //string receivedData = Encoding.Unicode.GetString(buffer, 0, bytesRead);
-                byte[] dest = new byte[6];
+                fixed (byte* p = buffer)
+                {
+                    while (true)
+                    {
+                        int dataSize = len - processLen;
+                        if (dataSize < sizeof(PacketHeader))
+                            break;
 
-                Array.Copy(buffer, 0, dest, 0, 6);
-
-                S_TEST receivedMessage = S_TEST.Parser.ParseFrom(dest);
-
-                // 수신한 메시지의 값을 출력 또는 처리
-                Debug.WriteLine($"Received ID: {receivedMessage.Id}");
-                Debug.WriteLine($"Received HP: {receivedMessage.Hp}");
-                Debug.WriteLine($"Received Attack: {receivedMessage.Attack}");
-
-
-                return receivedMessage.Attack.ToString();
-                //return receivedData;
+                        PacketHeader* headerPtr = (PacketHeader*)(p + processLen);
+                        PacketHeader header = *headerPtr;
+                        if (dataSize < header.size)
+                            break;
+                        byte[] tmp = new byte[dataSize];
+                        Buffer.BlockCopy(buffer, processLen, tmp, 0, header.size);
+                        //OnRecvPacket(p + processLen, header.size);
+                        HandlePacket(tmp, header.size);
+                        processLen += header.size;
+                    }
+                }
             }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Failed to receive data: " + e.Message);
-                return "";
-            }
+            return processLen;
+        }
+
+        unsafe void HandlePacket(byte[] buffer,  int len)
+        {
+            S_TEST pkt = S_TEST.Parser.ParseFrom(buffer, sizeof(PacketHeader), len - sizeof(PacketHeader));
+            //S_TEST pkt =  S_TEST.Parser.ParseFrom(buffer + sizeof(PacketHeader), len - sizeof(PacketHeader));
+            Debug.WriteLine($"Received ID: {pkt.Id}");
+            Debug.WriteLine($"Received HP: {pkt.Hp}");
+            Debug.WriteLine($"Received Attack: {pkt.Attack}");
+
         }
 
         public void Disconnect()

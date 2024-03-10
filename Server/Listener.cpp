@@ -39,7 +39,7 @@ void Listener::Init(wstring ip, INT16 port)
 	//::InetPtonW(AF_INET, ip.c_str(), &_addr);
 	_addr.sin_port = ::htons(port);
 
-	if (bind(_socket, reinterpret_cast<const SOCKADDR*>(&_addr), sizeof(SOCKADDR_IN)) == SOCKET_ERROR)
+	if (::bind(_socket, reinterpret_cast<SOCKADDR*>(& _addr), sizeof(SOCKADDR_IN)) == SOCKET_ERROR)
 	{
 		int err = WSAGetLastError();
 		cout << err << endl;
@@ -47,6 +47,12 @@ void Listener::Init(wstring ip, INT16 port)
 	}
 
 	if (::listen(_socket, SOMAXCONN) == SOCKET_ERROR)
+	{
+		int err = WSAGetLastError();
+		cout << err << endl;
+		return;
+		
+	}
 		return;
 }
 

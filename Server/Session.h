@@ -2,6 +2,8 @@
 #include "IocpCore.h"
 #include "IocpEvent.h"
 #include "RecvBuffer.h"
+#include "Protocol.pb.h"
+#include "PacketHeader.h"
 
 class Session : public IocpObject
 {
@@ -37,12 +39,36 @@ private:
 
 	INT32 OnRecv(BYTE* buffer, INT32 len) 
 	{
-		WCHAR tmp[1024];
-		memcpy(tmp, buffer, len);
-		std::wcout.imbue(std::locale("korean"));
+		INT32 processLen = 0;
 
-		wcout << tmp;
-		return len;
+		while (true)
+		{
+			INT32 dataSize = len - processLen;
+			// 최소한 헤더는 파싱할 수 있어야 한다
+			if (dataSize < sizeof(PacketHeader))
+				break;
+
+			PacketHeader header = *(reinterpret_cast<PacketHeader*>(&buffer[processLen]));
+			// 헤더에 기록된 패킷 크기를 파싱할 수 있어야 한다
+			if (dataSize < header.size)
+				break;
+
+			// 패킷 조립 성공
+			HandlePacket(&buffer[processLen], header.size);
+
+			processLen += header.size;
+		}
+
+		return processLen;
+	}
+
+	void HandlePacket(BYTE* buffer, INT32 len)
+	{
+		Protocol::S_TEST pkt;
+
+		ASSERT_CRASH(pkt.ParseFromArray(buffer + sizeof(PacketHeader), len - sizeof(PacketHeader)));
+
+		wcout << pkt.id() << " " << pkt.hp() << " " << pkt.attack() << endl;
 	}
 
 private:

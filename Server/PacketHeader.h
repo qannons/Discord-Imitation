@@ -1,6 +1,7 @@
 #pragma once
 
-enum PacketID
+//Server ÄÚµå
+enum PacketID  : UINT16
 {
 	S_TEST = 1
 };
