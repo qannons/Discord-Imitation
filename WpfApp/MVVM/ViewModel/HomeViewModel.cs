@@ -132,16 +132,15 @@ namespace WpfApp.MVVM.ViewModel
         {
         unsafe
             {
-                fixed (byte* ptr = &buffer[0])
+                fixed (byte* ptr = buffer)
                 {
-                    PacketHeader header = *(PacketHeader*)ptr;
+                    MyPacketHeader* header = (MyPacketHeader*)ptr;
+                    //int headerSize = sizeof(MyPacketHeader);
 
-                    PacketHeader h =
-
-                    switch((PacketID)header.id)
+                    switch((PacketID)header->id)
                     {
                         case PacketID.S_TEST:
-                            Handle_S_TEST(buffer, len);
+                            Handle_P_ChatMessage(buffer, len);
                             break;
 
                     }
@@ -149,18 +148,28 @@ namespace WpfApp.MVVM.ViewModel
             }
         }
 
-        unsafe void Handle_S_TEST(byte[] buffer, int len)
+        unsafe void Handle_P_ChatMessage(byte[] buffer, int len)
         {
-            S_TEST pkt = S_TEST.Parser.ParseFrom(buffer, sizeof(PacketHeader), len - sizeof(PacketHeader));
-            Debug.WriteLine($"Received ID: {pkt.Id}");
-            Debug.WriteLine($"Received HP: {pkt.Hp}");
-            Debug.WriteLine($"Received Attack: {pkt.Attack}");
+            //Application.Current.Dispatcher.Invoke(() =>
+            //{
 
-            Application.Current.Dispatcher.Invoke(() =>
+            //    _selectedRoom.Messages.Add(new Message("Server", pkt.Hp.ToString()));
+            //});
+            int headerSize = sizeof(MyPacketHeader);
+            ChatMessage message = ChatMessage.Parser.ParseFrom(buffer, headerSize, len - headerSize);
+            Debug.WriteLine($"Received Sender: {message.Sender}");
+            Debug.WriteLine($"Received Content: {message.Content}");
             {
+                DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(message.Timestamp);
+                // 출력 형식 지정
+                string formattedDate = dateTimeOffset.ToString("yyyy.MM.dd. tt hh:mm");
+                Debug.WriteLine($"Received Time: {formattedDate}");
+            }
+            
+            Debug.WriteLine($"Received Type: {message.Type}");
+            Debug.WriteLine($"Received ID: {message.RoomID}");
+            
 
-                _selectedRoom.Messages.Add(new Message("Server", pkt.Hp.ToString()));
-            });
         }
 
         //생성자

@@ -68,18 +68,6 @@ namespace WpfApp.Service
             return (buffer, bytesRead);
         }
 
-        
-
-        unsafe void HandlePacket(byte[] buffer,  int len)
-        {
-            S_TEST pkt = S_TEST.Parser.ParseFrom(buffer, sizeof(PacketHeader), len - sizeof(PacketHeader));
-            //S_TEST pkt =  S_TEST.Parser.ParseFrom(buffer + sizeof(PacketHeader), len - sizeof(PacketHeader));
-            Debug.WriteLine($"Received ID: {pkt.Id}");
-            Debug.WriteLine($"Received HP: {pkt.Hp}");
-            Debug.WriteLine($"Received Attack: {pkt.Attack}");
-
-        }
-
         public void Disconnect()
         {
             stream.Close();
