@@ -13,12 +13,14 @@ using WpfApp.Model;
 using WpfApp.Protocol;
 using System.IO;
 using WpfApp.MVVM.Model;
+using System.Threading;
 
 namespace WpfApp.Service
 {
     internal class ServerCommunicationService : IServerCommunicationService
     {
-        //Private 변수
+        //변수
+        private bool _connected = false;
         private TcpClient client;
         private NetworkStream stream;
         //생성자
@@ -27,16 +29,19 @@ namespace WpfApp.Service
             client = new TcpClient();
         }
 
-        public void Connect(string serverIp, int serverPort)
+        public bool Connect(string serverIp, int serverPort)
         {
             try
             {
                 client.Connect(serverIp, serverPort);
                 stream = client.GetStream();
+                Volatile.Write(ref _connected, true);
+                return true;
             }
             catch (Exception e)
             {
                 Debug.WriteLine("Failed to connect to server: " + e.Message);
+                return false;
             }
         }
 
@@ -90,12 +95,21 @@ namespace WpfApp.Service
             }
         }
 
-        public (byte[], int) Recv()
+        public MyBuffer? Recv()
         {
+            if (!_connected)
+                return null;
+
             byte[] buffer = new byte[512];
             int bytesRead = stream.Read(buffer, 0, buffer.Length);
 
-            return (buffer, bytesRead);
+            MyBuffer ret = new MyBuffer
+            {
+                buffer = buffer,
+                len = bytesRead
+            };
+
+            return ret;
         }
 
         public void Disconnect()
@@ -108,6 +122,17 @@ namespace WpfApp.Service
         {
             public Int32 size;
             public string data;
+        }
+    }
+
+    public struct MyBuffer
+    {
+        public byte[] buffer;
+        public int len;
+
+        public MyBuffer(byte[] pBuffer, int pLen)
+        {
+            buffer = pBuffer; len = pLen;
         }
     }
 }

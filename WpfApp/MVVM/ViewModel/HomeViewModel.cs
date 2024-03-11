@@ -20,9 +20,9 @@ using WpfApp.Protocol;
 using WpfApp.Service;
 using WpfApp.Service.Interface;
 using WpfApp.Stores;
-using WpfApp.Protocol;
 using Protocol;
 using System.Diagnostics;
+
 
 namespace WpfApp.MVVM.ViewModel
 {
@@ -55,6 +55,9 @@ namespace WpfApp.MVVM.ViewModel
         [ObservableProperty]
         private string _userName = "UserName";
 
+        [ObservableProperty]
+        private eSTATE _userState = eSTATE.Offline;
+
         private void Init()
         {
             if(_store.CurrentUser != null)
@@ -63,10 +66,17 @@ namespace WpfApp.MVVM.ViewModel
             CurrentSubViewModel = new FriendSubView();
 
             //통신 부분
-            _serverService.Connect("127.0.0.1", 7777);
-
-            Thread thread = new Thread(Recv);
-            thread.Start();
+            if(_serverService.Connect("127.0.0.1", 7777))
+            {
+                _userState = eSTATE.Online;
+                Thread thread = new Thread(Recv);
+                thread.Start();
+            }
+            else
+            {
+                Debug.Print("연결실패");
+                _userState = eSTATE.Offline;
+            }
 
             //친구 목록 불러오기
             //friends = _userRepo.SelectAllFriends(_store.CurrentUser.ID);
@@ -118,16 +128,18 @@ namespace WpfApp.MVVM.ViewModel
             {
                 if (_selectedRoom == null)
                     continue;
-                 
-                (byte[], int) buffer = _serverService.Recv();
-                OnRecv(buffer.Item1, buffer.Item2);
-                //Console.WriteLine("recvied: " + recvData);
-                //recvData = recvData.Split('\0')[0];
-                //Application.Current.Dispatcher.Invoke(() =>
-                //{
+                
 
-                //    _selectedRoom.Messages.Add(new Message("Server", recvData));
-                //});
+                 MyBuffer? readBuffer = _serverService.Recv();
+                if(readBuffer.HasValue)
+                {
+                    OnRecv(readBuffer.Value.buffer, readBuffer.Value.len);
+                }
+                else
+                {
+                    _userState = eSTATE.Offline;
+                    Debug.Print("Buffer zero");
+                }
             }
         }
 

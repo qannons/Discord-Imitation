@@ -52,7 +52,7 @@
 
                 <StackPanel VerticalAlignment="Center">
                     <Label Content="{Binding UserName}" Foreground="White" FontWeight="SemiBold" Margin="0, -5, 0, -5"/>
-                    <Label Content="온라인" Foreground="Gray" FontWeight="SemiBold" Margin="0, -7, 0, -5" FontSize="8"/>
+                    <Label Content="{Binding UserState}" Foreground="Gray" FontWeight="SemiBold" Margin="0, -7, 0, -5" FontSize="8"/>
                 </StackPanel>
 
             </StackPanel>

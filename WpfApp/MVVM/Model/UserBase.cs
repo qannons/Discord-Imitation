@@ -15,7 +15,7 @@ namespace WpfApp.MVVM.Model
         //string picture;
     }
 
-    public enum eSTATUS
+    public enum eSTATE
     {
         Online,
         Offline,
@@ -24,6 +24,6 @@ namespace WpfApp.MVVM.Model
 
     public class MinimalUser : UserBase
     {
-        public  eSTATUS Status { get; set; }
+        public eSTATE Status { get; set; }
     }
 }
