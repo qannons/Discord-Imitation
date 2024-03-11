@@ -1,49 +1,63 @@
 #include "pch.h"
 #include "ServerPacketHandler.h"
 #include "PacketHeader.h"
+#include "IocpCore.h"
+//BYTE* ServerPacketHandler::Handle_P_ChatMessage(Protocol::P_ChatMessage& pkt, UINT16 pktId)
+//{
+//    BYTE* buffer = new BYTE[pkt.ByteSizeLong()+sizeof(PacketHeader)];
+//    PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
+//    header->id = pktId;
+//    header->size = pkt.ByteSizeLong() + sizeof(PacketHeader); //기본 값 설정
+//    return nullptr;
+//}
 
-BYTE* ServerPacketHandler::Handle_P_ChatMessage(Protocol::ChatMessage& pkt, UINT16 pktId)
+BYTE* ServerPacketHandler::Handle_P_ChatMessage(BYTE* buffer, INT32 len)
 {
-    BYTE* buffer = new BYTE[pkt.ByteSizeLong()+sizeof(PacketHeader)];
-    PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
-    header->id = pktId;
-    header->size = pkt.ByteSizeLong() + sizeof(PacketHeader); //기본 값 설정
-    return nullptr;
+    Protocol::P_ChatMessage pkt;
+
+    if (pkt.ParseFromArray(buffer + sizeof(PacketHeader), len - sizeof(PacketHeader)))
+    {
+        cout << "Message ID: " << pkt.base().messageid() << endl;				//1
+        cout << "Room ID: " << pkt.base().roomid() << endl;							//3
+        cout << "Sender ID: " << pkt.base().sender().userid() << endl;			//4
+        cout << "Username: " << pkt.base().sender().username() << endl;	//4
+        cout << "Timestamp: " << pkt.base().timestamp() << endl;				//5	
+
+        cout << "Content: " << pkt.content() << endl;										//2-2
+
+        //tmp;
+        GIocpCore.Broadcast(buffer, len);
+    }
+    else
+    {
+        return;
+    }
+    //GIocpCore.Broadcast(pkt, 1);
 }
 
-BYTE* ServerPacketHandler::Handle_P_ChatMessage2(Protocol::ChatMessage& pkt)
+BYTE* ServerPacketHandler::Handle_P_ImageMessage(BYTE* buffer, INT32 len)
 {
-    //Protocol::ChatMessage message;
-    //{
-    //    Protocol::P_Sender* sender = new Protocol::P_Sender;
-    //    sender->set_userid(1);
-    //    sender->set_username("cannons");
-    //    message.set_allocated_sender(sender);
-    //}
+    Protocol::P_ImageMessage pkt;
 
-    //message.set_content("Hello World!");
+    if (pkt.ParseFromArray(buffer + sizeof(PacketHeader), len - sizeof(PacketHeader)))
+    {
+        cout << "Message ID: " << pkt.base().messageid() << endl;				//1
+        cout << "Room ID: " << pkt.base().roomid() << endl;							//3
+        cout << "Sender ID: " << pkt.base().sender().userid() << endl;			//4
+        cout << "Username: " << pkt.base().sender().username() << endl;	//4
+        cout << "Timestamp: " << pkt.base().timestamp() << endl;				//5	
 
-    //{
-    //    auto now = std::chrono::system_clock::now();
-    //    auto timestamp = std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch()).count();
-    //    message.set_timestamp(timestamp);
-    //}
+        cout << "Content: " << pkt.content() << endl;										//2-2
 
-    //message.set_type(Protocol::EP_MessageType::TEXT);
+        //tmp;
+        GIocpCore.Broadcast(buffer, len);
+    }
+    else
+    {
+        return;
+    }
+    //GIocpCore.Broadcast(pkt, 1);
 
-    //message.set_roomid("1212");
-
-    //const INT32  messageSize = message.ByteSizeLong();
-
-    //BYTE* byte_array = new BYTE[messageSize + sizeof(PacketHeader)];
-    //PacketHeader* header = reinterpret_cast<PacketHeader*>(byte_array);
-    //header->id = 1;
-    //header->size = messageSize + sizeof(PacketHeader); //기본 값 설정
-
-    //if (message.SerializeToArray(byte_array + sizeof(PacketHeader), messageSize))
-    //{
-    //    return byte_array;
-    //}
-    //else
-        return nullptr;
+    
 }
+

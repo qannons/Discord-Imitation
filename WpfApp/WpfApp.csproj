@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="R\Icons\AddUser.png" />
+    <None Remove="R\Icons\Call.png" />
+    <None Remove="R\Icons\Plus.png" />
+    <None Remove="R\Icons\VideoCall.png" />
     <None Remove="R\Images\LoginBackground.jpg" />
     <None Remove="R\Images\LoginBackground2.jpeg" />
     <None Remove="R\Images\LoginBackground3.jpg" />
@@ -35,6 +39,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="R\Icons\AddUser.png" />
+    <Resource Include="R\Icons\Call.png" />
+    <Resource Include="R\Icons\Plus.png" />
+    <Resource Include="R\Icons\VideoCall.png" />
     <Resource Include="R\Images\LoginBackground.jpg" />
     <Resource Include="R\Images\LoginBackground2.jpeg" />
     <Resource Include="R\Images\LoginBackground3.jpg" />

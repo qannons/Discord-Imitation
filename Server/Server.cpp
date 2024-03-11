@@ -24,9 +24,9 @@ int main()
         //PacketHeader header;
         //header.id = 1;
         //header.size = sizeof(PacketHeader); //기본 값 설정
+        Protocol::
 
-
-        Protocol::ChatMessage message;
+       /* Protocol::P_ChatMessage message;
         {
             Protocol::P_Sender* sender = new Protocol::P_Sender;
             sender->set_userid(1);
@@ -40,7 +40,7 @@ int main()
             auto now = std::chrono::system_clock::now();
             auto timestamp = std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch()).count();
             message.set_timestamp(timestamp);
-        }
+        }*/
 
         message.set_type(Protocol::EP_MessageType::TEXT);
 

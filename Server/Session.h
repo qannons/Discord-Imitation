@@ -4,6 +4,7 @@
 #include "RecvBuffer.h"
 #include "Protocol.pb.h"
 #include "PacketHeader.h"
+#include "ServerPacketHandler.h"
 
 class Session : public IocpObject
 {
@@ -54,7 +55,7 @@ private:
 				break;
 
 			 //패킷 조립 성공
-			HandlePacket(&buffer[processLen], header.size);
+			HandlePacket(&buffer[processLen], header.size, (ePacketID)header.id);
 
 			processLen += header.size;
 		}
@@ -62,27 +63,17 @@ private:
 		return processLen;
 	}
 
-	void HandlePacket(BYTE* buffer, INT32 len)
+	void HandlePacket(BYTE* buffer, INT32 len, ePacketID ID)
 	{
-		Protocol::ChatMessage pkt;
-
-		if (pkt.ParseFromArray(buffer+sizeof(PacketHeader), len - sizeof(PacketHeader)))
+		switch (ID)
 		{
-			cout << "Sender ID: " << pkt.sender().userid() << endl;
-			cout << "Username: " << pkt.sender().username() << endl;
-			cout << "Content: " << pkt.content() << endl;
-			cout << "Timestamp: " << pkt.timestamp() << endl;
-			cout << "Message Type: " << pkt.type() << endl;
-			cout << "Room ID: " << pkt.roomid() << endl;
-				
-			//tmp;
-			GIocpCore.Broadcast(buffer, len);
+		case ePacketID::CHAT_MESSAGE:
+			ServerPacketHandler::Handle_P_ChatMessage3(buffer, len);
+			break;
+		case ePacketID::IMAGE_MESSAGE:
+			ServerPacketHandler::Handle_P_ImageMessage(buffer, len);
+			break;
 		}
-		else
-		{
-			return;
-		}
-		//GIocpCore.Broadcast(pkt, 1);
 	}
 
 private:

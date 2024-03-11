@@ -22,6 +22,9 @@ using WpfApp.Service.Interface;
 using WpfApp.Stores;
 using Protocol;
 using System.Diagnostics;
+using Microsoft.Win32;
+using System.IO;
+using System.Reflection.Metadata;
 
 
 namespace WpfApp.MVVM.ViewModel
@@ -29,6 +32,7 @@ namespace WpfApp.MVVM.ViewModel
     [ObservableObject]
     public partial class HomeViewModel
     {
+
         private UserRepo _userRepo;
         private HomeStore _store;
         private ServerCommunicationService _serverService;
@@ -60,6 +64,8 @@ namespace WpfApp.MVVM.ViewModel
 
         private void Init()
         {
+            Test = "";
+
             if(_store.CurrentUser != null)
                 UserName = _store.CurrentUser.Nickname;
             //기본 화면은 FriendView
@@ -83,12 +89,40 @@ namespace WpfApp.MVVM.ViewModel
         }
 
         [RelayCommand]
+        private void ImageSend()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "이미지 파일|*.jpg;*.jpeg;*.png;*.gif|모든 파일|*.*";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // 선택한 이미지 파일의 경로 가져오기
+                string imagePath = openFileDialog.FileName;
+
+                // 이미지 파일을 바이트 배열로 변환
+                byte[] imageData = File.ReadAllBytes(imagePath);
+
+
+                //이미지를 서버로 전송
+                if (imageData != null)
+                {
+                    //bool success = await SendImageToServerAsync(imageData);
+                    //_serverService.Send(SelectedRoom.RoomID, imageData.ToString(), _store.CurrentUser, 1);
+
+                }
+            }
+        }
+
+        [RelayCommand]
         private void Enter(object pUserInput)
         {
+
             if (Test.Length == 0)
                     return;
+
+            
             SelectedRoom.Messages.Add(new Message(UserName, Test));
-            _serverService.Send(SelectedRoom.RoomID, Test, _store.CurrentUser);
+            //_serverService.Send(SelectedRoom.RoomID, Test, _store.CurrentUser);
             Test = "";
         }
 
@@ -149,7 +183,7 @@ namespace WpfApp.MVVM.ViewModel
             {
                 fixed (byte* ptr = buffer)
                 {
-                    MyPacketHeader* header = (MyPacketHeader*)ptr;
+                    PacketHeader* header = (PacketHeader*)ptr;
                     //int headerSize = sizeof(MyPacketHeader);
 
                     switch((PacketID)header->id)
@@ -165,38 +199,22 @@ namespace WpfApp.MVVM.ViewModel
 
         unsafe void Handle_P_ChatMessage(byte[] buffer, int len)
         {
+            //int headerSize = sizeof(PacketHeader);
+            //P_ChatMessage message = P_ChatMessage.Parser.ParseFrom(buffer, headerSize, len - headerSize);
+            //if (message.Sender.UserID == _store.CurrentUser?.ID)
+            //{
+            //    return;
+            //}
+
+            //DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(message.Timestamp);
+            //// 출력 형식 지정
+            //string formattedDate = dateTimeOffset.ToString("yyyy.MM.dd. tt hh:mm");
+
             //Application.Current.Dispatcher.Invoke(() =>
             //{
-
-            //    _selectedRoom.Messages.Add(new Message("Server", pkt.Hp.ToString()));
+            //    _timestamp = formattedDate;
+            //    _selectedRoom.Messages.Add(new Message(message.Sender.Username, message.Content));
             //});
-
-            
-
-            int headerSize = sizeof(MyPacketHeader);
-            ChatMessage message = ChatMessage.Parser.ParseFrom(buffer, headerSize, len - headerSize);
-            if (message.Sender.UserID == _store.CurrentUser?.ID)
-            {
-                return;
-            }
-            Debug.WriteLine($"Received Sender: {message.Sender}");
-            Debug.WriteLine($"Received Content: {message.Content}");
-
-            
-            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(message.Timestamp);
-            // 출력 형식 지정
-            string formattedDate = dateTimeOffset.ToString("yyyy.MM.dd. tt hh:mm");
-            Debug.WriteLine($"Received Time: {formattedDate}");
-            
-            
-            Debug.WriteLine($"Received Type: {message.Type}");
-            Debug.WriteLine($"Received ID: {message.RoomID}");
-
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                _timestamp = formattedDate;
-                _selectedRoom.Messages.Add(new Message(message.Sender.Username, message.Content));
-            });
         }
 
         //생성자
@@ -207,7 +225,6 @@ namespace WpfApp.MVVM.ViewModel
             _serverService = (ServerCommunicationService)pServerCommunicationService;
             Init();
 
-            
             rooms = new List<ChatRoom>
             {
                 //new ChatRoom{RoomID="123", RoomName="Room1", Members=new List<User>{}, Messages=new List<Message>{ }},
@@ -224,4 +241,5 @@ namespace WpfApp.MVVM.ViewModel
             Activator.CreateInstance(pageType);
         }
     }
+
 }

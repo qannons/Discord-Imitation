@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,23 @@ namespace WpfApp.MVVM.View.MainControls.SubControls
         public DirectMessageSubView()
         {
             InitializeComponent();
+        }
+
+        private void AttachFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "이미지 파일|*.jpg;*.jpeg;*.png;*.gif|모든 파일|*.*";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // 선택한 파일의 경로 가져오기
+                string selectedImagePath = openFileDialog.FileName;
+
+                // 이미지 파일 경로를 TextBox에 표시
+                UserInputBox.Text = selectedImagePath;
+
+                // 여기에서 선택한 이미지 파일을 다른 곳에 저장하거나 사용하는 추가적인 로직을 추가할 수 있습니다.
+            }
         }
     }
 }

@@ -1,9 +1,10 @@
 #pragma once
 
 //Server ÄÚµå
-enum PacketID  : UINT16
+enum ePacketID  : UINT16
 {
-	S_TEST = 1
+	CHAT_MESSAGE = 0,
+	IMAGE_MESSAGE = 1
 };
 
 

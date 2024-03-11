@@ -45,53 +45,69 @@ namespace WpfApp.Service
             }
         }
 
-        public unsafe void Send(Guid roomID, string data, User user)
+        public unsafe void Send(Guid roomID, string data, User user, ePacketID messageID = 0)
         {
-            try
+            switch(messageID)
             {
-                ChatMessage message = new ChatMessage();
-                {
-                    P_Sender sender = new P_Sender();
-                    sender.UserID = user.ID;
-                    sender.Username = user.Name;
-                    message.Sender = sender;
-                }
-                message.Content = data;
-
-                message.Timestamp = 100000;
-
-                message.Type = EP_MessageType.Text;
-
-                message.RoomID = "1212";
-
-                MyPacketHeader header = new MyPacketHeader();
-                header.id = 1;
-                header.size = (UInt16)(sizeof(MyPacketHeader)+message.CalculateSize());
-                using (var memoryStream = new MemoryStream())
-                {
-                    // PacketHeader를 바이트 배열로 변환하여 MemoryStream에 쓰기
-                    using (var writer = new BinaryWriter(memoryStream, Encoding.Default, true))
+                case ePacketID.CHAT_MESSAGE:          
+                    try
                     {
-                        writer.Write(header.size);
-                        writer.Write(header.id);
+                        P_ChatMessage message = new P_ChatMessage();
+                        //1
+                        message.Base.MessageID = "tmpID";
+                        //2
+                        message.Base.RoomID = "1212";
+                        //3
+                        {
+                            P_Sender sender = new P_Sender();
+                            sender.UserID = user.ID;
+                            sender.Username = user.Name;
+                            message.Base.Sender = sender;
+                        }
+                        //4
+                        message.Content = data;
+
+                        //5
+                        //message.ExtraContent = ;
+                        //6
+                        //message.Timestamp = 100000;
+
+                        //message.Type = EP_MessageType.Text;
+
+
+                        PacketHeader header = new PacketHeader();
+                        header.id = 1;
+                        header.size = (UInt16)(sizeof(PacketHeader)+message.CalculateSize());
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            // PacketHeader를 바이트 배열로 변환하여 MemoryStream에 쓰기
+                            using (var writer = new BinaryWriter(memoryStream, Encoding.Default, true))
+                            {
+                                writer.Write(header.size);
+                                writer.Write(header.id);
+                            }
+
+                            // 현재 MemoryStream의 위치는 PacketHeader 다음 위치입니다.
+                            // 여기서부터 Protobuf 메시지를 직렬화하여 쓸 수 있습니다.
+                            message.WriteTo(memoryStream);
+
+                            // 최종 바이트 배열 가져오기
+                            byte[] finalBytes = memoryStream.ToArray();
+
+                            // finalBytes를 네트워크 스트림에 쓰기
+                            // 예: stream.Write(finalBytes, 0, finalBytes.Length);
+                            stream.Write(finalBytes, 0, finalBytes.Length);
+                        }
+
                     }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine("Failed to send data: " + e.Message);
+                    }
+                    break;
 
-                    // 현재 MemoryStream의 위치는 PacketHeader 다음 위치입니다.
-                    // 여기서부터 Protobuf 메시지를 직렬화하여 쓸 수 있습니다.
-                    message.WriteTo(memoryStream);
-
-                    // 최종 바이트 배열 가져오기
-                    byte[] finalBytes = memoryStream.ToArray();
-
-                    // finalBytes를 네트워크 스트림에 쓰기
-                    // 예: stream.Write(finalBytes, 0, finalBytes.Length);
-                    stream.Write(finalBytes, 0, finalBytes.Length);
-                }
-
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("Failed to send data: " + e.Message);
+                //case ePacketID.IMAGE:
+                //    break;
             }
         }
 
