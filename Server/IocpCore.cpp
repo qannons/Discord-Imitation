@@ -61,6 +61,11 @@ void IocpCore::Broadcast(BYTE* buffer, INT32 len)
 	}
 }
 
+//void IocpCore::Broadcast(Protocol::ChatMessage& pkt, UINT16 pktId)
+//{
+//
+//}
+
 void IocpCore::Add(SessionRef session)
 {
 	lock_guard<mutex> lock(_mutex);

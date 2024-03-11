@@ -1,5 +1,6 @@
 #pragma once
 #include "IocpEvent.h"
+
 /*----------------
 	IocpObject
 -----------------*/
@@ -28,6 +29,10 @@ public:
 
 public:
 	void Broadcast(BYTE* buffer, INT32 len);
+
+
+	//void Broadcast(Protocol::ChatMessage& pkt, UINT16 pktId);
+	
 	void Add(SessionRef session);
 	void Remove(SessionRef session);
 	//void Broadcast(SendBufferRef sendBuffer);

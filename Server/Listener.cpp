@@ -9,6 +9,8 @@ Listener::~Listener()
 }
 void Listener::StartAccept()
 {
+	while (true)
+	{
 			SOCKADDR_IN clientAddr;
 			INT addrLen = sizeof(clientAddr);
 			SOCKET clientSocket = ::accept(_socket, (SOCKADDR*)&clientAddr, &addrLen);
@@ -26,6 +28,7 @@ void Listener::StartAccept()
 
 			session->Connect();
 			//session->RegisterRecv();
+	}
 }
 
 

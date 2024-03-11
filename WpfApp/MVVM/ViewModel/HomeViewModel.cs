@@ -78,7 +78,7 @@ namespace WpfApp.MVVM.ViewModel
             if (Test.Length == 0)
                     return;
             SelectedRoom.Messages.Add(new Message(UserName, Test));
-            _serverService.Send(SelectedRoom.RoomID, Test);
+            _serverService.Send(SelectedRoom.RoomID, Test, _store.CurrentUser);
             Test = "";
         }
 
@@ -158,8 +158,15 @@ namespace WpfApp.MVVM.ViewModel
 
             //    _selectedRoom.Messages.Add(new Message("Server", pkt.Hp.ToString()));
             //});
+
+            
+
             int headerSize = sizeof(MyPacketHeader);
             ChatMessage message = ChatMessage.Parser.ParseFrom(buffer, headerSize, len - headerSize);
+            if (message.Sender.UserID == _store.CurrentUser?.ID)
+            {
+                return;
+            }
             Debug.WriteLine($"Received Sender: {message.Sender}");
             Debug.WriteLine($"Received Content: {message.Content}");
 
@@ -176,7 +183,7 @@ namespace WpfApp.MVVM.ViewModel
             Application.Current.Dispatcher.Invoke(() =>
             {
                 _timestamp = formattedDate;
-                _selectedRoom.Messages.Add(new Message("Server", message.Content));
+                _selectedRoom.Messages.Add(new Message(message.Sender.Username, message.Content));
             });
         }
 

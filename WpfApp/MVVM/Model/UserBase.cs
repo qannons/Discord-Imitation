@@ -8,7 +8,7 @@ namespace WpfApp.MVVM.Model
 {
     public class UserBase
     {
-        public int ID { get; set; }
+        public UInt32 ID { get; set; }
         public string Name { get; set; }
         public string Nickname { get; set; }
         //string status;

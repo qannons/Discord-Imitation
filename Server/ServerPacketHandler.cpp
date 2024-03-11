@@ -45,5 +45,5 @@ BYTE* ServerPacketHandler::Handle_P_ChatMessage2(Protocol::ChatMessage& pkt)
     //    return byte_array;
     //}
     //else
-    //    return nullptr;
+        return nullptr;
 }

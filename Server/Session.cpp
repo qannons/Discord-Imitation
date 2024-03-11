@@ -31,7 +31,7 @@ void Session::Send(BYTE* buffer, INT32 len)
 void Session::Connect()
 {
 	_connected.store(true);
-
+	cout << "Connected" << endl;
 	RegisterRecv();
 }
 
@@ -164,6 +164,8 @@ void Session::ProcessRecv(INT32 numOfBytes)
 		Disconnect(L"OnRead Overflow");
 		return;
 	}
+
+	
 
 	// 커서 정리
 	_recvBuffer.Clean();

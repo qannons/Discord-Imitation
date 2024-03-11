@@ -12,6 +12,7 @@ using Protocol;
 using WpfApp.Model;
 using WpfApp.Protocol;
 using System.IO;
+using WpfApp.MVVM.Model;
 
 namespace WpfApp.Service
 {
@@ -39,15 +40,15 @@ namespace WpfApp.Service
             }
         }
 
-        public unsafe void Send(Guid roomID, string data)
+        public unsafe void Send(Guid roomID, string data, User user)
         {
             try
             {
                 ChatMessage message = new ChatMessage();
                 {
                     P_Sender sender = new P_Sender();
-                    sender.UserID = 1;
-                    sender.Username = "cannons";
+                    sender.UserID = user.ID;
+                    sender.Username = user.Name;
                     message.Sender = sender;
                 }
                 message.Content = data;

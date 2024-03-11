@@ -74,14 +74,15 @@ private:
 			cout << "Timestamp: " << pkt.timestamp() << endl;
 			cout << "Message Type: " << pkt.type() << endl;
 			cout << "Room ID: " << pkt.roomid() << endl;
-
-
+				
+			//tmp;
+			GIocpCore.Broadcast(buffer, len);
 		}
 		else
 		{
 			return;
 		}
-		
+		//GIocpCore.Broadcast(pkt, 1);
 	}
 
 private:

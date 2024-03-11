@@ -44,7 +44,7 @@ namespace WpfApp.Database.Repo
                 {
                     User account = new User()
                     {
-                        ID = (int)dr["id"],
+                        ID = (UInt16)dr["id"],
                         Email = (string)dr["email"],
                         Password = (string)dr["pwd"],
                         Name = (string)dr["user_name"],
@@ -72,7 +72,7 @@ namespace WpfApp.Database.Repo
                 {
                     User user = new User()
                     {
-                        ID = (int)dr["id"],
+                        ID = Convert.ToUInt32(dr["id"]),
                         Email = (string)dr["email"],
                         Name = (string)dr["user_name"],
                         Nickname = (string)dr["nickname"],
@@ -101,7 +101,7 @@ namespace WpfApp.Database.Repo
                 {
                     MinimalUser user = new MinimalUser()
                     {  
-                        ID = (int)dr["friend_id"],
+                        ID = (UInt32)dr["friend_id"],
                         
                         Name = (string)dr["user_name"],
                         Nickname = (string)dr["nickname"],
@@ -173,7 +173,7 @@ namespace WpfApp.Database.Repo
             return dr.Read();
         }
 
-        public bool AddFriend(int pUserID, string pFriendName)
+        public bool AddFriend(UInt32 pUserID, string pFriendName)
         {
             string query = "SELECT ID FROM USERS WHERE USER_NAME = @friendName;";
             using (MySqlDB? db = GetTestDB())
