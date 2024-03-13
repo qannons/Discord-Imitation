@@ -68,7 +68,7 @@ private:
 		switch (ID)
 		{
 		case ePacketID::CHAT_MESSAGE:
-			ServerPacketHandler::Handle_P_ChatMessage3(buffer, len);
+			ServerPacketHandler::Handle_P_ChatMessage(buffer, len);
 			break;
 		case ePacketID::IMAGE_MESSAGE:
 			ServerPacketHandler::Handle_P_ImageMessage(buffer, len);

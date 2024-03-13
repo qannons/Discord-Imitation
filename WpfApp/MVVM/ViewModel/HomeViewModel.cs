@@ -36,6 +36,7 @@ namespace WpfApp.MVVM.ViewModel
         private UserRepo _userRepo;
         private HomeStore _store;
         private ServerCommunicationService _serverService;
+        private RecvBuffer _recvBuffer;
 
         [ObservableProperty]
         private UserControl? _currentSubViewModel;
@@ -66,6 +67,7 @@ namespace WpfApp.MVVM.ViewModel
         {
             Test = "";
 
+            _recvBuffer = new RecvBuffer(0x10000);
             if(_store.CurrentUser != null)
                 UserName = _store.CurrentUser.Nickname;
             //기본 화면은 FriendView
@@ -107,9 +109,13 @@ namespace WpfApp.MVVM.ViewModel
                 if (imageData != null)
                 {
                     //bool success = await SendImageToServerAsync(imageData);
-                    //_serverService.Send(SelectedRoom.RoomID, imageData.ToString(), _store.CurrentUser, 1);
+                    _serverService.Send(SelectedRoom.RoomID, imageData, _store.CurrentUser, ePacketID.IMAGE_MESSAGE);
 
                 }
+            }
+            else
+            {
+                Debug.Print("Fail to open file");
             }
         }
 
@@ -122,7 +128,8 @@ namespace WpfApp.MVVM.ViewModel
 
             
             SelectedRoom.Messages.Add(new Message(UserName, Test));
-            //_serverService.Send(SelectedRoom.RoomID, Test, _store.CurrentUser);
+            byte[] bytes = Encoding.UTF8.GetBytes(Test);
+            _serverService.Send(SelectedRoom.RoomID, bytes, _store.CurrentUser);
             Test = "";
         }
 
@@ -151,10 +158,6 @@ namespace WpfApp.MVVM.ViewModel
 
             int tmp2;
         }
-        enum PacketID : ushort
-        {
-            S_TEST = 1
-        };
 
         private void Recv()
         {
@@ -164,57 +167,102 @@ namespace WpfApp.MVVM.ViewModel
                     continue;
                 
 
-                 MyBuffer? readBuffer = _serverService.Recv();
-                if(readBuffer.HasValue)
-                {
-                    OnRecv(readBuffer.Value.buffer, readBuffer.Value.len);
-                }
-                else
-                {
-                    _userState = eSTATE.Offline;
-                    Debug.Print("Buffer zero");
-                }
+                 int numOfBytes = _serverService.Recv(_recvBuffer.WritePos());
+                _recvBuffer.OnWrite(numOfBytes);
+                
+
+               Int32 ProcessLen= OnRecv(_recvBuffer.ReadPos(), _recvBuffer.DataSize());
+
+                _recvBuffer.OnRead(ProcessLen);
+                _recvBuffer.Clean();
             }
         }
 
-        private void OnRecv(byte[] buffer, int len)
+        private unsafe int OnRecv(Span<byte> buffer, int len)
         {
-        unsafe
+            Int32 processLen = 0;
+
+            while (true)
             {
+                Int32 dataSize = len - processLen;
+                //최소한 헤더는 파싱할 수 있어야 한다
+                if (dataSize < sizeof(PacketHeader))
+                    break;
                 fixed (byte* ptr = buffer)
                 {
-                    PacketHeader* header = (PacketHeader*)ptr;
-                    //int headerSize = sizeof(MyPacketHeader);
+                    PacketHeader* header = (PacketHeader*)(ptr + processLen);
+                    // 헤더에 기록된 패킷 크기를 파싱할 수 있어야 한다
+                    if (dataSize < header->size)
+                        break;
 
-                    switch((PacketID)header->id)
-                    {
-                        case PacketID.S_TEST:
-                            Handle_P_ChatMessage(buffer, len);
-                            break;
+                    //패킷 조립 성공
+                    HandlePacket(buffer.Slice(processLen), header->size, (ePacketID)header->id);
 
-                    }
+                    processLen += header->size;
+                   
                 }
             }
+            return processLen;
+        }
+        private void HandlePacket(Span<byte> buffer, int len, ePacketID ID)
+        {
+            byte[] byteBuffer = buffer.ToArray();
+            switch (ID)
+            {
+                case ePacketID.CHAT_MESSAGE:
+                    Handle_P_ChatMessage(byteBuffer, len);
+                    break;
+
+                case ePacketID.IMAGE_MESSAGE:
+                    Handle_P_ImageMessage(byteBuffer, len);
+                    break;
+            }
+            
         }
 
-        unsafe void Handle_P_ChatMessage(byte[] buffer, int len)
+        unsafe void Handle_P_ChatMessage(byte[] buffer , int len)
         {
-            //int headerSize = sizeof(PacketHeader);
-            //P_ChatMessage message = P_ChatMessage.Parser.ParseFrom(buffer, headerSize, len - headerSize);
-            //if (message.Sender.UserID == _store.CurrentUser?.ID)
+            int headerSize = sizeof(PacketHeader);
+            P_ChatMessage message = P_ChatMessage.Parser.ParseFrom(buffer, headerSize, len - headerSize);
+            //if (message.Base.Sender.UserID == _store.CurrentUser?.ID)
             //{
             //    return;
             //}
 
-            //DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(message.Timestamp);
-            //// 출력 형식 지정
-            //string formattedDate = dateTimeOffset.ToString("yyyy.MM.dd. tt hh:mm");
+            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(message.Base.Timestamp);
+            // 출력 형식 지정
+            string formattedDate = dateTimeOffset.ToString("yyyy.MM.dd. tt hh:mm");
 
-            //Application.Current.Dispatcher.Invoke(() =>
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _timestamp = formattedDate;
+                _selectedRoom.Messages.Add(new Message(message.Base.Sender.UserName, message.Content));
+            });
+        }
+
+        unsafe void Handle_P_ImageMessage(byte[] buffer, int len)
+        {
+            int headerSize = sizeof(PacketHeader);
+            P_ImageMessage message = P_ImageMessage.Parser.ParseFrom(buffer, headerSize, len - headerSize);
+            //if (message.Base.Sender.UserID == _store.CurrentUser?.ID)
             //{
-            //    _timestamp = formattedDate;
-            //    _selectedRoom.Messages.Add(new Message(message.Sender.Username, message.Content));
-            //});
+            //    return;
+            //}
+
+            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(message.Base.Timestamp);
+            // 출력 형식 지정
+            string formattedDate = dateTimeOffset.ToString("yyyy.MM.dd. tt hh:mm");
+            string s = message.Content.ToString();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _timestamp = formattedDate;
+                
+                _selectedRoom.Messages.Add(new Message {
+                    SenderID= message.Base.Sender.UserName, 
+                    Timestamp= formattedDate,
+                    ImagePath = message.Content
+                });
+            });
         }
 
         //생성자

@@ -2,6 +2,7 @@
 #include "ServerPacketHandler.h"
 #include "PacketHeader.h"
 #include "IocpCore.h"
+
 //BYTE* ServerPacketHandler::Handle_P_ChatMessage(Protocol::P_ChatMessage& pkt, UINT16 pktId)
 //{
 //    BYTE* buffer = new BYTE[pkt.ByteSizeLong()+sizeof(PacketHeader)];
@@ -11,7 +12,7 @@
 //    return nullptr;
 //}
 
-BYTE* ServerPacketHandler::Handle_P_ChatMessage(BYTE* buffer, INT32 len)
+void ServerPacketHandler::Handle_P_ChatMessage(BYTE* buffer, INT32 len)
 {
     Protocol::P_ChatMessage pkt;
 
@@ -35,7 +36,7 @@ BYTE* ServerPacketHandler::Handle_P_ChatMessage(BYTE* buffer, INT32 len)
     //GIocpCore.Broadcast(pkt, 1);
 }
 
-BYTE* ServerPacketHandler::Handle_P_ImageMessage(BYTE* buffer, INT32 len)
+void ServerPacketHandler::Handle_P_ImageMessage(BYTE* buffer, INT32 len)
 {
     Protocol::P_ImageMessage pkt;
 

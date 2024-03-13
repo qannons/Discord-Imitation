@@ -13,7 +13,7 @@ namespace WpfApp.Service.Interface
     {
         public bool Connect(string host, int port);
         public void Disconnect();
-        public void Send(Guid roomID, string data, User user, ePacketID messageID);
-        public MyBuffer? Recv();
+        public void Send(Guid roomID, byte[] data, User user, ePacketID messageID);
+        public int Recv(Span<byte> recvBuffer);
     }
 }

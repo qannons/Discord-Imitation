@@ -18,13 +18,13 @@ int main()
 
     std::thread t2(&Listener::StartAccept, &listener);
 
-    while (true)
-    {
+    //while (true)
+    //{
 
         //PacketHeader header;
         //header.id = 1;
         //header.size = sizeof(PacketHeader); //기본 값 설정
-        Protocol::
+        
 
        /* Protocol::P_ChatMessage message;
         {
@@ -42,25 +42,25 @@ int main()
             message.set_timestamp(timestamp);
         }*/
 
-        message.set_type(Protocol::EP_MessageType::TEXT);
+    //    message.set_type(Protocol::EP_MessageType::TEXT);
 
-        message.set_roomid("1212");
+    //    message.set_roomid("1212");
 
-        const INT32  messageSize = message.ByteSizeLong();
+    //    const INT32  messageSize = message.ByteSizeLong();
 
-        BYTE* byte_array = new BYTE[messageSize + sizeof(PacketHeader)];
-        PacketHeader* header = reinterpret_cast<PacketHeader*>(byte_array);
-        header->id = 1;
-        header->size = messageSize + sizeof(PacketHeader); //기본 값 설정
+    //    BYTE* byte_array = new BYTE[messageSize + sizeof(PacketHeader)];
+    //    PacketHeader* header = reinterpret_cast<PacketHeader*>(byte_array);
+    //    header->id = 1;
+    //    header->size = messageSize + sizeof(PacketHeader); //기본 값 설정
 
 
-        //if (message.SerializeToArray(byte_array + sizeof(PacketHeader), messageSize))
-        //{
-        //    GIocpCore.Broadcast(byte_array, messageSize + sizeof(PacketHeader));
-        //}
+    //    //if (message.SerializeToArray(byte_array + sizeof(PacketHeader), messageSize))
+    //    //{
+    //    //    GIocpCore.Broadcast(byte_array, messageSize + sizeof(PacketHeader));
+    //    //}
 
-        this_thread::sleep_for(4s);
-    }
+    //    this_thread::sleep_for(4s);
+    //}
 
     t2.join();
     t1.join();

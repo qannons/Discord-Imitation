@@ -14,6 +14,7 @@ using WpfApp.Protocol;
 using System.IO;
 using WpfApp.MVVM.Model;
 using System.Threading;
+using System.Collections;
 
 namespace WpfApp.Service
 {
@@ -45,39 +46,26 @@ namespace WpfApp.Service
             }
         }
 
-        public unsafe void Send(Guid roomID, string data, User user, ePacketID messageID = 0)
+        public unsafe void Send(Guid roomID, byte[] byteBuffer, User user, ePacketID messageID = 0)
         {
             switch(messageID)
             {
                 case ePacketID.CHAT_MESSAGE:          
                     try
                     {
-                        P_ChatMessage message = new P_ChatMessage();
-                        //1
-                        message.Base.MessageID = "tmpID";
-                        //2
-                        message.Base.RoomID = "1212";
-                        //3
-                        {
-                            P_Sender sender = new P_Sender();
-                            sender.UserID = user.ID;
-                            sender.Username = user.Name;
-                            message.Base.Sender = sender;
-                        }
-                        //4
-                        message.Content = data;
+                        P_BaseMessage b_pkt = Create_P_BaseMessage(user);
+                        P_ChatMessage pkt = new P_ChatMessage();
 
-                        //5
-                        //message.ExtraContent = ;
-                        //6
-                        //message.Timestamp = 100000;
+                        //2-1) 메시지 공동 내용
+                        pkt.Base = b_pkt;
+                        //2-2) 메시지 내용
+                        string resultString = Encoding.UTF8.GetString(byteBuffer);
+                        pkt.Content = resultString;
 
-                        //message.Type = EP_MessageType.Text;
-
-
+                        //패킷 헤더
                         PacketHeader header = new PacketHeader();
-                        header.id = 1;
-                        header.size = (UInt16)(sizeof(PacketHeader)+message.CalculateSize());
+                        header.id = (UInt16)messageID;
+                        header.size = (UInt16)(sizeof(PacketHeader)+ pkt.CalculateSize());
                         using (var memoryStream = new MemoryStream())
                         {
                             // PacketHeader를 바이트 배열로 변환하여 MemoryStream에 쓰기
@@ -86,16 +74,10 @@ namespace WpfApp.Service
                                 writer.Write(header.size);
                                 writer.Write(header.id);
                             }
-
-                            // 현재 MemoryStream의 위치는 PacketHeader 다음 위치입니다.
-                            // 여기서부터 Protobuf 메시지를 직렬화하여 쓸 수 있습니다.
-                            message.WriteTo(memoryStream);
+                            pkt.WriteTo(memoryStream);
 
                             // 최종 바이트 배열 가져오기
                             byte[] finalBytes = memoryStream.ToArray();
-
-                            // finalBytes를 네트워크 스트림에 쓰기
-                            // 예: stream.Write(finalBytes, 0, finalBytes.Length);
                             stream.Write(finalBytes, 0, finalBytes.Length);
                         }
 
@@ -106,26 +88,53 @@ namespace WpfApp.Service
                     }
                     break;
 
-                //case ePacketID.IMAGE:
-                //    break;
+                case ePacketID.IMAGE_MESSAGE:
+                    try
+                    {
+                        P_BaseMessage b_pkt = Create_P_BaseMessage(user);
+                        P_ImageMessage pkt = new P_ImageMessage();
+
+                        //2-1) 메시지 공동 내용
+                        pkt.Base = b_pkt;
+                        //2-2) 메시지 내용
+                        ByteString imageData = ByteString.CopyFrom(byteBuffer);
+                        pkt.Content = imageData;
+
+                        //패킷 헤더
+                        PacketHeader header = new PacketHeader();
+                        header.id = (UInt16)messageID;
+                        header.size = (UInt16)(sizeof(PacketHeader) + pkt.CalculateSize());
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            // PacketHeader를 바이트 배열로 변환하여 MemoryStream에 쓰기
+                            using (var writer = new BinaryWriter(memoryStream, Encoding.Default, true))
+                            {
+                                writer.Write(header.size);
+                                writer.Write(header.id);
+                            }
+                            pkt.WriteTo(memoryStream);
+
+                            // 최종 바이트 배열 가져오기
+                            byte[] finalBytes = memoryStream.ToArray();
+                            stream.Write(finalBytes, 0, finalBytes.Length);
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine("Failed to send data: " + e.Message);
+                    }
+                    break;
             }
         }
 
-        public MyBuffer? Recv()
+        public int Recv(Span<byte> recvBuffer)
         {
             if (!_connected)
-                return null;
+                return 0;
+            int bytesRead = stream.Read(recvBuffer);
 
-            byte[] buffer = new byte[512];
-            int bytesRead = stream.Read(buffer, 0, buffer.Length);
-
-            MyBuffer ret = new MyBuffer
-            {
-                buffer = buffer,
-                len = bytesRead
-            };
-
-            return ret;
+            return bytesRead;
         }
 
         public void Disconnect()
@@ -134,21 +143,25 @@ namespace WpfApp.Service
             client.Close();
         }
 
-        struct Packet
+        private P_BaseMessage Create_P_BaseMessage(User user)
         {
-            public Int32 size;
-            public string data;
+            P_BaseMessage b_pkt = new P_BaseMessage();
+            //1) 메시지 식별자
+            b_pkt.MessageID = "tmpID";
+            //2) 채팅방 정보
+            b_pkt.RoomID = "1212";
+            //3) 전송자의 정보
+            {
+                P_Sender sender = new P_Sender();
+                sender.UserID = user.ID;
+                sender.UserName = user.Name;
+                b_pkt.Sender = sender;
+            }
+            //4) 전송시간
+            b_pkt.Timestamp = 100000;
+
+            return b_pkt;
         }
     }
 
-    public struct MyBuffer
-    {
-        public byte[] buffer;
-        public int len;
-
-        public MyBuffer(byte[] pBuffer, int pLen)
-        {
-            buffer = pBuffer; len = pLen;
-        }
-    }
 }

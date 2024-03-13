@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Google.Protobuf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,24 +22,25 @@ namespace WpfApp.Model
 
     public class Message
     {
-        //생성자
-        public Message(string pSenderID, string pContent, string pTimestamp)
+        public Message() { }
+
+
+        public Message(string pSenderID, string pContent)
         {
-            MessageID = Guid.NewGuid().ToString();
             SenderID = pSenderID;
             Content = pContent;
-            Timestamp = pTimestamp;
-            //Timestamp = DateTime.Now.ToString("yyyy.MM.dd tt hh:mm");
+            Timestamp = DateTime.Now.ToString("yyyy.MM.dd tt hh:mm");
             IsRead = false;
+            ImagePath = null;
         }
-        public Message(string pSenderID, string pContent)
-               : this(pSenderID, pContent, DateTime.Now.ToString("yyyy.MM.dd tt hh:mm")){  }
+
 
         //변수
         public string MessageID { get; set; }
         public string SenderID { get; set; }
-        public string Content { get; set; }
+        public string? Content { get; set; }
         public string Timestamp { get; set; }
         public bool IsRead { get; set; }
-    }
+        public ByteString? ImagePath { get; set; }
+}
 }

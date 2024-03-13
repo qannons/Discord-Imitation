@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using WpfApp.Service;
 
 namespace WpfApp.Protocol
 {
@@ -28,4 +30,14 @@ namespace WpfApp.Protocol
         }
     }
 
+    public struct MyBuffer
+    {
+        public byte[] buffer;
+        public int len;
+
+        public MyBuffer(byte[] pBuffer, int pLen)
+        {
+            buffer = pBuffer; len = pLen;
+        }
+    }
 }
