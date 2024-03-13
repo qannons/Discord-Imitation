@@ -31,7 +31,7 @@ namespace WpfApp.Model
             Content = pContent;
             Timestamp = DateTime.Now.ToString("yyyy.MM.dd tt hh:mm");
             IsRead = false;
-            ImagePath = null;
+            ImagePath = "C:\\Users\\PC\\Desktop\\씨@발.png";
         }
 
 
@@ -41,6 +41,6 @@ namespace WpfApp.Model
         public string? Content { get; set; }
         public string Timestamp { get; set; }
         public bool IsRead { get; set; }
-        public ByteString? ImagePath { get; set; }
-}
+        public string ImagePath = "C:\\Users\\PC\\Desktop\\씨@발.png";
+    }
 }

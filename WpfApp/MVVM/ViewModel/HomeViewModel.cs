@@ -25,6 +25,7 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using System.IO;
 using System.Reflection.Metadata;
+using System.Net.NetworkInformation;
 
 
 namespace WpfApp.MVVM.ViewModel
@@ -40,7 +41,6 @@ namespace WpfApp.MVVM.ViewModel
 
         [ObservableProperty]
         private UserControl? _currentSubViewModel;
-
 
         [ObservableProperty]
         private string _test;
@@ -259,8 +259,8 @@ namespace WpfApp.MVVM.ViewModel
                 
                 _selectedRoom.Messages.Add(new Message {
                     SenderID= message.Base.Sender.UserName, 
-                    Timestamp= formattedDate,
-                    ImagePath = message.Content
+                    Timestamp= formattedDate
+                    //ImagePath = message.Content
                 });
             });
         }
