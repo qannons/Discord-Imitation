@@ -8,7 +8,8 @@
              Background="#36393F"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <local:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
+        <local:ByteArrayToBitmapImageConverter x:Key="ByteArrayToBitmapImageConverter"/>
+        <local:MyConverter x:Key="MyConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -40,7 +41,7 @@
                     <RowDefinition/>
                     <RowDefinition Height="70"/>
                 </Grid.RowDefinitions>
-                <Image Source="/R/Images/LoginBackground2.jpeg" Width="80" Height="80"/>
+                <Image Source="{Binding SibalSource, Converter={StaticResource ByteArrayToBitmapImageConverter}}"></Image>
                 <ListView x:Name="ChatListView" ItemsSource="{Binding SelectedRoom.Messages}" Background="Transparent" BorderThickness="0" Margin="8,0,0,0" Grid.Row="0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -53,8 +54,9 @@
                                         <TextBlock Text="{Binding SenderID}" Foreground="White" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="12"/>
                                         <TextBlock Text="{Binding Timestamp}" Foreground="Gray" FontWeight="SemiBold" VerticalAlignment="Center" FontSize="8"/>
                                     </StackPanel>
-                                    <TextBlock Text="{Binding  Content}" Foreground="White" Margin="4"/>
-                                    
+                                    <TextBlock Text="{Binding Content}" Foreground="White" Margin="4"/>
+                                    <Image Source="{Binding ImagePath, Converter={StaticResource ByteArrayToBitmapImageConverter}}"/>
+
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>

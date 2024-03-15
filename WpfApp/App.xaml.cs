@@ -36,9 +36,9 @@ namespace WpfApp
 
             //Stores
             services.AddSingleton<MainNavigationStore>();
-            
+
             services.AddSingleton<HomeStore>();
-            
+
 
             //ViewModel
             services.AddTransient<HomeViewModel>();
@@ -50,14 +50,14 @@ namespace WpfApp
             services.AddSingleton<IServerCommunicationService, ServerCommunicationService>();
             services.AddSingleton<INavigationService, Service.NavigationService>();
             services.AddSingleton<IUserRepo, UserRepo>();
-            
+
 
             //View
             services.AddSingleton(s => new MainWindow()
             {
                 DataContext = s.GetRequiredService<SubMainViewModel>()
             });
-                
+
 
             return services.BuildServiceProvider();
         }

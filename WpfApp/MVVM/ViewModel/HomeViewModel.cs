@@ -26,6 +26,9 @@ using Microsoft.Win32;
 using System.IO;
 using System.Reflection.Metadata;
 using System.Net.NetworkInformation;
+using WpfApp.Core;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 
 namespace WpfApp.MVVM.ViewModel
@@ -33,7 +36,10 @@ namespace WpfApp.MVVM.ViewModel
     [ObservableObject]
     public partial class HomeViewModel
     {
+        [ObservableProperty]
+        private byte[] _sibalSource;
 
+        
         private UserRepo _userRepo;
         private HomeStore _store;
         private ServerCommunicationService _serverService;
@@ -108,6 +114,11 @@ namespace WpfApp.MVVM.ViewModel
                 //이미지를 서버로 전송
                 if (imageData != null)
                 {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        SibalSource = imageData;
+
+                    });
                     //bool success = await SendImageToServerAsync(imageData);
                     _serverService.Send(SelectedRoom.RoomID, imageData, _store.CurrentUser, ePacketID.IMAGE_MESSAGE);
 
@@ -253,14 +264,20 @@ namespace WpfApp.MVVM.ViewModel
             // 출력 형식 지정
             string formattedDate = dateTimeOffset.ToString("yyyy.MM.dd. tt hh:mm");
             string s = message.Content.ToString();
+
+            MyConverter myConverter = new MyConverter();
+            ImageSource ret = myConverter.Convert(message.Content.ToArray());
+
+            byte[] arr = message.Content.ToArray();
             Application.Current.Dispatcher.Invoke(() =>
             {
                 _timestamp = formattedDate;
                 
                 _selectedRoom.Messages.Add(new Message {
                     SenderID= message.Base.Sender.UserName, 
-                    Timestamp= formattedDate
-                    //ImagePath = message.Content
+                    Timestamp= formattedDate,
+                    ImagePath = message.Content.ToArray()
+                    
                 });
             });
         }
