@@ -41,7 +41,7 @@
                     <RowDefinition/>
                     <RowDefinition Height="70"/>
                 </Grid.RowDefinitions>
-                <Image Source="{Binding SibalSource, Converter={StaticResource ByteArrayToBitmapImageConverter}}"></Image>
+                <!--<Image Source="{Binding SibalSource, Converter={StaticResource ByteArrayToBitmapImageConverter}}"></Image>-->
                 <ListView x:Name="ChatListView" ItemsSource="{Binding SelectedRoom.Messages}" Background="Transparent" BorderThickness="0" Margin="8,0,0,0" Grid.Row="0">
                     <ListView.ItemTemplate>
                         <DataTemplate>

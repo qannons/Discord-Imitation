@@ -114,11 +114,6 @@ namespace WpfApp.MVVM.ViewModel
                 //이미지를 서버로 전송
                 if (imageData != null)
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        SibalSource = imageData;
-
-                    });
                     //bool success = await SendImageToServerAsync(imageData);
                     _serverService.Send(SelectedRoom.RoomID, imageData, _store.CurrentUser, ePacketID.IMAGE_MESSAGE);
 
