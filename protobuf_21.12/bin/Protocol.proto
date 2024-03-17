@@ -1,0 +1,51 @@
+syntax = "proto3";
+package Protocol;
+
+message P_ChatRoom 
+{
+  // 채팅방의 고유 식별자
+	uint32 roomID = 1;
+
+  // 채팅방의 이름
+	string roomName = 2;
+
+  // 채팅방에 참여한 사용자 목록
+  repeated string participants = 3;
+}
+
+message P_Sender
+{
+	uint32 userID = 1;
+	string userName = 2;
+}
+
+message P_BaseMessage
+{
+	//메시지 식별자
+	string messageID = 1;
+
+	// 채팅방 정보
+	string roomID = 2;
+
+	// 전송자의 정보
+	P_Sender sender = 3;
+
+	// 전송 시간
+	int64 timestamp = 4;
+}
+
+message P_ChatMessage 
+{
+	P_BaseMessage base = 1;
+
+	// 메시지 내용
+	string content = 2;
+}
+
+message P_ImageMessage 
+{
+	P_BaseMessage base = 1;
+
+	// 메시지 내용
+	bytes content = 2;
+}
