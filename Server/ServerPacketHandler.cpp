@@ -33,7 +33,6 @@ void ServerPacketHandler::Handle_P_ChatMessage(BYTE* buffer, INT32 len)
     {
         return;
     }
-    //GIocpCore.Broadcast(pkt, 1);
 }
 
 void ServerPacketHandler::Handle_P_ImageMessage(BYTE* buffer, INT32 len)
@@ -48,7 +47,7 @@ void ServerPacketHandler::Handle_P_ImageMessage(BYTE* buffer, INT32 len)
         cout << "Username: " << pkt.base().sender().username() << endl;	//4
         cout << "Timestamp: " << pkt.base().timestamp() << endl;				//5	
 
-        cout << "Content: " << pkt.content() << endl;										//2-2
+        //cout << "Content: " << pkt.content() << endl;										//2-2
 
         //tmp;
         GIocpCore.Broadcast(buffer, len);
@@ -57,8 +56,5 @@ void ServerPacketHandler::Handle_P_ImageMessage(BYTE* buffer, INT32 len)
     {
         return;
     }
-    //GIocpCore.Broadcast(pkt, 1);
-
-    
 }
 

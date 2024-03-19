@@ -31,7 +31,6 @@ namespace WpfApp.Model
             Content = pContent;
             Timestamp = DateTime.Now.ToString("yyyy.MM.dd tt hh:mm");
             IsRead = false;
-            //ImagePath = "C:\\Users\\PC\\Desktop\\씨@발.png";
         }
 
 

@@ -6,13 +6,12 @@
 #include "PacketHeader.h"
 #include "ServerPacketHandler.h"
 
-class Session : public IocpObject
+class Session : public enable_shared_from_this<Session>
 {
 	friend Listener;
 public:
-	// IocpObject을(를) 통해 상속됨
-	virtual HANDLE GetHandle() override;
-	virtual void Dispatch(IocpEvent* iocpEvent, INT32 numOfBytes) override;
+	virtual HANDLE GetHandle();
+	virtual void Dispatch(IocpEvent* iocpEvent, INT32 numOfBytes);
 
 public:
 	Session();

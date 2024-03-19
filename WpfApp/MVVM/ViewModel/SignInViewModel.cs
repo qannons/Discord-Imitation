@@ -54,10 +54,7 @@ namespace WpfApp.MVVM.ViewModel
                 _homeStore.CurrentUser = _userRepo.SelectUser(Email);
 
                 _navigationService.Navigate(NaviType.HOME);
-
-                //mainWindow.Show();
             }
-
         }
 
         [RelayCommand]

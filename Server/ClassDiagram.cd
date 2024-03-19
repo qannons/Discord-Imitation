@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IocpObject">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IocpCore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IocpCore" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIoAAAAAAACAAEAAAAACBAAAAAIBAAAgAAAAAAgAAAA=</HashCode>
+      <FileName>IocpCore.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IocpEvent">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAQAAAAAAEAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>IocpEvent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SendEvent">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAABAA=</HashCode>
+      <FileName>IocpEvent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Listener" Collapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQACAAAAAEACAAAACQAAAAAA=</HashCode>
+      <FileName>Listener.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ServerPacketHandler" Collapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ServerPacketHandler.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Session">
+    <Position X="0.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AI6IBAAKBAABARICAEACgIQAgAAAEIABAECAQAAAABA=</HashCode>
+      <FileName>Session.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecvBuffer" Collapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAQAAAgAAAAEAMAAAAAgAQAAACAQgACAAABAAAAQAA=</HashCode>
+      <FileName>RecvBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SocketUtils" Collapsed="true">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAEQAABAAAAAAAAAAAAAAAAACAABAAAA=</HashCode>
+      <FileName>SocketUtils.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Protocol::P_BaseMessage" Collapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAigIAYQSAQCFCtAA0eAKJJ4AwAARAoISQEgJQlFAAA=</HashCode>
+      <FileName>Protocol.pb.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Protocol::P_ChatMessage" Collapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CARiYACBACCCFCtAAwAgiBIgAAAADIICSQIgBABFgIA=</HashCode>
+      <FileName>Protocol.pb.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Protocol::P_ChatRoom" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACgoAQAgAACNCpQTyCAAJIgAAABZAMOSQMgJABFAAg=</HashCode>
+      <FileName>Protocol.pb.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Protocol::P_ImageMessage" Collapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CABiYASBACCCFCtAAwAgiBIggAAADIICSQIgBABFgAA=</HashCode>
+      <FileName>Protocol.pb.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Protocol::P_Sender" Collapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQioAAMCCAiFipAAwAAABMAAAAgBAIASwggFABlAAA=</HashCode>
+      <FileName>Protocol.pb.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="google::protobuf::internal::AnyMetadata" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\PC\Desktop\cjh\WorkSpace\Discord-Imitation\Libraries\Include\google\protobuf\any.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecvEvent">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>IocpEvent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DisconnectEvent">
+    <Position X="9.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IocpEvent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="PacketHeader" Collapsed="true">
+    <Position X="14" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>PacketHeader.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TableStruct_Protocol_2eproto" Collapsed="true">
+    <Position X="15.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Protocol.pb.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Protocol::P_ChatRoomDefaultTypeInternal" Collapsed="true">
+    <Position X="15.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Protocol.pb.cc</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Protocol::P_SenderDefaultTypeInternal" Collapsed="true">
+    <Position X="12.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Protocol.pb.cc</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Protocol::P_BaseMessageDefaultTypeInternal" Collapsed="true">
+    <Position X="12.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Protocol.pb.cc</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Protocol::P_ChatMessageDefaultTypeInternal" Collapsed="true">
+    <Position X="14" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Protocol.pb.cc</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Protocol::P_ImageMessageDefaultTypeInternal" Collapsed="true">
+    <Position X="17.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Protocol.pb.cc</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="EventType" Collapsed="true">
+    <Position X="14" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAEAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IocpEvent.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ePacketID" Collapsed="true">
+    <Position X="12.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>PacketHeader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

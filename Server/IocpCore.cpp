@@ -17,7 +17,7 @@ IocpCore::~IocpCore()
 }
 
 
-bool	IocpCore::Register(IocpObjectRef iocpObject)
+bool	IocpCore::Register(SessionRef iocpObject)
 {
 	return CreateIoCompletionPort(iocpObject->GetHandle(), _iocpHandle, 0, 0);
 
@@ -29,9 +29,10 @@ bool IocpCore::Dispatch(UINT32 timeoutMs)
 	ULONG_PTR key = 0;
 	IocpEvent* iocpEvent = nullptr;
 
-	if (::GetQueuedCompletionStatus(_iocpHandle, OUT & numOfBytes, OUT & key, OUT reinterpret_cast<LPOVERLAPPED*>(&iocpEvent), timeoutMs))
+	if (::GetQueuedCompletionStatus(_iocpHandle, & numOfBytes, & key, 
+																reinterpret_cast<LPOVERLAPPED*>(&iocpEvent), timeoutMs))
 	{
-		IocpObjectRef iocpObject = iocpEvent->owner;
+		SessionRef iocpObject = iocpEvent->owner;
 		iocpObject->Dispatch(iocpEvent, numOfBytes);
 	}
 	else
@@ -42,8 +43,7 @@ bool IocpCore::Dispatch(UINT32 timeoutMs)
 		case WAIT_TIMEOUT:
 			return false;
 		default:
-			// TODO : ·Î±× Âï±â
-			IocpObjectRef iocpObject = iocpEvent->owner;
+			SessionRef iocpObject = iocpEvent->owner;
 			iocpObject->Dispatch(iocpEvent, numOfBytes);
 			break;
 		}

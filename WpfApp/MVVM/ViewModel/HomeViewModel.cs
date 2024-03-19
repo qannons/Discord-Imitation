@@ -106,23 +106,17 @@ namespace WpfApp.MVVM.ViewModel
             {
                 // 선택한 이미지 파일의 경로 가져오기
                 string imagePath = openFileDialog.FileName;
-
                 // 이미지 파일을 바이트 배열로 변환
                 byte[] imageData = File.ReadAllBytes(imagePath);
-
+                SelectedRoom.Messages.Add(new Message { SenderID=UserName, ImagePath=imageData});
 
                 //이미지를 서버로 전송
                 if (imageData != null)
-                {
-                    //bool success = await SendImageToServerAsync(imageData);
-                    _serverService.Send(SelectedRoom.RoomID, imageData, _store.CurrentUser, ePacketID.IMAGE_MESSAGE);
-
-                }
+                    _serverService.Send(SelectedRoom.RoomID, imageData, 
+                                                         _store.CurrentUser, ePacketID.IMAGE_MESSAGE);
             }
             else
-            {
                 Debug.Print("Fail to open file");
-            }
         }
 
         [RelayCommand]
@@ -230,12 +224,12 @@ namespace WpfApp.MVVM.ViewModel
         {
             int headerSize = sizeof(PacketHeader);
             P_ChatMessage message = P_ChatMessage.Parser.ParseFrom(buffer, headerSize, len - headerSize);
-            //if (message.Base.Sender.UserID == _store.CurrentUser?.ID)
-            //{
-            //    return;
-            //}
+            if (message.Base.Sender.UserID == _store.CurrentUser?.ID)
+            {
+                return;
+            }
 
-            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(message.Base.Timestamp);
+            DateTime dateTimeOffset = DateTime.FromBinary(message.Base.Timestamp);
             // 출력 형식 지정
             string formattedDate = dateTimeOffset.ToString("yyyy.MM.dd. tt hh:mm");
 
@@ -250,12 +244,12 @@ namespace WpfApp.MVVM.ViewModel
         {
             int headerSize = sizeof(PacketHeader);
             P_ImageMessage message = P_ImageMessage.Parser.ParseFrom(buffer, headerSize, len - headerSize);
-            //if (message.Base.Sender.UserID == _store.CurrentUser?.ID)
-            //{
-            //    return;
-            //}
+            if (message.Base.Sender.UserID == _store.CurrentUser?.ID)
+            {
+                return;
+            }
 
-            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(message.Base.Timestamp);
+            DateTime dateTimeOffset = DateTime.FromBinary(message.Base.Timestamp);
             // 출력 형식 지정
             string formattedDate = dateTimeOffset.ToString("yyyy.MM.dd. tt hh:mm");
             string s = message.Content.ToString();

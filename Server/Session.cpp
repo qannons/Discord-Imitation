@@ -20,7 +20,7 @@ Session::~Session()
 void Session::Send(BYTE* buffer, INT32 len)
 {
 	SendEvent* sendEvent = new SendEvent();
-	sendEvent->owner = shared_from_this(); // ADD_REF
+	sendEvent->owner = shared_from_this(); 
 	sendEvent->buffer.resize(len);
 	::memcpy(sendEvent->buffer.data(), buffer, len);
 
@@ -37,13 +37,13 @@ void Session::Connect()
 
 void Session::Disconnect(const WCHAR* cause)
 {
-	//if (_connected.exchange(false) == false)
-	//	return;
+	if (_connected.exchange(false) == false)
+		return;
 
-	//// TEMP
-	//wcout << "Disconnect : " << cause << endl;
+	// TEMP
+	wcout << "Disconnect : " << cause << endl;
 
-	//RegisterDisconnect();
+	RegisterDisconnect();
 }
 
 HANDLE Session::GetHandle()
@@ -157,19 +157,15 @@ void Session::ProcessRecv(INT32 numOfBytes)
 	}
 
 	INT32 dataSize = _recvBuffer.DataSize();
-	INT32 processLen = OnRecv(_recvBuffer.ReadPos(), dataSize); // 컨텐츠 코드에서 재정의
+	INT32 processLen = OnRecv(_recvBuffer.ReadPos(), dataSize);
 
 	if (processLen < 0 || dataSize < processLen || _recvBuffer.OnRead(processLen) == false)
 	{
 		Disconnect(L"OnRead Overflow");
 		return;
 	}
-
-	
-
 	// 커서 정리
 	_recvBuffer.Clean();
-
 	// 수신 등록
 	RegisterRecv();
 }

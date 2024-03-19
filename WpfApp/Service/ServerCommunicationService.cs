@@ -53,7 +53,7 @@ namespace WpfApp.Service
                 case ePacketID.CHAT_MESSAGE:          
                     try
                     {
-                        P_BaseMessage b_pkt = Create_P_BaseMessage(user);
+                        P_BaseMessage b_pkt = Create_P_BaseMessage(roomID, user);
                         P_ChatMessage pkt = new P_ChatMessage();
 
                         //2-1) 메시지 공동 내용
@@ -80,7 +80,6 @@ namespace WpfApp.Service
                             byte[] finalBytes = memoryStream.ToArray();
                             stream.Write(finalBytes, 0, finalBytes.Length);
                         }
-
                     }
                     catch (Exception e)
                     {
@@ -91,7 +90,7 @@ namespace WpfApp.Service
                 case ePacketID.IMAGE_MESSAGE:
                     try
                     {
-                        P_BaseMessage b_pkt = Create_P_BaseMessage(user);
+                        P_BaseMessage b_pkt = Create_P_BaseMessage(roomID, user);
                         P_ImageMessage pkt = new P_ImageMessage();
 
                         //2-1) 메시지 공동 내용
@@ -118,7 +117,6 @@ namespace WpfApp.Service
                             byte[] finalBytes = memoryStream.ToArray();
                             stream.Write(finalBytes, 0, finalBytes.Length);
                         }
-
                     }
                     catch (Exception e)
                     {
@@ -143,13 +141,13 @@ namespace WpfApp.Service
             client.Close();
         }
 
-        private P_BaseMessage Create_P_BaseMessage(User user)
+        private P_BaseMessage Create_P_BaseMessage(Guid roomID, User user)
         {
             P_BaseMessage b_pkt = new P_BaseMessage();
             //1) 메시지 식별자
             b_pkt.MessageID = "tmpID";
             //2) 채팅방 정보
-            b_pkt.RoomID = "1212";
+            b_pkt.RoomID = roomID.ToString();
             //3) 전송자의 정보
             {
                 P_Sender sender = new P_Sender();
@@ -158,7 +156,8 @@ namespace WpfApp.Service
                 b_pkt.Sender = sender;
             }
             //4) 전송시간
-            b_pkt.Timestamp = 100000;
+            
+            b_pkt.Timestamp = DateTime.Now.Ticks;
 
             return b_pkt;
         }

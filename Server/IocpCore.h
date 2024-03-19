@@ -24,7 +24,7 @@ public:
 
 	HANDLE		GetHandle() { return _iocpHandle; }
 
-	bool		Register(IocpObjectRef iocpObject);
+	bool		Register(SessionRef iocpObject);
 	bool		Dispatch(UINT32 timeoutMs = INFINITE);
 
 public:

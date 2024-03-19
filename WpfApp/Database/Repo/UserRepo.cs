@@ -114,7 +114,7 @@ namespace WpfApp.Database.Repo
 
         public bool IsExistEmail(string pEmail, string pPwd)
         {
-            string query = "SELECT EXISTS(SELECT 1 FROM users WHERE email = @Email)";
+            string query = "SELECT EXISTS(SELECT 1 FROM users WHERE email = @Email AND pwd = @Password)";
             using MySqlDB? db = GetTestDB();
 
             SqlParameter[] parameters = new SqlParameter[]
@@ -123,7 +123,6 @@ namespace WpfApp.Database.Repo
                 new SqlParameter("@Password", pPwd)
             };
 
-            //using IDataReader dr = db.GetReader(query, parameters);
             using (IDataReader dr = db.GetReader(query, parameters))
             {
                 if (dr.Read())
@@ -133,7 +132,6 @@ namespace WpfApp.Database.Repo
                 }
             }
             return false;
-            //return dr.Read();
         }
 
         public void Update(User user)

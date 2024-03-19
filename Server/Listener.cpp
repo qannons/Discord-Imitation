@@ -7,6 +7,7 @@ Listener::~Listener()
 	closesocket(_socket);
 
 }
+
 void Listener::StartAccept()
 {
 	while (true)
@@ -27,7 +28,6 @@ void Listener::StartAccept()
 
 
 			session->Connect();
-			//session->RegisterRecv();
 	}
 }
 

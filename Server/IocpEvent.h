@@ -4,10 +4,7 @@ class Session;
 
 enum class EventType : UINT8
 {
-	Connect,
 	Disconnect,
-	Accept,
-	//PreRecv,
 	Recv,
 	Send
 };
@@ -25,17 +22,7 @@ public:
 
 public:
 	EventType		eventType;
-	IocpObjectRef	owner;
-};
-
-/*----------------
-	ConnectEvent
------------------*/
-
-class ConnectEvent : public IocpEvent
-{
-public:
-	ConnectEvent() : IocpEvent(EventType::Connect) { }
+	SessionRef	owner;
 };
 
 /*--------------------
@@ -46,19 +33,6 @@ class DisconnectEvent : public IocpEvent
 {
 public:
 	DisconnectEvent() : IocpEvent(EventType::Disconnect) { }
-};
-
-/*----------------
-	AcceptEvent
------------------*/
-
-class AcceptEvent : public IocpEvent
-{
-public:
-	AcceptEvent() : IocpEvent(EventType::Accept) { }
-
-public:
-	SessionRef	session = nullptr;
 };
 
 /*----------------
