@@ -12,7 +12,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using WpfApp.Database.Repo;
 using WpfApp.Model;
 using WpfApp.MVVM.Model;
 using WpfApp.MVVM.View.MainControls.SubControls;
@@ -36,11 +35,7 @@ namespace WpfApp.MVVM.ViewModel
     [ObservableObject]
     public partial class HomeViewModel
     {
-        [ObservableProperty]
-        private byte[] _sibalSource;
 
-        
-        private UserRepo _userRepo;
         private HomeStore _store;
         private ServerCommunicationService _serverService;
         private RecvBuffer _recvBuffer;
@@ -149,14 +144,6 @@ namespace WpfApp.MVVM.ViewModel
         private void NavAddFriend()
         {
             CurrentSubViewModel = new AddFriendSubView();
-        }
-
-        [RelayCommand]
-        private void AddFriend(string text)
-        {
-            bool tmp = _userRepo.AddFriend(_store.CurrentUser.ID, text);
-
-            int tmp2;
         }
 
         private void Recv()
@@ -272,9 +259,8 @@ namespace WpfApp.MVVM.ViewModel
         }
 
         //생성자
-        public HomeViewModel(IUserRepo userRepository, HomeStore pHomeStore, IServerCommunicationService pServerCommunicationService)
+        public HomeViewModel(HomeStore pHomeStore, IServerCommunicationService pServerCommunicationService)
         {
-            _userRepo = (UserRepo?)userRepository;
             _store = pHomeStore;
             _serverService = (ServerCommunicationService)pServerCommunicationService;
             Init();

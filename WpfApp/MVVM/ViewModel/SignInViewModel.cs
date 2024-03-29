@@ -14,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Navigation;
 using System.Windows.Xps.Serialization;
 using WpfApp.Core;
-using WpfApp.Database.Repo;
 using WpfApp.MVVM.Model;
 using WpfApp.MVVM.View;
 using WpfApp.Service;
@@ -28,7 +27,6 @@ namespace WpfApp.MVVM.ViewModel
     {
         private readonly INavigationService _navigationService;
 
-        private UserRepo _userRepo;
         private HomeStore _homeStore;
 
         [ObservableProperty]
@@ -52,7 +50,7 @@ namespace WpfApp.MVVM.ViewModel
             }
             else
             {
-                _homeStore.CurrentUser = _userRepo.SelectUser(Email);
+                _homeStore.CurrentUser = new User { Email = Email };
 
                 _navigationService.Navigate(NaviType.HOME);
             }
@@ -64,9 +62,8 @@ namespace WpfApp.MVVM.ViewModel
             _navigationService.Navigate(NaviType.SIGNUP);
         }
 
-        public SignInViewModel(IUserRepo userRepository, INavigationService navigationService, HomeStore pHomeStore)
+        public SignInViewModel( INavigationService navigationService, HomeStore pHomeStore)
         {
-            _userRepo = (UserRepo?)userRepository;
             _navigationService = navigationService;
             _homeStore = pHomeStore;
         }

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using WpfApp.Core;
-using WpfApp.Database.Repo;
 using WpfApp.MVVM.Model;
 using WpfApp.Service.Interface;
 using WpfApp.Stores;
@@ -20,7 +19,6 @@ namespace WpfApp.MVVM.ViewModel
     [ObservableObject]
     public partial class SignUpViewModel
     {
-        private IUserRepo _userRepo;
         private readonly INavigationService _navigationService;
         private HomeStore _homeStore;
 
@@ -50,9 +48,8 @@ namespace WpfApp.MVVM.ViewModel
         public ObservableCollection<string> Days { get; set; }
 
         //생성자
-        public SignUpViewModel(IUserRepo userRepository, INavigationService navigationService, HomeStore pSignUpStore) 
+        public SignUpViewModel(INavigationService navigationService, HomeStore pSignUpStore) 
         {
-            _userRepo = userRepository;
             _navigationService = navigationService;
             _homeStore = pSignUpStore;
 
@@ -82,7 +79,7 @@ namespace WpfApp.MVVM.ViewModel
             }
             else
             {
-                _userRepo.Insert(new User { Email = Email, Password = pPwd.Password, Name = Name, Nickname = Nickname });
+                //_userRepo.Insert(new User { Email = Email, Password = pPwd.Password, Name = Name, Nickname = Nickname });
                 _homeStore.CurrentUser = new Model.User() { Email = Email, Nickname = Nickname };
                 _navigationService.Navigate(NaviType.HOME);
 
