@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using WpfApp.Core;
 using WpfApp.MVVM.Model;
+using WpfApp.Service;
 using WpfApp.Service.Interface;
 using WpfApp.Stores;
 
@@ -70,6 +71,7 @@ namespace WpfApp.MVVM.ViewModel
         [RelayCommand]
         private void SignUpBtn(PasswordBox pPwd)
         {
+            if(LoginServerCommunicationService.IsExistEmail())
             if (_userRepo.IsExistEmail(Email, pPwd.Password))
             {
                 EmailTextBlock = "이메일-이미 존재하는 이메일입니다.";
