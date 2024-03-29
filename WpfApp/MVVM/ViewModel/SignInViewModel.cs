@@ -28,7 +28,6 @@ namespace WpfApp.MVVM.ViewModel
     {
         private readonly INavigationService _navigationService;
 
-        private LoginServerCommunicationService _loginService;
         private UserRepo _userRepo;
         private HomeStore _homeStore;
 
@@ -44,7 +43,7 @@ namespace WpfApp.MVVM.ViewModel
         [RelayCommand]
         private async Task LoginBtnAsync(PasswordBox pPwd)
         {
-            bool flag = await _loginService.LoginAsync(Email, pPwd.Password);
+            bool flag = await LoginServerCommunicationService.LoginAsync(Email, pPwd.Password);
             if (flag == false)
             {
                 EmailTextBlock = "이메일 또는 전화번호-유효하지 않은 아이디 또는 비밀번호입니다.";
@@ -70,7 +69,6 @@ namespace WpfApp.MVVM.ViewModel
             _userRepo = (UserRepo?)userRepository;
             _navigationService = navigationService;
             _homeStore = pHomeStore;
-            _loginService = new LoginServerCommunicationService();
         }
         //public SignInViewModel(IUserRepo userRepository)
         //{

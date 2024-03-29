@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace WpfApp.Service
 {
-    internal class LoginServerCommunicationService
+    static class LoginServerCommunicationService
     {
-        public async Task<bool> LoginAsync(string pEmail, string pPwd)
+        public static async Task<bool> LoginAsync(string pEmail, string pPwd)
         {
             // HTTP POST 요청을 보낼 엔드포인트 URL
             string url = "http://localhost:3000/login";
