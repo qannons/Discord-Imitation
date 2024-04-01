@@ -2,7 +2,6 @@
 using System;
 using System.Windows;
 using System.Windows.Navigation;
-using WpfApp.Database.Repo;
 using WpfApp.MVVM.View;
 using WpfApp.MVVM.ViewModel;
 using WpfApp.Service;
@@ -49,7 +48,7 @@ namespace WpfApp
             //Serivce
             services.AddSingleton<IServerCommunicationService, ServerCommunicationService>();
             services.AddSingleton<INavigationService, Service.NavigationService>();
-            services.AddSingleton<IUserRepo, UserRepo>();
+            
 
 
             //View

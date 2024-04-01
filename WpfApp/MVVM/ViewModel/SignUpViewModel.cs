@@ -71,21 +71,21 @@ namespace WpfApp.MVVM.ViewModel
         [RelayCommand]
         private void SignUpBtn(PasswordBox pPwd)
         {
-            if(LoginServerCommunicationService.IsExistEmail())
-            if (_userRepo.IsExistEmail(Email, pPwd.Password))
-            {
-                EmailTextBlock = "이메일-이미 존재하는 이메일입니다.";
-                EmailBrush.Color = Colors.Red;
-                return;
+            //if(LoginServerCommunicationService.IsExistEmail())
+            //if (_userRepo.IsExistEmail(Email, pPwd.Password))
+            //{
+            //    EmailTextBlock = "이메일-이미 존재하는 이메일입니다.";
+            //    EmailBrush.Color = Colors.Red;
+            //    return;
                 
-            }
-            else
-            {
-                //_userRepo.Insert(new User { Email = Email, Password = pPwd.Password, Name = Name, Nickname = Nickname });
-                _homeStore.CurrentUser = new Model.User() { Email = Email, Nickname = Nickname };
-                _navigationService.Navigate(NaviType.HOME);
+            //}
+            //else
+            //{
+            //    //_userRepo.Insert(new User { Email = Email, Password = pPwd.Password, Name = Name, Nickname = Nickname });
+            //    _homeStore.CurrentUser = new Model.User() { Email = Email, Nickname = Nickname };
+            //    _navigationService.Navigate(NaviType.HOME);
 
-            }
+            //}
 
         }
     }
