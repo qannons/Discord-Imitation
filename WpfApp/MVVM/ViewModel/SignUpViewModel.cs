@@ -72,6 +72,7 @@ namespace WpfApp.MVVM.ViewModel
         
         private async Task SignUpBtnAsync(PasswordBox pPwd)
         {
+
             if (CheckSignUpField(pPwd.Password) == false)
                 return;
 
@@ -88,7 +89,6 @@ namespace WpfApp.MVVM.ViewModel
                 EmailBrush.Color = Colors.Red;
             }
         }
-
         private bool CheckSignUpField(string pPwd)
         {
             bool ret = true;

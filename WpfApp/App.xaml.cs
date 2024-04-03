@@ -49,7 +49,6 @@ namespace WpfApp
             services.AddSingleton<IServerCommunicationService, ServerCommunicationService>();
             services.AddSingleton<INavigationService, Service.NavigationService>();
 
-
             //View
             services.AddSingleton(s => new MainWindow()
             {
