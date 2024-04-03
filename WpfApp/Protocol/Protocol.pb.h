@@ -383,9 +383,23 @@ class P_Sender final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kUserNameFieldNumber = 2,
     kUserIDFieldNumber = 1,
+    kUserNameFieldNumber = 2,
   };
+  // bytes userID = 1;
+  void clear_userid();
+  const std::string& userid() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_userid(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_userid();
+  PROTOBUF_NODISCARD std::string* release_userid();
+  void set_allocated_userid(std::string* userid);
+  private:
+  const std::string& _internal_userid() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_userid(const std::string& value);
+  std::string* _internal_mutable_userid();
+  public:
+
   // string userName = 2;
   void clear_username();
   const std::string& username() const;
@@ -400,15 +414,6 @@ class P_Sender final :
   std::string* _internal_mutable_username();
   public:
 
-  // uint32 userID = 1;
-  void clear_userid();
-  uint32_t userid() const;
-  void set_userid(uint32_t value);
-  private:
-  uint32_t _internal_userid() const;
-  void _internal_set_userid(uint32_t value);
-  public:
-
   // @@protoc_insertion_point(class_scope:Protocol.P_Sender)
  private:
   class _Internal;
@@ -417,8 +422,8 @@ class P_Sender final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr userid_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr username_;
-    uint32_t userid_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -547,25 +552,11 @@ class P_BaseMessage final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kMessageIDFieldNumber = 1,
     kRoomIDFieldNumber = 2,
     kSenderFieldNumber = 3,
+    kMessageIDFieldNumber = 1,
     kTimestampFieldNumber = 4,
   };
-  // string messageID = 1;
-  void clear_messageid();
-  const std::string& messageid() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_messageid(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_messageid();
-  PROTOBUF_NODISCARD std::string* release_messageid();
-  void set_allocated_messageid(std::string* messageid);
-  private:
-  const std::string& _internal_messageid() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_messageid(const std::string& value);
-  std::string* _internal_mutable_messageid();
-  public:
-
   // string roomID = 2;
   void clear_roomid();
   const std::string& roomid() const;
@@ -598,6 +589,15 @@ class P_BaseMessage final :
       ::Protocol::P_Sender* sender);
   ::Protocol::P_Sender* unsafe_arena_release_sender();
 
+  // int64 messageID = 1;
+  void clear_messageid();
+  int64_t messageid() const;
+  void set_messageid(int64_t value);
+  private:
+  int64_t _internal_messageid() const;
+  void _internal_set_messageid(int64_t value);
+  public:
+
   // int64 timestamp = 4;
   void clear_timestamp();
   int64_t timestamp() const;
@@ -615,9 +615,9 @@ class P_BaseMessage final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr messageid_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr roomid_;
     ::Protocol::P_Sender* sender_;
+    int64_t messageid_;
     int64_t timestamp_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1130,24 +1130,54 @@ P_ChatRoom::mutable_participants() {
 
 // P_Sender
 
-// uint32 userID = 1;
+// bytes userID = 1;
 inline void P_Sender::clear_userid() {
-  _impl_.userid_ = 0u;
+  _impl_.userid_.ClearToEmpty();
 }
-inline uint32_t P_Sender::_internal_userid() const {
-  return _impl_.userid_;
-}
-inline uint32_t P_Sender::userid() const {
+inline const std::string& P_Sender::userid() const {
   // @@protoc_insertion_point(field_get:Protocol.P_Sender.userID)
   return _internal_userid();
 }
-inline void P_Sender::_internal_set_userid(uint32_t value) {
-  
-  _impl_.userid_ = value;
-}
-inline void P_Sender::set_userid(uint32_t value) {
-  _internal_set_userid(value);
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void P_Sender::set_userid(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.userid_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
   // @@protoc_insertion_point(field_set:Protocol.P_Sender.userID)
+}
+inline std::string* P_Sender::mutable_userid() {
+  std::string* _s = _internal_mutable_userid();
+  // @@protoc_insertion_point(field_mutable:Protocol.P_Sender.userID)
+  return _s;
+}
+inline const std::string& P_Sender::_internal_userid() const {
+  return _impl_.userid_.Get();
+}
+inline void P_Sender::_internal_set_userid(const std::string& value) {
+  
+  _impl_.userid_.Set(value, GetArenaForAllocation());
+}
+inline std::string* P_Sender::_internal_mutable_userid() {
+  
+  return _impl_.userid_.Mutable(GetArenaForAllocation());
+}
+inline std::string* P_Sender::release_userid() {
+  // @@protoc_insertion_point(field_release:Protocol.P_Sender.userID)
+  return _impl_.userid_.Release();
+}
+inline void P_Sender::set_allocated_userid(std::string* userid) {
+  if (userid != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.userid_.SetAllocated(userid, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.userid_.IsDefault()) {
+    _impl_.userid_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.P_Sender.userID)
 }
 
 // string userName = 2;
@@ -1204,54 +1234,24 @@ inline void P_Sender::set_allocated_username(std::string* username) {
 
 // P_BaseMessage
 
-// string messageID = 1;
+// int64 messageID = 1;
 inline void P_BaseMessage::clear_messageid() {
-  _impl_.messageid_.ClearToEmpty();
+  _impl_.messageid_ = int64_t{0};
 }
-inline const std::string& P_BaseMessage::messageid() const {
+inline int64_t P_BaseMessage::_internal_messageid() const {
+  return _impl_.messageid_;
+}
+inline int64_t P_BaseMessage::messageid() const {
   // @@protoc_insertion_point(field_get:Protocol.P_BaseMessage.messageID)
   return _internal_messageid();
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void P_BaseMessage::set_messageid(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.messageid_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+inline void P_BaseMessage::_internal_set_messageid(int64_t value) {
+  
+  _impl_.messageid_ = value;
+}
+inline void P_BaseMessage::set_messageid(int64_t value) {
+  _internal_set_messageid(value);
   // @@protoc_insertion_point(field_set:Protocol.P_BaseMessage.messageID)
-}
-inline std::string* P_BaseMessage::mutable_messageid() {
-  std::string* _s = _internal_mutable_messageid();
-  // @@protoc_insertion_point(field_mutable:Protocol.P_BaseMessage.messageID)
-  return _s;
-}
-inline const std::string& P_BaseMessage::_internal_messageid() const {
-  return _impl_.messageid_.Get();
-}
-inline void P_BaseMessage::_internal_set_messageid(const std::string& value) {
-  
-  _impl_.messageid_.Set(value, GetArenaForAllocation());
-}
-inline std::string* P_BaseMessage::_internal_mutable_messageid() {
-  
-  return _impl_.messageid_.Mutable(GetArenaForAllocation());
-}
-inline std::string* P_BaseMessage::release_messageid() {
-  // @@protoc_insertion_point(field_release:Protocol.P_BaseMessage.messageID)
-  return _impl_.messageid_.Release();
-}
-inline void P_BaseMessage::set_allocated_messageid(std::string* messageid) {
-  if (messageid != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.messageid_.SetAllocated(messageid, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.messageid_.IsDefault()) {
-    _impl_.messageid_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:Protocol.P_BaseMessage.messageID)
 }
 
 // string roomID = 2;

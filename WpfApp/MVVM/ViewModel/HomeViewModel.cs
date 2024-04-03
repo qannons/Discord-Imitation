@@ -53,7 +53,6 @@ namespace WpfApp.MVVM.ViewModel
         private string _timestamp;
 
         public List<ChatRoom> rooms { get; set; }
-        public ObservableCollection<MinimalUser> friends { get; set; }
 
         [ObservableProperty]
         private string _roomNameLabel = default!;
@@ -61,8 +60,6 @@ namespace WpfApp.MVVM.ViewModel
         [ObservableProperty]
         private string _userName = "UserName";
 
-        [ObservableProperty]
-        private eSTATE _userState = eSTATE.Offline;
 
         private void Init()
         {
@@ -77,14 +74,14 @@ namespace WpfApp.MVVM.ViewModel
             //통신 부분
             if(_serverService.Connect("127.0.0.1", 7777))
             {
-                _userState = eSTATE.Online;
+                //_userState = eSTATE.Online;
                 Thread thread = new Thread(Recv);
                 thread.Start();
             }
             else
             {
                 Debug.Print("연결실패");
-                _userState = eSTATE.Offline;
+                //_userState = eSTATE.Offline;
             }
 
             //친구 목록 불러오기
@@ -211,7 +208,7 @@ namespace WpfApp.MVVM.ViewModel
         {
             int headerSize = sizeof(PacketHeader);
             P_ChatMessage message = P_ChatMessage.Parser.ParseFrom(buffer, headerSize, len - headerSize);
-            if (message.Base.Sender.UserID == _store.CurrentUser?.ID)
+            if (message.Base.Sender.UserID.ToString() == _store.CurrentUser?.ID)
             {
                 return;
             }
@@ -231,7 +228,7 @@ namespace WpfApp.MVVM.ViewModel
         {
             int headerSize = sizeof(PacketHeader);
             P_ImageMessage message = P_ImageMessage.Parser.ParseFrom(buffer, headerSize, len - headerSize);
-            if (message.Base.Sender.UserID == _store.CurrentUser?.ID)
+            if (message.Base.Sender.UserID.ToString() == _store.CurrentUser?.ID)
             {
                 return;
             }

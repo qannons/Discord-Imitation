@@ -145,13 +145,13 @@ namespace WpfApp.Service
         {
             P_BaseMessage b_pkt = new P_BaseMessage();
             //1) 메시지 식별자
-            b_pkt.MessageID = "tmpID";
+            b_pkt.MessageID = 1193962010682073089;
             //2) 채팅방 정보
             b_pkt.RoomID = roomID.ToString();
             //3) 전송자의 정보
             {
                 P_Sender sender = new P_Sender();
-                sender.UserID = user.ID;
+                sender.UserID = ByteString.FromBase64(user.ID);
                 sender.UserName = user.Name;
                 b_pkt.Sender = sender;
             }

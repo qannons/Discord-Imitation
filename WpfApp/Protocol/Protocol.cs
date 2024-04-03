@@ -26,8 +26,8 @@ namespace Protocol {
           string.Concat(
             "Cg5Qcm90b2NvbC5wcm90bxIIUHJvdG9jb2wiRAoKUF9DaGF0Um9vbRIOCgZy",
             "b29tSUQYASABKA0SEAoIcm9vbU5hbWUYAiABKAkSFAoMcGFydGljaXBhbnRz",
-            "GAMgAygJIiwKCFBfU2VuZGVyEg4KBnVzZXJJRBgBIAEoDRIQCgh1c2VyTmFt",
-            "ZRgCIAEoCSJpCg1QX0Jhc2VNZXNzYWdlEhEKCW1lc3NhZ2VJRBgBIAEoCRIO",
+            "GAMgAygJIiwKCFBfU2VuZGVyEg4KBnVzZXJJRBgBIAEoDBIQCgh1c2VyTmFt",
+            "ZRgCIAEoCSJpCg1QX0Jhc2VNZXNzYWdlEhEKCW1lc3NhZ2VJRBgBIAEoAxIO",
             "CgZyb29tSUQYAiABKAkSIgoGc2VuZGVyGAMgASgLMhIuUHJvdG9jb2wuUF9T",
             "ZW5kZXISEQoJdGltZXN0YW1wGAQgASgDIkcKDVBfQ2hhdE1lc3NhZ2USJQoE",
             "YmFzZRgBIAEoCzIXLlByb3RvY29sLlBfQmFzZU1lc3NhZ2USDwoHY29udGVu",
@@ -355,13 +355,13 @@ namespace Protocol {
 
     /// <summary>Field number for the "userID" field.</summary>
     public const int UserIDFieldNumber = 1;
-    private uint userID_;
+    private pb::ByteString userID_ = pb::ByteString.Empty;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public uint UserID {
+    public pb::ByteString UserID {
       get { return userID_; }
       set {
-        userID_ = value;
+        userID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -401,7 +401,7 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (UserID != 0) hash ^= UserID.GetHashCode();
+      if (UserID.Length != 0) hash ^= UserID.GetHashCode();
       if (UserName.Length != 0) hash ^= UserName.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -421,9 +421,9 @@ namespace Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (UserID != 0) {
-        output.WriteRawTag(8);
-        output.WriteUInt32(UserID);
+      if (UserID.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteBytes(UserID);
       }
       if (UserName.Length != 0) {
         output.WriteRawTag(18);
@@ -439,9 +439,9 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (UserID != 0) {
-        output.WriteRawTag(8);
-        output.WriteUInt32(UserID);
+      if (UserID.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteBytes(UserID);
       }
       if (UserName.Length != 0) {
         output.WriteRawTag(18);
@@ -457,8 +457,8 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (UserID != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(UserID);
+      if (UserID.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeBytesSize(UserID);
       }
       if (UserName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(UserName);
@@ -475,7 +475,7 @@ namespace Protocol {
       if (other == null) {
         return;
       }
-      if (other.UserID != 0) {
+      if (other.UserID.Length != 0) {
         UserID = other.UserID;
       }
       if (other.UserName.Length != 0) {
@@ -496,8 +496,8 @@ namespace Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 8: {
-            UserID = input.ReadUInt32();
+          case 10: {
+            UserID = input.ReadBytes();
             break;
           }
           case 18: {
@@ -519,8 +519,8 @@ namespace Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 8: {
-            UserID = input.ReadUInt32();
+          case 10: {
+            UserID = input.ReadBytes();
             break;
           }
           case 18: {
@@ -583,16 +583,16 @@ namespace Protocol {
 
     /// <summary>Field number for the "messageID" field.</summary>
     public const int MessageIDFieldNumber = 1;
-    private string messageID_ = "";
+    private long messageID_;
     /// <summary>
     ///메시지 식별자
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string MessageID {
+    public long MessageID {
       get { return messageID_; }
       set {
-        messageID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        messageID_ = value;
       }
     }
 
@@ -667,7 +667,7 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (MessageID.Length != 0) hash ^= MessageID.GetHashCode();
+      if (MessageID != 0L) hash ^= MessageID.GetHashCode();
       if (RoomID.Length != 0) hash ^= RoomID.GetHashCode();
       if (sender_ != null) hash ^= Sender.GetHashCode();
       if (Timestamp != 0L) hash ^= Timestamp.GetHashCode();
@@ -689,9 +689,9 @@ namespace Protocol {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (MessageID.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(MessageID);
+      if (MessageID != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(MessageID);
       }
       if (RoomID.Length != 0) {
         output.WriteRawTag(18);
@@ -715,9 +715,9 @@ namespace Protocol {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (MessageID.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(MessageID);
+      if (MessageID != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(MessageID);
       }
       if (RoomID.Length != 0) {
         output.WriteRawTag(18);
@@ -741,8 +741,8 @@ namespace Protocol {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (MessageID.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(MessageID);
+      if (MessageID != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MessageID);
       }
       if (RoomID.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
@@ -765,7 +765,7 @@ namespace Protocol {
       if (other == null) {
         return;
       }
-      if (other.MessageID.Length != 0) {
+      if (other.MessageID != 0L) {
         MessageID = other.MessageID;
       }
       if (other.RoomID.Length != 0) {
@@ -795,8 +795,8 @@ namespace Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            MessageID = input.ReadString();
+          case 8: {
+            MessageID = input.ReadInt64();
             break;
           }
           case 18: {
@@ -829,8 +829,8 @@ namespace Protocol {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            MessageID = input.ReadString();
+          case 8: {
+            MessageID = input.ReadInt64();
             break;
           }
           case 18: {

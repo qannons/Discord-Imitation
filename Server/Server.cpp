@@ -8,7 +8,8 @@ int main()
 {
     SocketUtils::Init();
 
-    Listener listener(L"203.237.81.67", 7777);
+    Listener listener(L"127.0.0.1", 7777);
+    //Listener listener(L"203.237.81.67", 7777);
     
     vector<thread> workerThreads;
 

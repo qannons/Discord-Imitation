@@ -41,8 +41,8 @@ namespace WpfApp.MVVM.ViewModel
         [RelayCommand]
         private async Task LoginBtnAsync(PasswordBox pPwd)
         {
-            bool flag = await LoginServerCommunicationService.LoginAsync(Email, pPwd.Password);
-            if (flag == false)
+            User? user = await LoginServerCommunicationService.LoginAsyncOrNull(Email, pPwd.Password);
+            if (user == null)
             {
                 EmailTextBlock = "이메일 또는 전화번호-유효하지 않은 아이디 또는 비밀번호입니다.";
                 ColorBrush.Color = Colors.Red;
@@ -50,7 +50,7 @@ namespace WpfApp.MVVM.ViewModel
             }
             else
             {
-                _homeStore.CurrentUser = new User { Email = Email };
+                _homeStore.CurrentUser = new User { ID = user.ID, Name = user.Name, Nickname = user.Nickname};
 
                 _navigationService.Navigate(NaviType.HOME);
             }
@@ -67,9 +67,5 @@ namespace WpfApp.MVVM.ViewModel
             _navigationService = navigationService;
             _homeStore = pHomeStore;
         }
-        //public SignInViewModel(IUserRepo userRepository)
-        //{
-        //    _userRepo = userRepository;
-        //}
     }
 }

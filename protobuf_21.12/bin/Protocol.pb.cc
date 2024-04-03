@@ -38,8 +38,8 @@ struct P_ChatRoomDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 P_ChatRoomDefaultTypeInternal _P_ChatRoom_default_instance_;
 PROTOBUF_CONSTEXPR P_Sender::P_Sender(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.username_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.userid_)*/0u
+    /*decltype(_impl_.userid_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.username_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct P_SenderDefaultTypeInternal {
   PROTOBUF_CONSTEXPR P_SenderDefaultTypeInternal()
@@ -52,9 +52,9 @@ struct P_SenderDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 P_SenderDefaultTypeInternal _P_Sender_default_instance_;
 PROTOBUF_CONSTEXPR P_BaseMessage::P_BaseMessage(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.messageid_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.roomid_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+    /*decltype(_impl_.roomid_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.sender_)*/nullptr
+  , /*decltype(_impl_.messageid_)*/int64_t{0}
   , /*decltype(_impl_.timestamp_)*/int64_t{0}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct P_BaseMessageDefaultTypeInternal {
@@ -164,8 +164,8 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\n\016Protocol.proto\022\010Protocol\"D\n\nP_ChatRoom"
   "\022\016\n\006roomID\030\001 \001(\r\022\020\n\010roomName\030\002 \001(\t\022\024\n\014pa"
   "rticipants\030\003 \003(\t\",\n\010P_Sender\022\016\n\006userID\030\001"
-  " \001(\r\022\020\n\010userName\030\002 \001(\t\"i\n\rP_BaseMessage\022"
-  "\021\n\tmessageID\030\001 \001(\t\022\016\n\006roomID\030\002 \001(\t\022\"\n\006se"
+  " \001(\014\022\020\n\010userName\030\002 \001(\t\"i\n\rP_BaseMessage\022"
+  "\021\n\tmessageID\030\001 \001(\003\022\016\n\006roomID\030\002 \001(\t\022\"\n\006se"
   "nder\030\003 \001(\0132\022.Protocol.P_Sender\022\021\n\ttimest"
   "amp\030\004 \001(\003\"G\n\rP_ChatMessage\022%\n\004base\030\001 \001(\013"
   "2\027.Protocol.P_BaseMessage\022\017\n\007content\030\002 \001"
@@ -475,11 +475,19 @@ P_Sender::P_Sender(const P_Sender& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   P_Sender* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.username_){}
-    , decltype(_impl_.userid_){}
+      decltype(_impl_.userid_){}
+    , decltype(_impl_.username_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.userid_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.userid_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_userid().empty()) {
+    _this->_impl_.userid_.Set(from._internal_userid(), 
+      _this->GetArenaForAllocation());
+  }
   _impl_.username_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.username_.Set("", GetArenaForAllocation());
@@ -488,7 +496,6 @@ P_Sender::P_Sender(const P_Sender& from)
     _this->_impl_.username_.Set(from._internal_username(), 
       _this->GetArenaForAllocation());
   }
-  _this->_impl_.userid_ = from._impl_.userid_;
   // @@protoc_insertion_point(copy_constructor:Protocol.P_Sender)
 }
 
@@ -497,10 +504,14 @@ inline void P_Sender::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.username_){}
-    , decltype(_impl_.userid_){0u}
+      decltype(_impl_.userid_){}
+    , decltype(_impl_.username_){}
     , /*decltype(_impl_._cached_size_)*/{}
   };
+  _impl_.userid_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.userid_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   _impl_.username_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.username_.Set("", GetArenaForAllocation());
@@ -518,6 +529,7 @@ P_Sender::~P_Sender() {
 
 inline void P_Sender::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.userid_.Destroy();
   _impl_.username_.Destroy();
 }
 
@@ -531,8 +543,8 @@ void P_Sender::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  _impl_.userid_.ClearToEmpty();
   _impl_.username_.ClearToEmpty();
-  _impl_.userid_ = 0u;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -542,10 +554,11 @@ const char* P_Sender::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // uint32 userID = 1;
+      // bytes userID = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.userid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_userid();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -589,10 +602,10 @@ uint8_t* P_Sender::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 userID = 1;
-  if (this->_internal_userid() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_userid(), target);
+  // bytes userID = 1;
+  if (!this->_internal_userid().empty()) {
+    target = stream->WriteBytesMaybeAliased(
+        1, this->_internal_userid(), target);
   }
 
   // string userName = 2;
@@ -621,16 +634,18 @@ size_t P_Sender::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  // bytes userID = 1;
+  if (!this->_internal_userid().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_userid());
+  }
+
   // string userName = 2;
   if (!this->_internal_username().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_username());
-  }
-
-  // uint32 userID = 1;
-  if (this->_internal_userid() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_userid());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -651,11 +666,11 @@ void P_Sender::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTO
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (!from._internal_userid().empty()) {
+    _this->_internal_set_userid(from._internal_userid());
+  }
   if (!from._internal_username().empty()) {
     _this->_internal_set_username(from._internal_username());
-  }
-  if (from._internal_userid() != 0) {
-    _this->_internal_set_userid(from._internal_userid());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -677,10 +692,13 @@ void P_Sender::InternalSwap(P_Sender* other) {
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.userid_, lhs_arena,
+      &other->_impl_.userid_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.username_, lhs_arena,
       &other->_impl_.username_, rhs_arena
   );
-  swap(_impl_.userid_, other->_impl_.userid_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata P_Sender::GetMetadata() const {
@@ -710,21 +728,13 @@ P_BaseMessage::P_BaseMessage(const P_BaseMessage& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   P_BaseMessage* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.messageid_){}
-    , decltype(_impl_.roomid_){}
+      decltype(_impl_.roomid_){}
     , decltype(_impl_.sender_){nullptr}
+    , decltype(_impl_.messageid_){}
     , decltype(_impl_.timestamp_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.messageid_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.messageid_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_messageid().empty()) {
-    _this->_impl_.messageid_.Set(from._internal_messageid(), 
-      _this->GetArenaForAllocation());
-  }
   _impl_.roomid_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.roomid_.Set("", GetArenaForAllocation());
@@ -736,7 +746,9 @@ P_BaseMessage::P_BaseMessage(const P_BaseMessage& from)
   if (from._internal_has_sender()) {
     _this->_impl_.sender_ = new ::Protocol::P_Sender(*from._impl_.sender_);
   }
-  _this->_impl_.timestamp_ = from._impl_.timestamp_;
+  ::memcpy(&_impl_.messageid_, &from._impl_.messageid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.timestamp_) -
+    reinterpret_cast<char*>(&_impl_.messageid_)) + sizeof(_impl_.timestamp_));
   // @@protoc_insertion_point(copy_constructor:Protocol.P_BaseMessage)
 }
 
@@ -745,16 +757,12 @@ inline void P_BaseMessage::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.messageid_){}
-    , decltype(_impl_.roomid_){}
+      decltype(_impl_.roomid_){}
     , decltype(_impl_.sender_){nullptr}
+    , decltype(_impl_.messageid_){int64_t{0}}
     , decltype(_impl_.timestamp_){int64_t{0}}
     , /*decltype(_impl_._cached_size_)*/{}
   };
-  _impl_.messageid_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.messageid_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   _impl_.roomid_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
     _impl_.roomid_.Set("", GetArenaForAllocation());
@@ -772,7 +780,6 @@ P_BaseMessage::~P_BaseMessage() {
 
 inline void P_BaseMessage::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.messageid_.Destroy();
   _impl_.roomid_.Destroy();
   if (this != internal_default_instance()) delete _impl_.sender_;
 }
@@ -787,13 +794,14 @@ void P_BaseMessage::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.messageid_.ClearToEmpty();
   _impl_.roomid_.ClearToEmpty();
   if (GetArenaForAllocation() == nullptr && _impl_.sender_ != nullptr) {
     delete _impl_.sender_;
   }
   _impl_.sender_ = nullptr;
-  _impl_.timestamp_ = int64_t{0};
+  ::memset(&_impl_.messageid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.timestamp_) -
+      reinterpret_cast<char*>(&_impl_.messageid_)) + sizeof(_impl_.timestamp_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -803,13 +811,11 @@ const char* P_BaseMessage::_InternalParse(const char* ptr, ::_pbi::ParseContext*
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // string messageID = 1;
+      // int64 messageID = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_messageid();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.messageid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "Protocol.P_BaseMessage.messageID"));
         } else
           goto handle_unusual;
         continue;
@@ -868,14 +874,10 @@ uint8_t* P_BaseMessage::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // string messageID = 1;
-  if (!this->_internal_messageid().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_messageid().data(), static_cast<int>(this->_internal_messageid().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Protocol.P_BaseMessage.messageID");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_messageid(), target);
+  // int64 messageID = 1;
+  if (this->_internal_messageid() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(1, this->_internal_messageid(), target);
   }
 
   // string roomID = 2;
@@ -917,13 +919,6 @@ size_t P_BaseMessage::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string messageID = 1;
-  if (!this->_internal_messageid().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_messageid());
-  }
-
   // string roomID = 2;
   if (!this->_internal_roomid().empty()) {
     total_size += 1 +
@@ -936,6 +931,11 @@ size_t P_BaseMessage::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.sender_);
+  }
+
+  // int64 messageID = 1;
+  if (this->_internal_messageid() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_messageid());
   }
 
   // int64 timestamp = 4;
@@ -961,15 +961,15 @@ void P_BaseMessage::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_messageid().empty()) {
-    _this->_internal_set_messageid(from._internal_messageid());
-  }
   if (!from._internal_roomid().empty()) {
     _this->_internal_set_roomid(from._internal_roomid());
   }
   if (from._internal_has_sender()) {
     _this->_internal_mutable_sender()->::Protocol::P_Sender::MergeFrom(
         from._internal_sender());
+  }
+  if (from._internal_messageid() != 0) {
+    _this->_internal_set_messageid(from._internal_messageid());
   }
   if (from._internal_timestamp() != 0) {
     _this->_internal_set_timestamp(from._internal_timestamp());
@@ -993,10 +993,6 @@ void P_BaseMessage::InternalSwap(P_BaseMessage* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.messageid_, lhs_arena,
-      &other->_impl_.messageid_, rhs_arena
-  );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.roomid_, lhs_arena,
       &other->_impl_.roomid_, rhs_arena
